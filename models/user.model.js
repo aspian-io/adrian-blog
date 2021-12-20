@@ -12,9 +12,10 @@ const schema = new Schema({
   passwordHash: { type: String, required: true },
   createdByIp: { type: String, required: true },
   lastIp: { type: String, required: true },
-  claims: [{ type: mongoose.Types.ObjectId(), ref: 'claim' }],
+  claims: [{ type: Schema.Types.ObjectId, ref: 'Claim' }],
 })
 
+schema.set('timestamps', true)
 schema.set('toJSON', {
   virtuals: true,
   versionKey: false,
@@ -22,7 +23,6 @@ schema.set('toJSON', {
     delete ret._id
     delete ret.passwordHash
   },
-  timestamps: true,
 })
 
 schema.pre('save', function (next) {
