@@ -10,6 +10,8 @@ export async function taxonomyEditController ( req: Request, res: Response ) {
     type: req.body.type,
     description: req.body.description,
     term: req.body.term,
+    parent: req.body.parent,
+    children: req.body.children,
     updatedBy: req.currentUser!.id,
     updatedByIp: req.ip,
     userAgent: req.get( 'User-Agent' ) ?? "unknown_agent"

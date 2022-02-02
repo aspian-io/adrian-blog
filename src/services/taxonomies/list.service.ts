@@ -2,6 +2,9 @@ import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructur
 import { Taxonomy } from "../../models/taxonomy.model";
 
 export async function taxonomyListService () {
-  const taxonomies = await Taxonomy.find().sort( { createdAt: "desc" } ).cache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
+  const taxonomies = await Taxonomy.find()
+    .populate( "parent children" )
+    .sort( { createdAt: "desc" } )
+    .cache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
   return taxonomies;
 }

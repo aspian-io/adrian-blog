@@ -11,17 +11,19 @@ export interface ITaxonomyCreateService {
   type: TaxonomyTypeEnum;
   description: string;
   term: string;
+  parent?: string;
+  children?: string[];
   createdBy: string;
   createdByIp: string;
   userAgent: string;
 }
 
 export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
-  const { type, description, term, createdBy, createdByIp, userAgent } = data;
+  const { type, description, term, parent, children, createdBy, createdByIp, userAgent } = data;
   if ( !mongoose.isValidObjectId( createdBy ) ) throw new BadRequestError( "User id must be a standard id", CoreLocaleEnum.ERROR_USER_ID );
   const slug = slugify( term );
 
-  const taxonomy = Taxonomy.build( { type, description, term, slug, createdBy, createdByIp, userAgent } );
+  const taxonomy = Taxonomy.build( { type, description, term, slug, parent, children, createdBy, createdByIp, userAgent } );
 
   const isDuplicated = await Taxonomy.find( { type, term } );
   if ( isDuplicated.length ) {

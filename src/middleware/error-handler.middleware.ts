@@ -15,10 +15,10 @@ export const errorHandler = async (
     const errors = err.serializeErrors();
     const localizedMessageKey = err.localizedMsgKey ? err.localizedMsgKey : err.message;
     if ( !( err instanceof RequestValidationError ) ) {
-      errors.forEach( e => e.message = req.t( localizedMessageKey ) );
+      errors.forEach( e => e.message = req.t ? req.t( localizedMessageKey ) : e.message );
     }
     if ( err instanceof RequestValidationError ) {
-      errors.forEach( e => e.message = req.t( e.message ) );
+      errors.forEach( e => e.message = req.t ? req.t( e.message ) : e.message );
     }
 
     res.status( err.statusCode ).send( { errors } );
@@ -28,11 +28,10 @@ export const errorHandler = async (
   }
 
   console.error( err );
-  // Winston Logger
 
   res.status( 400 ).send( {
     errors: [
-      { message: req.t( CoreLocaleEnum.ERROR_400_MSG ) }
+      { message: req.t ? req.t( CoreLocaleEnum.ERROR_400_MSG ) : "Something went wrong" }
     ]
   } );
   logger.error( err.message, logSerializer( req, res, CoreLocaleEnum.ERROR_400_MSG, "", 400 ) );

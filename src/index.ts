@@ -17,7 +17,7 @@ const start = async () => {
   try {
     await mongoose.connect( process.env.DB_HOST! );
     log( boldGreen( `${ emoji.get( 'white_check_mark' ) } Connected to MongoDB ${ emoji.get( 'cocktail' ) }` ) );
-    if ( process.env.SEEDER ) {
+    if ( process.env.SEEDER === "true" ) {
       await authSeeder();
     }
   } catch ( error ) {

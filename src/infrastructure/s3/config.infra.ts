@@ -70,7 +70,7 @@ const s3BucketConfig = ( expiresInSeconds: number, allowedMimeTypes: string[] ) 
         acl: process.env.S3_ACL, // default: public-read
         awsClientOptions: {
           endpoint: process.env.S3_ENDPOINT,
-          s3ForcePathStyle: process.env.S3_FORTH_PATH_STYLE
+          s3ForcePathStyle: process.env.S3_FORTH_PATH_STYLE === "true"
         }
       },
     },
@@ -80,11 +80,11 @@ const s3BucketConfig = ( expiresInSeconds: number, allowedMimeTypes: string[] ) 
       // This MUST match the path you specify in `app.use()` below:
       path: process.env.S3_UPLOAD_PATH,
     },
-    redisUrl: process.env.USING_CACHE ? process.env.REDIS_URL : "",
+    redisUrl: process.env.USING_CACHE === "true" ? process.env.REDIS_URL : "",
     debug: process.env.NODE_ENV === 'development',
     secret: process.env.JWT_KEY,
     filePath: path.join( __dirname, '../../../public' ),
-    streamingUpload: process.env.S3_STREAMING_UPLOAD,
+    streamingUpload: process.env.S3_STREAMING_UPLOAD === "true",
     uploadUrls: [ process.env.S3_ENDPOINT ]
   };
 };

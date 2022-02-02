@@ -11,13 +11,15 @@ export interface ITaxonomyEditService {
   type: TaxonomyTypeEnum;
   description: string;
   term: string;
+  parent?: string;
+  children?: string[];
   updatedBy: string;
   updatedByIp: string;
   userAgent: string;
 }
 
 export async function taxonomyEditService ( data: ITaxonomyEditService ) {
-  const { slug, type, description, term, updatedBy, updatedByIp, userAgent } = data;
+  const { slug, type, description, term, parent, children, updatedBy, updatedByIp, userAgent } = data;
   const taxonomy = await Taxonomy.findOne( { slug } );
   const slugified = slugify( term );
 
@@ -38,6 +40,8 @@ export async function taxonomyEditService ( data: ITaxonomyEditService ) {
     type,
     description,
     term,
+    parent,
+    children,
     slug: slugified,
     updatedBy,
     updatedByIp,

@@ -25,7 +25,7 @@ declare module 'mongoose' {
 export const startCacheMongooseQueries = async () => {
 
   mongoose.Query.prototype.cache = async function ( area: CacheOptionAreaEnum, serviceName: CacheOptionServiceEnum ) {
-    this.useCache = true;
+    this.useCache = process.env.USING_CACHE === "true";
     this.hashKey = JSON.stringify( `${ area }_${ serviceName }` );
     return this;
   };

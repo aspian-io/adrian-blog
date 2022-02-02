@@ -1,4 +1,4 @@
-import { Model, Schema, Document, model } from 'mongoose';
+import mongoose, { Model, Schema, Document, model } from 'mongoose';
 import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from './base.model';
 import { PostDoc } from './post.model';
 
@@ -14,6 +14,8 @@ interface TaxonomyAttrs extends BaseAttrs {
   term: string;
   slug: string;
   posts?: string[];
+  parent?: string;
+  children?: string[];
 }
 
 export interface TaxonomyDoc extends BaseDoc, Document {
@@ -22,6 +24,8 @@ export interface TaxonomyDoc extends BaseDoc, Document {
   term: string;
   slug: string;
   posts?: PostDoc[];
+  parent: TaxonomyDoc;
+  children: TaxonomyDoc[];
 }
 
 interface TaxonomyModel extends Model<TaxonomyDoc> {
@@ -33,12 +37,25 @@ const taxonomySchema = new Schema<TaxonomyDoc, TaxonomyModel>( {
   term: { type: String, required: true },
   slug: { type: String, required: true, unique: true },
   posts: [ { type: Schema.Types.ObjectId, ref: "Post" } ],
+  parent: { type: Schema.Types.ObjectId, ref: "Taxonomy" },
+  children: [ { type: Schema.Types.ObjectId, ref: "Taxonomy" } ],
   ...baseSchema.obj
 }, baseSchemaOptions );
 
 taxonomySchema.statics.build = ( attrs: TaxonomyAttrs ) => {
   return new Taxonomy( attrs );
 };
+
+const autoPopulate = function (
+  this: mongoose.Query<any, any, {}, any>,
+  next: ( err?: mongoose.CallbackError | undefined ) => void
+) {
+  this.populate( "parent" ).populate( "children" );
+  next();
+};
+
+taxonomySchema.pre( "findOne", autoPopulate );
+taxonomySchema.pre( "find", autoPopulate );
 
 const Taxonomy = model<TaxonomyDoc, TaxonomyModel>( 'Taxonomy', taxonomySchema );
 
