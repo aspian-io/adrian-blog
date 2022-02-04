@@ -5,8 +5,8 @@ import emoji from 'node-emoji';
 import companion from '@uppy/companion';
 import { envTypeGuards } from './infrastructure/env/env-type-guards';
 import chalk from 'chalk';
-import { redisWrapper } from './infrastructure/cache/redis-client.infra';
-import { startCacheMongooseQueries } from './infrastructure/cache/redis-cache-server.infra';
+import { redisWrapper } from './infrastructure/mongoose-extensions/cache/redis-client.infra';
+import { startCacheMongooseQueries } from './infrastructure/mongoose-extensions/cache/redis-cache-server.infra';
 const { log } = console;
 const boldGreen = chalk.bold.green;
 

@@ -1,6 +1,6 @@
 import { NotFoundError } from "../../errors/not-found-error";
 import { Taxonomy } from "../../models/taxonomy.model";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/mongoose-extensions/cache/cache-options.infra";
 
 export async function taxonomyDetailsService ( slug: string ) {
   const taxonomy = await Taxonomy.findOne( { slug } )

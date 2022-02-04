@@ -8,7 +8,7 @@ export enum TaxonomyTypeEnum {
   TAG = "TAG"
 }
 
-interface TaxonomyAttrs extends BaseAttrs {
+export interface TaxonomyAttrs extends BaseAttrs {
   type: TaxonomyTypeEnum;
   description: string;
   term: string;
@@ -46,17 +46,15 @@ taxonomySchema.statics.build = ( attrs: TaxonomyAttrs ) => {
   return new Taxonomy( attrs );
 };
 
-const autoPopulate = function (
-  this: mongoose.Query<any, any, {}, any>,
-  next: ( err?: mongoose.CallbackError | undefined ) => void
-) {
-  this.populate( "parent" ).populate( "children" );
-  next();
-};
+// const autoPopulate = function (
+//   this: mongoose.Query<any, any, {}, any>,
+//   next: ( err?: mongoose.CallbackError | undefined ) => void
+// ) {
+//   this.populate( "parent" ).populate( "children" );
+//   next();
+// };
 
-taxonomySchema.pre( "findOne", autoPopulate );
-taxonomySchema.pre( "find", autoPopulate );
+// taxonomySchema.pre( "findOne", autoPopulate );
+// taxonomySchema.pre( "find", autoPopulate );
 
-const Taxonomy = model<TaxonomyDoc, TaxonomyModel>( 'Taxonomy', taxonomySchema );
-
-export { Taxonomy };
+export const Taxonomy = model<TaxonomyDoc, TaxonomyModel>( 'Taxonomy', taxonomySchema );

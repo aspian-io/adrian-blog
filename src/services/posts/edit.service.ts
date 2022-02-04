@@ -5,8 +5,8 @@ import { CoreLocaleEnum } from "../../locales/service-locale-keys/core.locale";
 import { NotFoundError } from "../../errors/not-found-error";
 import { PostLocaleEnum } from "../../locales/service-locale-keys/posts.locale";
 import slugify from "slugify";
-import { clearCache } from "../../infrastructure/cache/clear-cache.infra";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
+import { clearCache } from "../../infrastructure/mongoose-extensions/cache/clear-cache.infra";
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/mongoose-extensions/cache/cache-options.infra";
 
 export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp">;
 

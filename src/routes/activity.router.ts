@@ -1,5 +1,5 @@
 import express from 'express';
-import { activityListController } from '../controllers/activities/list.controller';
+import { adminActivityListController } from '../controllers/admin-controllers/api/v1/activities/list.controller';
 import { asyncHandler } from '../middleware/async-handler.middleware';
 import { authorize } from '../middleware/authorize.middleware';
 import { requireAuth } from '../middleware/require-auth.middleware';
@@ -13,5 +13,5 @@ activityRouter.get(
   '/',
   requireAuth,
   authorize( [ ActivityPolicies.ActivityClaims_LIST, CorePolicies.CoreClaims_ADMIN ] ),
-  asyncHandler( activityListController )
+  asyncHandler( adminActivityListController )
 );

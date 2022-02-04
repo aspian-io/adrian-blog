@@ -3,10 +3,8 @@ import { authorize } from "../middleware/authorize.middleware";
 import { requireAuth } from "../middleware/require-auth.middleware";
 import { AttachmentPolicies } from "../models/enums/attachment-policies.enum";
 import { CorePolicies } from "../models/enums/core-policies.enum";
-import { createPrivateAttachmentController } from "../controllers/attachments/create-private-attachment.controller";
-import { createPublicAttachmentController } from "../controllers/attachments/create-public-attachment.controller";
-import { getPresignedUrlController } from "../controllers/attachments/get-presigned-url.controller";
 import { asyncHandler } from "../middleware/async-handler.middleware";
+import { adminGetPresignedUrlController } from "../controllers/admin-controllers/api/v1/attachments/get-presigned-url.controller";
 
 export const attachmentRouter = express.Router();
 
@@ -31,5 +29,5 @@ attachmentRouter.post(
   '/download-file',
   requireAuth,
   authorize( [ AttachmentPolicies.AttachmentClaims_CREATE, CorePolicies.CoreClaims_ADMIN ] ),
-  asyncHandler( getPresignedUrlController )
+  asyncHandler( adminGetPresignedUrlController )
 );

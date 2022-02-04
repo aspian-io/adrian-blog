@@ -1,11 +1,11 @@
 import express from 'express';
-import { postCreateController } from '../controllers/posts/create.controller';
-import { postDeleteController } from '../controllers/posts/delete.controller';
-import { postDetailsController } from '../controllers/posts/details.controller';
-import { postEditController } from '../controllers/posts/edit.controller';
-import { postListController } from '../controllers/posts/list.controller';
-import { postCreateSchema } from '../controllers/posts/validation-schemas/post-create.schema';
-import { postEditSchema } from '../controllers/posts/validation-schemas/post-edit.schema';
+import { adminPostCreateController } from '../controllers/admin-controllers/api/v1/posts/create.controller';
+import { adminPostDeleteController } from '../controllers/admin-controllers/api/v1/posts/delete.controller';
+import { adminPostDetailsController } from '../controllers/admin-controllers/api/v1/posts/details.controller';
+import { adminPostEditController } from '../controllers/admin-controllers/api/v1/posts/edit.controller';
+import { adminPostListController } from '../controllers/admin-controllers/api/v1/posts/list.controller';
+import { postCreateSchema } from '../controllers/admin-controllers/api/v1/posts/validation-schemas/post-create.schema';
+import { postEditSchema } from '../controllers/admin-controllers/api/v1/posts/validation-schemas/post-edit.schema';
 import { asyncHandler } from '../middleware/async-handler.middleware';
 import { authorize } from '../middleware/authorize.middleware';
 import { requireAuth } from '../middleware/require-auth.middleware';
@@ -20,7 +20,7 @@ postRouter.get(
   '/',
   requireAuth,
   authorize( [ PostPolicies.PostClaims_LIST, CorePolicies.CoreClaims_ADMIN ] ),
-  asyncHandler( postListController )
+  asyncHandler( adminPostListController )
 );
 
 // GET: Get a Post by its slug
@@ -28,7 +28,7 @@ postRouter.get(
   '/details/:slug',
   requireAuth,
   authorize( [ PostPolicies.PostClaims_DETAILS, CorePolicies.CoreClaims_ADMIN ] ),
-  asyncHandler( postDetailsController )
+  asyncHandler( adminPostDetailsController )
 );
 
 // POST: Create a Post
@@ -38,7 +38,7 @@ postRouter.post(
   authorize( [ PostPolicies.PostClaims_CREATE, CorePolicies.CoreClaims_ADMIN ] ),
   postCreateSchema,
   validateRequest,
-  asyncHandler( postCreateController )
+  asyncHandler( adminPostCreateController )
 );
 
 // PUT: Edit a Post
@@ -48,7 +48,7 @@ postRouter.put(
   authorize( [ PostPolicies.PostClaims_EDIT, CorePolicies.CoreClaims_ADMIN ] ),
   postEditSchema,
   validateRequest,
-  asyncHandler( postEditController )
+  asyncHandler( adminPostEditController )
 );
 
 // DELETE: Delete a Post
@@ -56,5 +56,5 @@ postRouter.delete(
   '/delete/:slug',
   requireAuth,
   authorize( [ PostPolicies.PostClaims_DELETE, CorePolicies.CoreClaims_ADMIN ] ),
-  asyncHandler( postDeleteController )
+  asyncHandler( adminPostDeleteController )
 );

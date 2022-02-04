@@ -54,11 +54,12 @@ app.use( currentUser );
 // Uppy Companion
 app.use( '/upload', companion.app( getS3ConfigParams( 5 * 60 * 60 ) ) );
 // Routes
-app.use( '/:lng?/api/users', authRouter );
-app.use( '/:lng?/api/taxonomies', taxonomyRouter );
-app.use( '/:lng?/api/posts', postRouter );
-app.use( '/:lng?/api/attachments', attachmentRouter );
-app.use( '/:lng?/api/activities', activityRouter );
+app.use( '/:lng?/api/v1/users', authRouter );
+
+app.use( '/:lng?/api/v1/admin/taxonomies', taxonomyRouter );
+app.use( '/:lng?/api/v1/admin/posts', postRouter );
+app.use( '/:lng?/api/v1/admin/attachments', attachmentRouter );
+app.use( '/:lng?/api/v1/admin/activities', activityRouter );
 // Issue 404 Not Found Error if all paths until this point do not match 
 app.all( '*', async ( req, res, next ) => {
   next( new NotFoundError() );
