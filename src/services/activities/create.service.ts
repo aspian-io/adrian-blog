@@ -1,4 +1,4 @@
-import { Activity } from "../../models/activity.model";
+import { Activity } from "../../models/activities/activity.model";
 
 export interface IActivityCreateService {
   level: string;

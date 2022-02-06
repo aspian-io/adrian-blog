@@ -1,11 +1,11 @@
-import { Post, PostAttrs } from "../../models/post.model";
+import { Post, PostAttrs } from "../../models/posts/post.model";
 import mongoose from 'mongoose';
 import { BadRequestError } from "../../errors/bad-request-error";
 import { CoreLocaleEnum } from "../../locales/service-locale-keys/core.locale";
 import slugify from "slugify";
 import { PostLocaleEnum } from "../../locales/service-locale-keys/posts.locale";
-import { clearCache } from "../../infrastructure/mongoose-extensions/cache/clear-cache.infra";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/mongoose-extensions/cache/cache-options.infra";
+import { clearCache } from "../../infrastructure/cache/clear-cache.infra";
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
 
 export type IPostCreateService = Omit<PostAttrs, "slug">;
 

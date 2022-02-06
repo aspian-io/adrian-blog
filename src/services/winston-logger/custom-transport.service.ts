@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import Transport from 'winston-transport';
 import { activityCreateService, IActivityCreateService } from '../activities/create.service';
 

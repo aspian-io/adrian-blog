@@ -1,5 +1,4 @@
 import { ValidationError } from 'express-validator';
-import { CoreLocaleEnum } from '../locales/service-locale-keys/core.locale';
 import { CustomError } from './custom-error';
 
 export class RequestValidationError extends CustomError {

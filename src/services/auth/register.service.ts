@@ -1,8 +1,6 @@
 import { BadRequestError } from "../../errors/bad-request-error";
 import { AuthLocaleEnum } from "../../locales/service-locale-keys/auth.locale";
-import { Claim } from "../../models/auth-claim.model";
-import { User } from "../../models/auth-user.model";
-import { CorePolicies } from "../../models/enums/core-policies.enum";
+import { User } from "../../models/auth/auth-user.model";
 import { authenticateService } from "./authenticate.service";
 
 export interface IRegisterUserService {
@@ -22,8 +20,6 @@ export async function registerService ( { firstName, lastName, email, password, 
 
   const userToRegister = User.build( { firstName, lastName, email, password, createdByIp: ipAddress, lastIp: ipAddress, userAgent } );
   await userToRegister.save();
-  const claim = Claim.build( { user: userToRegister, claim: CorePolicies.CoreClaims_USER } );
-  await claim.save();
 
   const { refreshToken, jwtToken, ...user } = await authenticateService( { email, password, ipAddress, userAgent } );
   // return basic details and tokens

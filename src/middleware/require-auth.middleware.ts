@@ -9,6 +9,5 @@ export const requireAuth = (
   if ( !req.currentUser ) {
     throw new NotAuthenticatedError();
   }
-
   next();
-}
+};

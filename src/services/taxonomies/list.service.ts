@@ -1,5 +1,5 @@
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/mongoose-extensions/cache/cache-options.infra";
-import { Taxonomy } from "../../models/taxonomy.model";
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
+import { Taxonomy } from "../../models/taxonomies/taxonomy.model";
 
 export async function taxonomyListService () {
   const taxonomies = await Taxonomy.find()

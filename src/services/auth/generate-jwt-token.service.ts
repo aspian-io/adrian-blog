@@ -1,4 +1,4 @@
-import { UserDoc } from "../../models/auth-user.model";
+import { UserDoc } from "../../models/auth/auth-user.model";
 import jwt from 'jsonwebtoken';
 
 export function generateJwtTokenService ( user: UserDoc, claims: string[] ) {

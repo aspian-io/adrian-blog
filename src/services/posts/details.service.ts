@@ -1,6 +1,6 @@
 import { NotFoundError } from '../../errors/not-found-error';
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/mongoose-extensions/cache/cache-options.infra';
-import { Post } from '../../models/post.model';
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/cache/cache-options.infra';
+import { Post } from '../../models/posts/post.model';
 
 
 export async function postDetailsService ( slug: string ) {

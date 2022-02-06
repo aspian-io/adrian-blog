@@ -17,6 +17,7 @@ import { authRouter } from './routes/auth.router';
 import { taxonomyRouter } from './routes/taxonomy.router';
 import { activityRouter } from './routes/activity.router';
 import { postRouter } from './routes/post.router';
+import { postCommentRouter } from './routes/post-comment.router';
 
 const app = express();
 app.use( express.json() );
@@ -58,6 +59,7 @@ app.use( '/:lng?/api/v1/users', authRouter );
 
 app.use( '/:lng?/api/v1/admin/taxonomies', taxonomyRouter );
 app.use( '/:lng?/api/v1/admin/posts', postRouter );
+app.use( '/:lng?/api/v1/admin/post-comments', postCommentRouter );
 app.use( '/:lng?/api/v1/admin/attachments', attachmentRouter );
 app.use( '/:lng?/api/v1/admin/activities', activityRouter );
 // Issue 404 Not Found Error if all paths until this point do not match 

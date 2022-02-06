@@ -78,6 +78,26 @@
         "contentEmptyErr": "وارد کردن محتوای متنی پست الزامی است",
         "taxonomiesEmptyErr": "انتخاب حداقل یک دسته برای پست الزامی است"
       }
+    },
+    "postComments": {
+      "settings": {
+        "editValueErr": "وارد کردن مقدار جدید برای این تنظیم الزامی است"
+      },
+      "createService": {
+        "replyLevelNotAllowed": "پاسخ به این نظر مجاز نمی باشد"
+      },
+      "createSchema": {
+        "titleEmptyErr": "وارد کردن عنوان دیدگاه الزامی است",
+        "titleLengthErr": "عنوان دیدگاه میبایست کمتر از ۶۰ کاراکتر باشد",
+        "contentEmptyErr": "وارد کردن متن دیدگاه الزامی است",
+        "contentLengthErr": "متن دیدگاه میبایست کمتر از ۲۵۰ کاراکتر باشد"
+      },
+      "editSchema": {
+        "titleEmptyErr": "وارد کردن عنوان دیدگاه الزامی است",
+        "titleLengthErr": "عنوان دیدگاه میبایست کمتر از ۶۰ کاراکتر باشد",
+        "contentEmptyErr": "وارد کردن متن دیدگاه الزامی است",
+        "contentLengthErr": "متن دیدگاه میبایست کمتر از ۲۵۰ کاراکتر باشد"
+      }
     }
   },
   "info": {
@@ -95,6 +115,32 @@
       },
       "signup": {
         "successMsg": "کاربر ثبت نام کرد"
+      },
+
+      "claims": {
+        "coreAdmin": "مدیر - ( دسترسی به تمامی سرویس ها بدون محدودیت )",
+        "coreUser": "کاربر معمولی",
+        "claimList": "دریافت لیست سطوح دسترسی",
+        "activityList": "دسترسی به لیت فعالیت های همه کاربران",
+        "taxonomyList": "دسترسی به لیست همه دسته ها",
+        "taxonomyDetails": "دسترسی به جزئیات یک دسته",
+        "taxonomyCreate": "توانایی افزودن یک دسته",
+        "taxonomyEdit": "توانایی ویرایش یک دسته",
+        "taxonomyDelete": "توانایی حذف یک دسته",
+        "attachmentCreate": "توانایی ارسال فایل",
+        "postList": "دسترسی به لیست پست ها",
+        "postDetails": "دسترسی به جزئیات یک پست",
+        "postCreate": "توانایی اضافه کردن پست",
+        "postEdit": "توانایی ویرایش پست",
+        "postDelete": "توانایی حذف پست",
+        "postCommentApprove": "توانایی تایید کردن دیدگاه‌ها",
+        "postCommentList": "دسترسی به لیست دیدگاه‌های پست‌ها",
+        "postCommentDetails": "دسترسی به جزئیات دیدگاه‌های پست‌ها",
+        "postCommentCreate": "توانایی افزودن دیدگاه برای پست",
+        "postCommentEdit": "توانایی ویرایش دیدگاه پست",
+        "postCommentDelete": "توانایی حذف دیدگاه پست‌ها",
+        "postCommentSettingsList": "دسترسی به لیست تنظیمات دیدگاه پست‌ها",
+        "postCommentSettingsEdit": "توانایی تغییر تنظیمات دیدگاه پست‌ها"
       }
     },
     "taxonomies": {
@@ -129,6 +175,34 @@
       },
       "list": {
         "successMsg": "لیست همه پست ها دریافت گردید"
+      }
+    },
+    "postComments": {
+      "settings": {
+        "list": {
+          "successMsg": "لیست تنظیمات دیدگاه پست با موفقیت دریافت گردید"
+        },
+        "edit": {
+          "successMsg": "تنظیمات دیدگاه پست با موفقیت ویرایش گردید"
+        }
+      },
+      "create": {
+        "successMsg": "دیدگاه پست با موفقیت ثبت گردید"
+      },
+      "edit": {
+        "successMsg": "دیدگاه پست با موفقیت ویرایش گردید"
+      },
+      "details": {
+        "successMsg": "جزئیات دیدگاه پست با موفقیت دریافت گردید"
+      },
+      "list": {
+        "successMsg": "لیست دیدگاه‌های پست با موفقیت دریافت گردید"
+      },
+      "delete": {
+        "successMsg": "دیدگاه پست مورد نظر با موفقیت حذف گردید"
+      },
+      "approve": {
+        "successMsg": "وضعیت تایید دیدگاه پست مورد نظر با موفقیت ویرایش شد"
       }
     }
   }

@@ -1,11 +1,11 @@
-import { Taxonomy, TaxonomyTypeEnum } from "../../models/taxonomy.model";
+import { Taxonomy, TaxonomyTypeEnum } from "../../models/taxonomies/taxonomy.model";
 import mongoose from 'mongoose';
 import slugify from "slugify";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { TaxonomyLocaleEnum } from "../../locales/service-locale-keys/taxonomies.locale";
 import { CoreLocaleEnum } from "../../locales/service-locale-keys/core.locale";
-import { clearCache } from "../../infrastructure/mongoose-extensions/cache/clear-cache.infra";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/mongoose-extensions/cache/cache-options.infra";
+import { clearCache } from "../../infrastructure/cache/clear-cache.infra";
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
 
 export interface ITaxonomyCreateService {
   type: TaxonomyTypeEnum;

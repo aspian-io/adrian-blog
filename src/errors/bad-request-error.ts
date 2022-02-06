@@ -1,4 +1,3 @@
-import { CoreLocaleEnum } from '../locales/service-locale-keys/core.locale';
 import { CustomError } from './custom-error';
 
 export class BadRequestError extends CustomError {

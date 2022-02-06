@@ -1,5 +1,5 @@
-import { RefreshToken } from "../../models/auth-refresh-token.model";
-import { UserDoc } from "../../models/auth-user.model";
+import { RefreshToken } from "../../models/auth/auth-refresh-token.model";
+import { UserDoc } from "../../models/auth/auth-user.model";
 import { randomTokenStringService } from "./random-token-string.service";
 
 export function generateRefreshTokenService ( user: UserDoc, ipAddress: string, userAgent: string ) {

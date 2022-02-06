@@ -20,5 +20,6 @@ namespace NodeJS {
     S3_FORTH_PATH_STYLE?: string;
     S3_STREAMING_UPLOAD?: string;
     S3_BUCKET?: string;
+    POSTCOMMENT_REPLY_ALLOWED_LEVEL?: string;
   }
 }

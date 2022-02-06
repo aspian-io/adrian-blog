@@ -1,4 +1,4 @@
-import { User } from "../../models/auth-user.model"
+import { User } from "../../models/auth/auth-user.model"
 import { basicDetailsService } from "./basic-details.service"
 
 export async function getAllUsersService () {

@@ -78,6 +78,26 @@
         "contentEmptyErr": "Post content is required",
         "taxonomiesEmptyErr": "A post needs to have at least one taxonomy"
       }
+    },
+    "postComments": {
+      "settings": {
+        "editValueErr": "Comment settings value is required"
+      },
+      "createService": {
+        "replyLevelNotAllowed": "Reply is now allowed"
+      },
+      "createSchema": {
+        "titleEmptyErr": "Comment title is required",
+        "titleLengthErr": "Comment title's length must be less than 60 characters",
+        "contentEmptyErr": "Comment content cannot be empty",
+        "contentLengthErr": "Comment content's length must be less than 250 characters"
+      },
+      "editSchema": {
+        "titleEmptyErr": "Comment title is required",
+        "titleLengthErr": "Comment title's length must be less than 60 characters",
+        "contentEmptyErr": "Comment content cannot be empty",
+        "contentLengthErr": "Comment content's length must be less than 250 characters"
+      }
     }
   },
   "info": {
@@ -95,6 +115,32 @@
       },
       "signup": {
         "successMsg": "User signed up"
+      },
+
+      "claims": {
+        "coreAdmin": "Administrator - ( having access to all services unlimited )",
+        "coreUser": "Ordinary user",
+        "claimList": "Access to claim list",
+        "activityList": "Access to activity list of all users",
+        "taxonomyList": "Access to taxonomy list",
+        "taxonomyDetails": "Access to a taxonomy details",
+        "taxonomyCreate": "Ability to add a taxonomy",
+        "taxonomyEdit": "Ability to edit a taxonomy",
+        "taxonomyDelete": "Ability to delete a taxonomy",
+        "attachmentCreate": "Ability to upload a file",
+        "postList": "Access to post list",
+        "postDetails": "Access to a post details",
+        "postCreate": "Ability to add a post",
+        "postEdit": "Ability to edit a post",
+        "postDelete": "Ability to delete a post",
+        "postCommentApprove": "Ability to approve a post comment",
+        "postCommentList": "Access to post comment list",
+        "postCommentDetails": "Access to post comment details",
+        "postCommentCreate": "Ability to add a post comment",
+        "postCommentEdit": "Ability to edit a post comment",
+        "postCommentDelete": "Ability to delete a post comment",
+        "postCommentSettingsList": "Access to post comment settings list",
+        "postCommentSettingsEdit": "Ability to change post comment settings"
       }
     },
     "taxonomies": {
@@ -129,6 +175,34 @@
       },
       "list": {
         "successMsg": "List of posts retrieved"
+      }
+    },
+    "postComments": {
+      "settings": {
+        "list": {
+          "successMsg": "Post comment settings list retrieved successfully"
+        },
+        "edit": {
+          "successMsg": "Post comment setting changed successfully"
+        }
+      },
+      "create": {
+        "successMsg": "Post comment created successfully"
+      },
+      "edit": {
+        "successMsg": "Post comment edited successfully"
+      },
+      "details": {
+        "successMsg": "Post comment details retrieved successfully"
+      },
+      "list": {
+        "successMsg": "Post comment list retrieved successfully"
+      },
+      "delete": {
+        "successMsg": "Post comment deleted successfully"
+      },
+      "approve": {
+        "successMsg": "Post comment approval changed successfully"
       }
     }
   }

@@ -1,4 +1,4 @@
-import { RefreshToken } from "../../models/auth-refresh-token.model";
+import { RefreshToken } from "../../models/auth/auth-refresh-token.model";
 import { BadRequestError } from '../../errors/bad-request-error';
 import { AuthLocaleEnum } from "../../locales/service-locale-keys/auth.locale";
 

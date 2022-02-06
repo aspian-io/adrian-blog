@@ -6,12 +6,11 @@ import { adminTaxonomyEditController } from "../controllers/admin-controllers/ap
 import { adminTaxonomyListController } from "../controllers/admin-controllers/api/v1/taxonomies/list.controller";
 import { taxonomyCreateSchema } from "../controllers/admin-controllers/api/v1/taxonomies/validation-schemas/taxonomy-create.schema";
 import { taxonomyEditSchema } from "../controllers/admin-controllers/api/v1/taxonomies/validation-schemas/taxonomy-edit.schema";
+import { AccessPoliciesEnum } from "../infrastructure/security/access-policies.enum";
 import { asyncHandler } from "../middleware/async-handler.middleware";
 import { authorize } from "../middleware/authorize.middleware";
 import { requireAuth } from "../middleware/require-auth.middleware";
 import { validateRequest } from "../middleware/validate-request.middleware";
-import { CorePolicies } from "../models/enums/core-policies.enum";
-import { TaxonomyPolicies } from "../models/enums/taxonomy-policies.enum";
 
 export const taxonomyRouter = express.Router();
 
@@ -19,7 +18,7 @@ export const taxonomyRouter = express.Router();
 taxonomyRouter.get(
   '/',
   requireAuth,
-  authorize( [ TaxonomyPolicies.TaxonomyClaims_LIST, CorePolicies.CoreClaims_ADMIN ] ),
+  authorize( [ AccessPoliciesEnum.Taxonomy_LIST, AccessPoliciesEnum.Core_ADMIN ] ),
   asyncHandler( adminTaxonomyListController )
 );
 
@@ -27,7 +26,7 @@ taxonomyRouter.get(
 taxonomyRouter.get(
   '/details/:slug',
   requireAuth,
-  authorize( [ TaxonomyPolicies.TaxonomyClaims_DETAILS, CorePolicies.CoreClaims_ADMIN ] ),
+  authorize( [ AccessPoliciesEnum.Taxonomy_DETAILS, AccessPoliciesEnum.Core_ADMIN ] ),
   asyncHandler( adminTaxonomyDetailsController )
 );
 
@@ -35,7 +34,7 @@ taxonomyRouter.get(
 taxonomyRouter.post(
   '/create',
   requireAuth,
-  authorize( [ TaxonomyPolicies.TaxonomyClaims_CREATE, CorePolicies.CoreClaims_ADMIN ] ),
+  authorize( [ AccessPoliciesEnum.Taxonomy_CREATE, AccessPoliciesEnum.Core_ADMIN ] ),
   taxonomyCreateSchema,
   validateRequest,
   asyncHandler( adminTaxonomyCreateController )
@@ -45,7 +44,7 @@ taxonomyRouter.post(
 taxonomyRouter.put(
   '/edit/:slug',
   requireAuth,
-  authorize( [ TaxonomyPolicies.TaxonomyClaims_EDIT, CorePolicies.CoreClaims_ADMIN ] ),
+  authorize( [ AccessPoliciesEnum.Taxonomy_EDIT, AccessPoliciesEnum.Core_ADMIN ] ),
   taxonomyEditSchema,
   validateRequest,
   asyncHandler( adminTaxonomyEditController )
@@ -55,6 +54,6 @@ taxonomyRouter.put(
 taxonomyRouter.delete(
   '/delete/:slug',
   requireAuth,
-  authorize( [ TaxonomyPolicies.TaxonomyClaims_DELETE, CorePolicies.CoreClaims_ADMIN ] ),
+  authorize( [ AccessPoliciesEnum.Taxonomy_DELETE, AccessPoliciesEnum.Core_ADMIN ] ),
   asyncHandler( adminTaxonomyDeleteController )
 );

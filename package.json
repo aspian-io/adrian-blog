@@ -6,7 +6,11 @@
   "type": "module",
   "scripts": {
     "start": "node build/index.js",
-    "dev": "ts-node-dev -r dotenv/config --poll src/index.ts"
+    "dev": "ts-node-dev -r dotenv/config --poll src/index.ts",
+    "data:import": "ts-node-dev -r dotenv/config src/infrastructure/database/seed-data/data-seeder.infra.ts",
+    "data:destroy": "ts-node-dev -r dotenv/config src/infrastructure/database/seed-data/data-seeder.infra.ts -d",
+    "settings:import": "ts-node-dev -r dotenv/config src/infrastructure/database/seed-data/settings-seeder.infra.ts",
+    "settings:destroy": "ts-node-dev -r dotenv/config src/infrastructure/database/seed-data/settings-seeder.infra.ts -d"
   },
   "author": "Omid Rouhani",
   "license": "MIT",
@@ -20,6 +24,7 @@
     "@types/node": "^17.0.9",
     "@types/node-emoji": "^1.8.1",
     "@types/response-time": "^2.3.5",
+    "@types/sanitize-html": "^2.6.2",
     "@types/uuid": "^8.3.3",
     "dotenv": "^10.0.0",
     "eslint": "^8.5.0",
@@ -43,6 +48,7 @@
     "node-emoji": "^1.11.0",
     "redis": "^4.0.2",
     "response-time": "^2.3.2",
+    "sanitize-html": "^2.7.0",
     "slugify": "^1.6.4",
     "string-sanitizer": "^2.0.2",
     "uuid": "^8.3.2",

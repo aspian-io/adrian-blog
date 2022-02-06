@@ -20,4 +20,5 @@ export const envKeys = [
   'S3_FORTH_PATH_STYLE',
   'S3_STREAMING_UPLOAD',
   'S3_BUCKET',
+  'POSTCOMMENT_REPLY_ALLOWED_LEVEL',
 ];

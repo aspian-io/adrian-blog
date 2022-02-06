@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { AuthLocaleEnum } from "../../locales/service-locale-keys/auth.locale";
-import { User } from "../../models/auth-user.model";
+import { User } from "../../models/auth/auth-user.model";
 
 export async function getUserByIdService ( id: string ) {
   if ( !mongoose.isValidObjectId( id ) ) throw new BadRequestError( "User not found" );
