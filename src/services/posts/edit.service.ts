@@ -1,4 +1,4 @@
-import { Post, PostAttrs } from "../../models/posts/post.model";
+import { Post, PostAttrs, PostStatusEnum } from "../../models/posts/post.model";
 import mongoose from 'mongoose';
 import { BadRequestError } from "../../errors/bad-request-error";
 import { CoreLocaleEnum } from "../../locales/service-locale-keys/core.locale";
@@ -7,6 +7,7 @@ import { PostLocaleEnum } from "../../locales/service-locale-keys/posts.locale";
 import slugify from "slugify";
 import { clearCache } from "../../infrastructure/cache/clear-cache.infra";
 import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
+import { scheduledPostsQueue } from "./post-queue.service";
 
 export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp">;
 
@@ -34,6 +35,7 @@ export async function postEditService ( data: PostEditService ) {
     } );
   }
 
+  const isScheduled = scheduledFor && scheduledFor.getTime() > Date.now();
   const slugified = slugify( title );
 
   post.set( {
@@ -43,7 +45,7 @@ export async function postEditService ( data: PostEditService ) {
     content,
     visibility,
     slug: slugified,
-    status,
+    status: isScheduled ? PostStatusEnum.FUTURE : status,
     scheduledFor,
     commentAllowed,
     viewCount,
@@ -60,6 +62,13 @@ export async function postEditService ( data: PostEditService ) {
   } );
 
   await post.save();
+  if ( isScheduled ) {
+    await scheduledPostsQueue.add( {
+      postId: post.id
+    }, {
+      delay: new Date( post.scheduledFor! ).getTime() - new Date().getTime()
+    } );
+  }
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST );
   return post;
 }
