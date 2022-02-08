@@ -8,7 +8,7 @@ export async function adminPostEditController ( req: Request, res: Response ) {
   const userAgent = req.get( 'User-Agent' ) ?? "unknown_agent";
 
   const post = await postEditService( {
-    slug: req.params.s,
+    slug: req.params.slug,
     title: req.body.title,
     subtitle: req.body.subtitle,
     excerpt: req.body.excerpt,
@@ -20,7 +20,6 @@ export async function adminPostEditController ( req: Request, res: Response ) {
     viewCount: req.body.viewCount,
     type: req.body.type,
     isPinned: req.body.isPinned,
-    child: req.body.child,
     parent: req.body.parent,
     taxonomies: req.body.taxonomies,
     attachments: req.body.attachments,

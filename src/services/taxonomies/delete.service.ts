@@ -10,6 +10,13 @@ export async function taxonomyDeleteService ( slug: string ) {
     throw new NotFoundError();
   }
 
+  await Taxonomy.updateMany( { parent: taxonomy.id }, { $unset: { parent: "" } } );
+  await Taxonomy.updateMany( {}, {
+    $pullAll: {
+      children: [ { _id: taxonomy.id } ]
+    }
+  } );
+
   await taxonomy.delete();
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
   return taxonomy;

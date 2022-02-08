@@ -7,6 +7,8 @@ export enum PostLocaleEnum {
 
   ERROR_DUPLICATE_POST = "errors.posts.createService.duplicatePostErr",
   ERROR_POST_ID = "errors.posts.deleteService.postIdErr",
+  ERROR_PARENT_NOT_FOUND = "errors.posts.common.parentNotFoundErr",
+  ERROR_DUPLICATE_PARENT = "errors.posts.common.duplicateParentPostErr",
 
   ERROR_SCHEMA_CREATE_TITLE = "errors.posts.createSchema.titleEmptyErr",
   ERROR_SCHEMA_CREATE_EXCERPT = "errors.posts.createSchema.excerptEmptyErr",

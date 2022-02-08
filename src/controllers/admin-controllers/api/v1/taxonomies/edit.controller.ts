@@ -11,7 +11,6 @@ export async function adminTaxonomyEditController ( req: Request, res: Response 
     description: req.body.description,
     term: req.body.term,
     parent: req.body.parent,
-    children: req.body.children,
     updatedBy: req.currentUser!.id,
     updatedByIp: req.ip,
     userAgent: req.get( 'User-Agent' ) ?? "unknown_agent"

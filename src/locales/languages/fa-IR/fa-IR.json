@@ -45,6 +45,9 @@
       "createService": {
         "duplicateTaxonomyErr": "ایجاد دسته بندی تکراری مجاز نمی باشد"
       },
+      "editService": {
+        "parentNotFoundErr": "دسته والد پیدا نشد"
+      },
       "deleteService": {
         "taxonomyIdErr": "شناسه دسته بندی میبایست یک شناسه استاندارد باشد"
       },
@@ -60,6 +63,10 @@
       }
     },
     "posts": {
+      "common": {
+        "parentNotFoundErr": "پست والد پیدا نشد",
+        "duplicateParentPostErr": "پست والد قبلا استفاده شده و قابل استفاده مجدد نیست"
+      },
       "createService": {
         "duplicatePostErr": "پست با عنوان تکراری مجاز نمی باشد"
       },

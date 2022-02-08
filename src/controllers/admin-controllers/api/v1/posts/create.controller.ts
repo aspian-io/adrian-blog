@@ -8,14 +8,14 @@ export async function adminPostCreateController ( req: Request, res: Response ) 
   const {
     title, subtitle, excerpt, content, visibility,
     status, scheduledFor, commentAllowed, viewCount, type,
-    isPinned, child, parent, taxonomies, attachments, postmeta
+    isPinned, parent, taxonomies, attachments, postmeta
   } = req.body;
   const userAgent = req.get( 'User-Agent' ) ?? "unknown_agent";
 
   const post = await postCreateService( {
     title, subtitle, excerpt, content, visibility,
     status, scheduledFor, commentAllowed, viewCount, type,
-    isPinned, child, parent, taxonomies, attachments, postmeta,
+    isPinned, parent, taxonomies, attachments, postmeta,
     createdBy: req.currentUser!.id, createdByIp: req.ip, userAgent
   } );
 

@@ -6,6 +6,7 @@ export enum TaxonomyLocaleEnum {
   INFO_DELETE = "info.taxonomies.delete.successMsg",
 
   ERROR_DUPLICATE_TAXONOMY = "errors.taxonomies.createService.duplicateTaxonomyErr",
+  ERROR_PARENT_NOT_FOUND = "errors.taxonomies.editService.parentNotFoundErr",
   ERROR_TAXONOMY_ID = "errors.taxonomies.deleteService.taxonomyIdErr",
 
   ERROR_SCHEMA_CREATE_TYPE = "errors.taxonomies.createSchema.typeErr",

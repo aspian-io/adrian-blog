@@ -12,18 +12,20 @@ export interface ITaxonomyCreateService {
   description: string;
   term: string;
   parent?: string;
-  children?: string[];
   createdBy: string;
   createdByIp: string;
   userAgent: string;
 }
 
 export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
-  const { type, description, term, parent, children, createdBy, createdByIp, userAgent } = data;
+  const { type, description, term, parent, createdBy, createdByIp, userAgent } = data;
   if ( !mongoose.isValidObjectId( createdBy ) ) throw new BadRequestError( "User id must be a standard id", CoreLocaleEnum.ERROR_USER_ID );
   const slug = slugify( term );
 
-  const taxonomy = Taxonomy.build( { type, description, term, slug, parent, children, createdBy, createdByIp, userAgent } );
+  const taxonomy = Taxonomy.build( { type, description, term, slug, parent, createdBy, createdByIp, userAgent } );
+  const parentTaxonomy = mongoose.isValidObjectId( parent )
+    ? await Taxonomy.findById( parent )
+    : null;
 
   const isDuplicated = await Taxonomy.find( { type, term } );
   if ( isDuplicated.length ) {
@@ -31,6 +33,13 @@ export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
   }
 
   await taxonomy.save();
+  if ( parentTaxonomy ) {
+    parentTaxonomy.set( {
+      children: parentTaxonomy.children ? [ ...parentTaxonomy.children, taxonomy.id ] : [ taxonomy.id ]
+    } );
+
+    await parentTaxonomy.save();
+  }
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
   return taxonomy;
 }

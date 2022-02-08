@@ -45,6 +45,9 @@
       "createService": {
         "duplicateTaxonomyErr": "Duplicate taxonomy is not allowed"
       },
+      "editService": {
+        "parentNotFoundErr": "Parent taxonomy not found"
+      },
       "deleteService": {
         "taxonomyIdErr": "Taxonomy Id must be a standard Id"
       },
@@ -60,6 +63,10 @@
       }
     },
     "posts": {
+      "common": {
+        "parentNotFoundErr": "Parent post not found",
+        "duplicateParentPostErr": "The parent post has been taken and is not reusable"
+      },
       "createService": {
         "duplicatePostErr": "Duplicate post title is not allowed"
       },

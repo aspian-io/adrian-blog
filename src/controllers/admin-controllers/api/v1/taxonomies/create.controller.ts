@@ -5,7 +5,7 @@ import { taxonomyCreateService } from "../../../../../services/taxonomies/create
 import { logger } from "../../../../../services/winston-logger/logger.service";
 
 export async function adminTaxonomyCreateController ( req: Request, res: Response ) {
-  const { type, description, term, parent, children } = req.body;
+  const { type, description, term, parent } = req.body;
   const userAgent = req.get( 'User-Agent' ) ?? "unknown_agent";
 
   const taxonomy = await taxonomyCreateService( {
@@ -13,7 +13,6 @@ export async function adminTaxonomyCreateController ( req: Request, res: Respons
     description,
     term,
     parent,
-    children,
     createdBy: req.currentUser!.id,
     createdByIp: req.ip,
     userAgent

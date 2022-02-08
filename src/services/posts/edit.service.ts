@@ -9,13 +9,13 @@ import { clearCache } from "../../infrastructure/cache/clear-cache.infra";
 import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
 import { scheduledPostsQueue } from "./post-queue.service";
 
-export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp">;
+export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "child">;
 
 export async function postEditService ( data: PostEditService ) {
   const {
     slug, title, subtitle, excerpt, content, visibility,
     status, scheduledFor, commentAllowed, viewCount, type,
-    isPinned, child, parent, taxonomies, attachments, postmeta,
+    isPinned, parent, taxonomies, attachments, postmeta,
     updatedBy, updatedByIp, userAgent
   } = data;
 
@@ -35,7 +35,19 @@ export async function postEditService ( data: PostEditService ) {
     } );
   }
 
-  const isScheduled = scheduledFor && scheduledFor.getTime() > Date.now();
+  const oldParent = post.parent ? post.parent.toString() : null;
+  const parentDoc = parent ? await Post.findById( parent ) : null;
+  if ( parent && !parentDoc ) {
+    throw new BadRequestError( "Parent post not found", PostLocaleEnum.ERROR_PARENT_NOT_FOUND );
+  }
+  if ( parentDoc && parentDoc.child && parentDoc.child.toString() !== post.id ) {
+    throw new BadRequestError(
+      "The parent post has been taken and is not reusable",
+      PostLocaleEnum.ERROR_DUPLICATE_PARENT
+    );
+  }
+
+  const isScheduled = scheduledFor && new Date( scheduledFor ).getTime() > Date.now();
   const slugified = slugify( title );
 
   post.set( {
@@ -51,7 +63,6 @@ export async function postEditService ( data: PostEditService ) {
     viewCount,
     type,
     isPinned,
-    child,
     parent,
     taxonomies,
     attachments,
@@ -62,6 +73,7 @@ export async function postEditService ( data: PostEditService ) {
   } );
 
   await post.save();
+
   if ( isScheduled ) {
     await scheduledPostsQueue.add( {
       postId: post.id
@@ -69,6 +81,15 @@ export async function postEditService ( data: PostEditService ) {
       delay: new Date( post.scheduledFor! ).getTime() - new Date().getTime()
     } );
   }
+
+  if ( oldParent && oldParent !== parent ) {
+    await Post.updateOne( { _id: oldParent }, { $unset: { child: "" } } );
+  }
+  if ( parentDoc ) {
+    parentDoc.set( { child: post.id } );
+    await parentDoc.save();
+  }
+
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST );
   return post;
 }

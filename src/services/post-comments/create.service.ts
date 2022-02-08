@@ -8,6 +8,8 @@ import { CommentLocaleEnum } from '../../locales/service-locale-keys/post-commen
 import { postCommentSettingGetValueByKey } from './settings/get-value.service';
 import { commaSeparatedToArray } from '../../helpers/comma-separated-to-array.helper';
 import { postCommentProcessor } from './helper/comment-processor.helper';
+import { clearCache } from '../../infrastructure/cache/clear-cache.infra';
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/cache/cache-options.infra';
 
 export interface IPostCommentCreateService {
   title: string;
@@ -58,6 +60,6 @@ export async function postCommentCreateService ( data: IPostCommentCreateService
 
     await parentComment.save();
   }
-
+  clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST_COMMENT_SETTINGS );
   return postComment;
 }
