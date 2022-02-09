@@ -72,8 +72,10 @@ export async function postEditService ( data: PostEditService ) {
     userAgent
   } );
 
-  await post.save();
+  const session = await mongoose.startSession(); // Transaction session started
+  session.startTransaction();
 
+  await post.save( { session } );
   if ( isScheduled ) {
     await scheduledPostsQueue.add( {
       postId: post.id
@@ -81,15 +83,17 @@ export async function postEditService ( data: PostEditService ) {
       delay: new Date( post.scheduledFor! ).getTime() - new Date().getTime()
     } );
   }
-
   if ( oldParent && oldParent !== parent ) {
-    await Post.updateOne( { _id: oldParent }, { $unset: { child: "" } } );
+    await Post.updateOne( { _id: oldParent }, { $unset: { child: "" } }, { session } );
   }
   if ( parentDoc ) {
     parentDoc.set( { child: post.id } );
-    await parentDoc.save();
+    await parentDoc.save( { session } );
   }
-
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST );
+
+  await session.commitTransaction();
+  session.endSession(); // Transaction session ended
+
   return post;
 }

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { NotFoundError } from '../../errors/not-found-error';
 import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/cache/cache-options.infra';
 import { clearCache } from '../../infrastructure/cache/clear-cache.infra';
@@ -9,15 +10,21 @@ export async function taxonomyDeleteService ( slug: string ) {
   if ( !taxonomy ) {
     throw new NotFoundError();
   }
+  
+  const session = await mongoose.startSession(); // Transaction session started
+  session.startTransaction();
 
-  await Taxonomy.updateMany( { parent: taxonomy.id }, { $unset: { parent: "" } } );
+  await Taxonomy.updateMany( { parent: taxonomy.id }, { $unset: { parent: "" } }, { session } );
   await Taxonomy.updateMany( {}, {
     $pullAll: {
       children: [ { _id: taxonomy.id } ]
     }
-  } );
-
-  await taxonomy.delete();
+  }, { session } );
+  await taxonomy.delete( { session } );
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
+
+  await session.commitTransaction();
+  session.endSession(); // Transaction session ended
+
   return taxonomy;
 }

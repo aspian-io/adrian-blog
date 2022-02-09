@@ -32,14 +32,18 @@ export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
     throw new BadRequestError( "Duplicate taxonomy is not allowed", TaxonomyLocaleEnum.ERROR_DUPLICATE_TAXONOMY );
   }
 
-  await taxonomy.save();
+  const session = await mongoose.startSession(); // Transaction session started
+  session.startTransaction();
+  await taxonomy.save( { session } );
   if ( parentTaxonomy ) {
     parentTaxonomy.set( {
       children: parentTaxonomy.children ? [ ...parentTaxonomy.children, taxonomy.id ] : [ taxonomy.id ]
     } );
-
-    await parentTaxonomy.save();
+    await parentTaxonomy.save( { session } );
   }
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
+  await session.commitTransaction();
+  session.endSession(); // Transaction session ended
+
   return taxonomy;
 }

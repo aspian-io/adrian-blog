@@ -1,9 +1,10 @@
+import mongoose from "mongoose";
 import slugify from "slugify";
-import mongoose from 'mongoose';
 import { BadRequestError } from "../../errors/bad-request-error";
 import { NotFoundError } from "../../errors/not-found-error";
 import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/cache/cache-options.infra';
 import { clearCache } from '../../infrastructure/cache/clear-cache.infra';
+import { CoreLocaleEnum } from "../../locales/service-locale-keys/core.locale";
 import { TaxonomyLocaleEnum } from '../../locales/service-locale-keys/taxonomies.locale';
 import { Taxonomy, TaxonomyTypeEnum } from "../../models/taxonomies/taxonomy.model";
 
@@ -52,22 +53,25 @@ export async function taxonomyEditService ( data: ITaxonomyEditService ) {
     updatedByIp,
     userAgent
   } );
-  await taxonomy.save();
+
+  const session = await mongoose.startSession(); // Transaction session started
+  session.startTransaction();
+  await taxonomy.save( { session } );
   if ( oldParent && oldParent !== parent ) {
     await Taxonomy.updateOne( { _id: oldParent }, {
       $pullAll: {
         children: [ { _id: taxonomy.id } ]
       }
-    } );
+    }, { session } );
   }
-
   if ( parentDoc && !parentDoc.children.includes( taxonomy.id ) ) {
     parentDoc.set( {
       children: parentDoc.children ? [ ...parentDoc.children, taxonomy.id ] : [ taxonomy.id ]
     } );
-    await parentDoc.save();
+    await parentDoc.save( { session } );
   }
-
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
+  await session.commitTransaction();
+  session.endSession(); // Transaction session ended
   return taxonomy;
 }

@@ -52,14 +52,20 @@ export async function postCommentCreateService ( data: IPostCommentCreateService
     userAgent
   } );
 
-  await postComment.save();
+  const session = await mongoose.startSession(); // Transaction session started
+  session.startTransaction();
+
+  await postComment.save( { session } );
   if ( parentComment ) {
     parentComment.set( {
       replies: parentComment.replies ? [ ...parentComment.replies, postComment.id ] : [ postComment.id ]
     } );
-
-    await parentComment.save();
+    await parentComment.save( { session } );
   }
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST_COMMENT_SETTINGS );
+
+  await session.commitTransaction();
+  session.endSession(); // Transaction session ended
+
   return postComment;
 }

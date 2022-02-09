@@ -2,13 +2,22 @@ import { NotFoundError } from '../../errors/not-found-error';
 import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/cache/cache-options.infra';
 import { clearCache } from '../../infrastructure/cache/clear-cache.infra';
 import { Post } from '../../models/posts/post.model';
+import mongoose from 'mongoose';
 
 export async function postDeleteService ( slug: string ) {
   const post = await Post.findOne( { slug } );
   if ( !post ) throw new NotFoundError();
-  await Post.updateMany( { parent: post.id }, { $unset: { parent: "" } } );
-  await Post.updateMany( { child: post.id }, { $unset: { child: "" } } );
-  await post.delete();
+
+  const session = await mongoose.startSession(); // Transaction session started
+  session.startTransaction();
+
+  await Post.updateMany( { parent: post.id }, { $unset: { parent: "" } }, { session } );
+  await Post.updateMany( { child: post.id }, { $unset: { child: "" } }, { session } );
+  await post.delete( { session } );
   clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST );
+
+  await session.commitTransaction();
+  session.endSession();
+
   return post;
 }
