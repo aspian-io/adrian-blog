@@ -1,4 +1,4 @@
-import { NotAuthorizedError } from '../errors/not-authorized-error';
+import { NotAuthorizedError } from 'errors/not-authorized-error';
 import { Request, Response, NextFunction } from 'express';
 import { asyncHandler } from './async-handler.middleware';
 

@@ -1,6 +1,6 @@
-import { PasswordUtil } from '../../helpers/password-util.helper';
+import { PasswordUtil } from 'helpers/password-util.helper';
 import mongoose from 'mongoose';
-import { AccessPoliciesEnum } from '../../infrastructure/security/access-policies.enum';
+import { AccessPoliciesEnum } from 'infrastructure/security/access-policies.enum';
 
 interface UserAttrs {
   firstName: string;
@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema<UserDoc, UserModel>( {
     {
       type: String,
       default: AccessPoliciesEnum.Core_USER,
-      enum: Object.values( AccessPoliciesEnum )
+      enum: Object.values( AccessPoliciesEnum ),
     }
   ],
   userAgent: { type: String, required: true }

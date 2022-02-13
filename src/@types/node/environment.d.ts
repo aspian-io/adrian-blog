@@ -5,10 +5,14 @@ namespace NodeJS {
     DB_HOST?: string;
     USING_CACHE?: string;
     REDIS_URL?: string;
+    MAILER_HOST?: string;
+    MAILER_PORT?: string;
+    MAILER_SECURE?: string;
+    MAILER_USER?: string;
+    MAILER_PASS?: string;
     LOGGER_CAPPED_SIZE_IN_MB?: string;
     NODE_ENV: 'development' | 'production';
     PORT?: string;
-    SEEDER?: string;
     JWT_KEY?: string;
     JWT_EXP_IN_MINS?: string;
     REFRESH_TOKEN_EXP_IN_DAYS?: string;

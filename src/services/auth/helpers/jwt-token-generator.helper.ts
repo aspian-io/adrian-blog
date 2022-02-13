@@ -1,7 +1,7 @@
-import { UserDoc } from "../../models/auth/auth-user.model";
+import { UserDoc } from "models/auth/auth-user.model";
 import jwt from 'jsonwebtoken';
 
-export function generateJwtTokenService ( user: UserDoc, claims: string[] ) {
+export function authJwtTokenGen ( user: UserDoc, claims: string[] ) {
   // create a jwt token containing the user id that expires in 15 minutes
   return jwt.sign(
     { sub: user.id, id: user.id, email: user.email, claims },

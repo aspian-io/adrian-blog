@@ -1,9 +1,9 @@
-import { CustomError } from '../errors/custom-error';
+import { CustomError } from 'errors/custom-error';
 import { Request, Response, NextFunction } from 'express';
-import { logger } from '../services/winston-logger/logger.service';
-import { logSerializer } from '../helpers/log-serializer.helper';
-import { RequestValidationError } from '../errors/request-validation-error';
-import { CoreLocaleEnum } from '../locales/service-locale-keys/core.locale';
+import { logger } from 'services/winston-logger/logger.service';
+import { logSerializer } from 'helpers/log-serializer.helper';
+import { RequestValidationError } from 'errors/request-validation-error';
+import { CoreLocaleEnum } from 'locales/service-locale-keys/core.locale';
 
 export const errorHandler = async (
   err: Error,

@@ -1,6 +1,6 @@
+import { redisWrapper } from 'infrastructure/database/redis/redis-client.infra';
 import mongoose from 'mongoose';
 import { CacheOptionAreaEnum, CacheOptionServiceEnum } from './cache-options.infra';
-import { redisWrapper } from '../database/redis/redis-client.infra';
 
 /**
  * Custom type for mongoose Document to use Redis cache

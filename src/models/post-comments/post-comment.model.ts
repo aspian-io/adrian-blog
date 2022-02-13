@@ -1,6 +1,6 @@
+import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from "models/base/base.model";
+import { PostDoc } from "models/posts/post.model";
 import { Document, model, Model, Schema } from "mongoose";
-import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from "../base/base.model";
-import { PostDoc } from "../posts/post.model";
 
 export interface CommentAttrs extends BaseAttrs {
   title: string;

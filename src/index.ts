@@ -1,11 +1,11 @@
-import { app } from './app';
+import { app } from 'app';
 import emoji from 'node-emoji';
 import companion from '@uppy/companion';
-import { envTypeGuards } from './infrastructure/env/env-type-guards';
+import { envTypeGuards } from 'infrastructure/env/env-type-guards';
 import chalk from 'chalk';
-import { redisWrapper } from './infrastructure/database/redis/redis-client.infra';
-import { startCacheMongooseQueries } from './infrastructure/cache/redis-cache-extension.infra';
-import { connectToMongoDB } from './infrastructure/database/mongodb/mongoose-connection.infra';
+import { redisWrapper } from 'infrastructure/database/redis/redis-client.infra';
+import { startCacheMongooseQueries } from 'infrastructure/cache/redis-cache-extension.infra';
+import { connectToMongoDB } from 'infrastructure/database/mongodb/mongoose-connection.infra';
 const boldGreen = chalk.bold.green;
 
 const start = async () => {

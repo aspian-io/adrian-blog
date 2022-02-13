@@ -1,16 +1,16 @@
 import express from 'express';
-import { adminPostCreateController } from '../controllers/admin-controllers/api/v1/posts/create.controller';
-import { adminPostDeleteController } from '../controllers/admin-controllers/api/v1/posts/delete.controller';
-import { adminPostDetailsController } from '../controllers/admin-controllers/api/v1/posts/details.controller';
-import { adminPostEditController } from '../controllers/admin-controllers/api/v1/posts/edit.controller';
-import { adminPostListController } from '../controllers/admin-controllers/api/v1/posts/list.controller';
-import { postCreateSchema } from '../controllers/admin-controllers/api/v1/posts/validation-schemas/post-create.schema';
-import { postEditSchema } from '../controllers/admin-controllers/api/v1/posts/validation-schemas/post-edit.schema';
-import { AccessPoliciesEnum } from '../infrastructure/security/access-policies.enum';
-import { asyncHandler } from '../middleware/async-handler.middleware';
-import { authorize } from '../middleware/authorize.middleware';
-import { requireAuth } from '../middleware/require-auth.middleware';
-import { validateRequest } from '../middleware/validate-request.middleware';
+import { adminPostCreateController } from 'controllers/admin-controllers/api/v1/posts/create.controller';
+import { adminPostDeleteController } from 'controllers/admin-controllers/api/v1/posts/delete.controller';
+import { adminPostDetailsController } from 'controllers/admin-controllers/api/v1/posts/details.controller';
+import { adminPostEditController } from 'controllers/admin-controllers/api/v1/posts/edit.controller';
+import { adminPostListController } from 'controllers/admin-controllers/api/v1/posts/list.controller';
+import { postCreateSchema } from 'controllers/admin-controllers/api/v1/posts/validation-schemas/post-create.schema';
+import { postEditSchema } from 'controllers/admin-controllers/api/v1/posts/validation-schemas/post-edit.schema';
+import { AccessPoliciesEnum } from 'infrastructure/security/access-policies.enum';
+import { asyncHandler } from 'middleware/async-handler.middleware';
+import { authorize } from 'middleware/authorize.middleware';
+import { requireAuth } from 'middleware/require-auth.middleware';
+import { validateRequest } from 'middleware/validate-request.middleware';
 
 export const postRouter = express.Router();
 

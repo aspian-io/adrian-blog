@@ -1,5 +1,5 @@
-import { PasswordUtil } from "../helpers/password-util.helper";
-import { AccessPoliciesEnum } from "../infrastructure/security/access-policies.enum";
+import { PasswordUtil } from "helpers/password-util.helper";
+import { AccessPoliciesEnum } from "infrastructure/security/access-policies.enum";
 
 export const usersData = async () => [
   {
@@ -9,7 +9,7 @@ export const usersData = async () => [
     password: await PasswordUtil.hash( '123456' ),
     createdByIp: '::1',
     lastIp: '::1',
-    claims: [AccessPoliciesEnum.Core_ADMIN],
+    claims: [ AccessPoliciesEnum.Core_ADMIN ],
     userAgent: "SEEDED"
   },
   {
@@ -19,7 +19,7 @@ export const usersData = async () => [
     password: await PasswordUtil.hash( '123456' ),
     createdByIp: '::1',
     lastIp: '::1',
-    claims: [AccessPoliciesEnum.Core_USER],
+    claims: [ AccessPoliciesEnum.Core_USER ],
     userAgent: "SEEDED"
   }
 ];

@@ -1,7 +1,7 @@
 import sanitizeHtml from 'sanitize-html';
-import { commaSeparatedToArray } from "../../../helpers/comma-separated-to-array.helper";
-import { sanitizeHtmlOptions } from "../../../infrastructure/security/html-allowed.infra";
-import { CommentSettingsKeyEnum } from "../../../models/post-comments/post-comments-settings.model";
+import { commaSeparatedToArray } from "helpers/comma-separated-to-array.helper";
+import { sanitizeHtmlOptions } from "infrastructure/security/html-allowed.infra";
+import { CommentSettingsKeyEnum } from "models/post-comments/post-comments-settings.model";
 import { postCommentSettingGetValueByKey } from "../settings/get-value.service";
 
 export interface ICommentProcessorParams {

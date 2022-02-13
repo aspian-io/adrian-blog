@@ -1,5 +1,5 @@
+import { BaseOnlyUpdateAttrs, BaseOnlyUpdateDoc, baseOnlyUpdateSchema, baseSchemaOptions } from "models/base/base.model";
 import { Document, model, Model, Schema } from "mongoose";
-import { BaseOnlyUpdateAttrs, BaseOnlyUpdateDoc, baseOnlyUpdateSchema, baseSchemaOptions } from "../base/base.model";
 import { CommentDoc } from "./post-comment.model";
 
 export enum CommentSettingsKeyEnum {

@@ -1,7 +1,7 @@
+import { AttachmentDoc } from 'models/attachments/attachment.model';
+import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from 'models/base/base.model';
+import { TaxonomyDoc } from 'models/taxonomies/taxonomy.model';
 import { model, Schema, Model, Document, Types } from 'mongoose';
-import { AttachmentDoc } from '../attachments/attachment.model';
-import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from '../base/base.model';
-import { TaxonomyDoc } from '../taxonomies/taxonomy.model';
 
 export enum PostVisibilityEnum {
   PUBLIC = "PUBLIC",

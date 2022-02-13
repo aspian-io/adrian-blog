@@ -1,6 +1,6 @@
-import mongoose, { Model, Schema, Document, model } from 'mongoose';
-import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from '../base/base.model';
-import { PostDoc } from '../posts/post.model';
+import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from 'models/base/base.model';
+import { PostDoc } from 'models/posts/post.model';
+import { Model, Schema, Document, model } from 'mongoose';
 
 export enum TaxonomyTypeEnum {
   NAV_MENU = "NAV_MENU",

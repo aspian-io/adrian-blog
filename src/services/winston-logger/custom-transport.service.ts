@@ -1,5 +1,5 @@
+import { activityCreateService, IActivityCreateService } from 'services/activities/create.service';
 import Transport from 'winston-transport';
-import { activityCreateService, IActivityCreateService } from '../activities/create.service';
 
 export class WinstonMongoDbConsoleTransport extends Transport {
   constructor ( opts?: Transport.TransportStreamOptions ) {

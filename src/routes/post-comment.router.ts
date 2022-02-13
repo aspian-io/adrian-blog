@@ -1,20 +1,20 @@
 import express from 'express';
-import { adminPostCommentApproveController } from '../controllers/admin-controllers/api/v1/post-comments/approve.controller';
-import { adminPostCommentCreateController } from '../controllers/admin-controllers/api/v1/post-comments/create.controller';
-import { adminPostCommentDeleteController } from '../controllers/admin-controllers/api/v1/post-comments/delete.controller';
-import { adminPostCommentDetailsController } from '../controllers/admin-controllers/api/v1/post-comments/details.controller';
-import { adminPostCommentEditController } from '../controllers/admin-controllers/api/v1/post-comments/edit.controller';
-import { adminPostCommentListController } from '../controllers/admin-controllers/api/v1/post-comments/list.controller';
-import { adminPostCommentSettingEditController } from '../controllers/admin-controllers/api/v1/post-comments/settings/edit.controller';
-import { adminPostCommentSettingsListController } from '../controllers/admin-controllers/api/v1/post-comments/settings/list.controller';
-import { postCommentSettingsEditSchema } from '../controllers/admin-controllers/api/v1/post-comments/settings/validation-schemas/comment-settings-edit.schema';
-import { postCommentCreateSchema } from '../controllers/admin-controllers/api/v1/post-comments/validation-schemas/comment-create.schema';
-import { postCommentEditSchema } from '../controllers/admin-controllers/api/v1/post-comments/validation-schemas/comment-edit.schema';
-import { AccessPoliciesEnum } from '../infrastructure/security/access-policies.enum';
-import { asyncHandler } from '../middleware/async-handler.middleware';
-import { authorize } from '../middleware/authorize.middleware';
-import { requireAuth } from '../middleware/require-auth.middleware';
-import { validateRequest } from '../middleware/validate-request.middleware';
+import { adminPostCommentApproveController } from 'controllers/admin-controllers/api/v1/post-comments/approve.controller';
+import { adminPostCommentCreateController } from 'controllers/admin-controllers/api/v1/post-comments/create.controller';
+import { adminPostCommentDeleteController } from 'controllers/admin-controllers/api/v1/post-comments/delete.controller';
+import { adminPostCommentDetailsController } from 'controllers/admin-controllers/api/v1/post-comments/details.controller';
+import { adminPostCommentEditController } from 'controllers/admin-controllers/api/v1/post-comments/edit.controller';
+import { adminPostCommentListController } from 'controllers/admin-controllers/api/v1/post-comments/list.controller';
+import { adminPostCommentSettingEditController } from 'controllers/admin-controllers/api/v1/post-comments/settings/edit.controller';
+import { adminPostCommentSettingsListController } from 'controllers/admin-controllers/api/v1/post-comments/settings/list.controller';
+import { postCommentSettingsEditSchema } from 'controllers/admin-controllers/api/v1/post-comments/settings/validation-schemas/comment-settings-edit.schema';
+import { postCommentCreateSchema } from 'controllers/admin-controllers/api/v1/post-comments/validation-schemas/comment-create.schema';
+import { postCommentEditSchema } from 'controllers/admin-controllers/api/v1/post-comments/validation-schemas/comment-edit.schema';
+import { AccessPoliciesEnum } from 'infrastructure/security/access-policies.enum';
+import { asyncHandler } from 'middleware/async-handler.middleware';
+import { authorize } from 'middleware/authorize.middleware';
+import { requireAuth } from 'middleware/require-auth.middleware';
+import { validateRequest } from 'middleware/validate-request.middleware';
 
 export const postCommentRouter = express.Router();
 

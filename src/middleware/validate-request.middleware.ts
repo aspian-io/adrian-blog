@@ -1,4 +1,4 @@
-import { RequestValidationError } from '../errors/request-validation-error';
+import { RequestValidationError } from 'errors/request-validation-error';
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 
@@ -14,4 +14,4 @@ export const validateRequest = (
   }
 
   next();
-}
+};

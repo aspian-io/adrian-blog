@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-import { AccessPoliciesEnum } from '../../infrastructure/security/access-policies.enum';
-import { baseSchemaOptions } from '../base/base.model';
-import { UserDoc } from './auth-user.model';
+import { AccessPoliciesEnum } from 'infrastructure/security/access-policies.enum';
+import { baseSchemaOptions } from 'models/base/base.model';
 
 export interface ClaimAttrs {
   claim: AccessPoliciesEnum;

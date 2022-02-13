@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Activity } from "../../models/activities/activity.model";
+import { Activity } from "models/activities/activity.model";
 
 export async function activityListService ( req: Request ) {
   const activities = await Activity.find( {} ).sort( { createdAt: 'desc' } );

@@ -1,15 +1,10 @@
-import sanitizeHtml from 'sanitize-html';
 import mongoose from 'mongoose';
-import { sanitizeHtmlOptions } from '../../infrastructure/security/html-allowed.infra';
-import { Comment, CommentDoc } from '../../models/post-comments/post-comment.model';
-import { CommentSettingsKeyEnum } from '../../models/post-comments/post-comments-settings.model';
-import { BadRequestError } from '../../errors/bad-request-error';
-import { CommentLocaleEnum } from '../../locales/service-locale-keys/post-comment.locale';
-import { postCommentSettingGetValueByKey } from './settings/get-value.service';
-import { commaSeparatedToArray } from '../../helpers/comma-separated-to-array.helper';
+import { Comment } from 'models/post-comments/post-comment.model';
+import { BadRequestError } from 'errors/bad-request-error';
+import { CommentLocaleEnum } from 'locales/service-locale-keys/post-comment.locale';
 import { postCommentProcessor } from './helper/comment-processor.helper';
-import { clearCache } from '../../infrastructure/cache/clear-cache.infra';
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/cache/cache-options.infra';
+import { clearCache } from 'infrastructure/cache/clear-cache.infra';
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
 
 export interface IPostCommentCreateService {
   title: string;

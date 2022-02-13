@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 import slugify from "slugify";
-import { BadRequestError } from "../../errors/bad-request-error";
-import { NotFoundError } from "../../errors/not-found-error";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/cache/cache-options.infra';
-import { clearCache } from '../../infrastructure/cache/clear-cache.infra';
-import { CoreLocaleEnum } from "../../locales/service-locale-keys/core.locale";
-import { TaxonomyLocaleEnum } from '../../locales/service-locale-keys/taxonomies.locale';
-import { Taxonomy, TaxonomyTypeEnum } from "../../models/taxonomies/taxonomy.model";
+import { BadRequestError } from "errors/bad-request-error";
+import { NotFoundError } from "errors/not-found-error";
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { clearCache } from 'infrastructure/cache/clear-cache.infra';
+import { TaxonomyLocaleEnum } from 'locales/service-locale-keys/taxonomies.locale';
+import { Taxonomy, TaxonomyTypeEnum } from "models/taxonomies/taxonomy.model";
 
 export interface ITaxonomyEditService {
   slug: string;

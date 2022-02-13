@@ -1,6 +1,6 @@
-import { AccessPoliciesEnum } from "../infrastructure/security/access-policies.enum";
-import { AuthLocaleEnum } from "../locales/service-locale-keys/auth.locale";
-import { ClaimAttrs } from "../models/auth/auth-claim.model";
+import { AccessPoliciesEnum } from "infrastructure/security/access-policies.enum";
+import { AuthLocaleEnum } from "locales/service-locale-keys/auth.locale";
+import { ClaimAttrs } from "models/auth/auth-claim.model";
 
 export const claimsData: ClaimAttrs[] = [
   {

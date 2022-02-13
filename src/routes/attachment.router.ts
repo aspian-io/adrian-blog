@@ -1,9 +1,9 @@
 import express from "express";
-import { authorize } from "../middleware/authorize.middleware";
-import { requireAuth } from "../middleware/require-auth.middleware";
-import { asyncHandler } from "../middleware/async-handler.middleware";
-import { adminGetPresignedUrlController } from "../controllers/admin-controllers/api/v1/attachments/get-presigned-url.controller";
-import { AccessPoliciesEnum } from "../infrastructure/security/access-policies.enum";
+import { authorize } from "middleware/authorize.middleware";
+import { requireAuth } from "middleware/require-auth.middleware";
+import { asyncHandler } from "middleware/async-handler.middleware";
+import { adminGetPresignedUrlController } from "controllers/admin-controllers/api/v1/attachments/get-presigned-url.controller";
+import { AccessPoliciesEnum } from "infrastructure/security/access-policies.enum";
 
 export const attachmentRouter = express.Router();
 

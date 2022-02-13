@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { Claim } from "../../models/auth/auth-claim.model";
+import { Claim } from "models/auth/auth-claim.model";
 
 export async function authClaimListService ( t: TFunction ) {
   const claims = await Claim.find();

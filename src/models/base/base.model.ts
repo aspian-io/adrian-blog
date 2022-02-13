@@ -1,5 +1,5 @@
+import { UserDoc } from 'models/auth/auth-user.model';
 import { Schema, SchemaOptions } from 'mongoose';
-import { UserDoc } from '../auth/auth-user.model';
 
 /**
  * Base Schema Attributes Type

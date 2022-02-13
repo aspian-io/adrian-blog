@@ -1,4 +1,4 @@
-import { CommentSettingsKeyEnum } from "../../models/post-comments/post-comments-settings.model";
+import { CommentSettingsKeyEnum } from "models/post-comments/post-comments-settings.model";
 
 export const postCommentSettingsData = [
   {

@@ -1,4 +1,4 @@
-import { getRefreshTokenService } from "./get-refresh-token.service";
+import { authRefreshTokenDetailsService } from "./details.service";
 
 export interface IRevokeTokenService {
   token: string;
@@ -6,7 +6,7 @@ export interface IRevokeTokenService {
 }
 
 export async function revokeTokenService ( { token, ipAddress }: IRevokeTokenService ) {
-  const refreshToken = await getRefreshTokenService( token );
+  const refreshToken = await authRefreshTokenDetailsService( token );
 
   // revoke token and save
   refreshToken.revoked = Date.now();

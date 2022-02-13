@@ -1,6 +1,6 @@
-import { NotFoundError } from "../../errors/not-found-error";
-import { Taxonomy } from "../../models/taxonomies/taxonomy.model";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
+import { NotFoundError } from "errors/not-found-error";
+import { Taxonomy } from "models/taxonomies/taxonomy.model";
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
 
 export async function taxonomyDetailsService ( slug: string ) {
   const taxonomy = await Taxonomy.findOne( { slug } )

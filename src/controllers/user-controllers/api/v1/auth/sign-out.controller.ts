@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { logSerializer } from '../../../../../helpers/log-serializer.helper';
-import { AuthLocaleEnum } from '../../../../../locales/service-locale-keys/auth.locale';
-import { revokeTokenService } from '../../../../../services/auth/revoke-token.service';
-import { logger } from '../../../../../services/winston-logger/logger.service';
+import { logSerializer } from 'helpers/log-serializer.helper';
+import { AuthLocaleEnum } from 'locales/service-locale-keys/auth.locale';
+import { revokeTokenService } from 'services/auth/tokens/revoke-token.service';
+import { logger } from 'services/winston-logger/logger.service';
 
 export async function signoutController ( req: Request, res: Response ) {
   const token = req.cookies.refreshToken;

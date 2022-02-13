@@ -1,7 +1,7 @@
 import path from "path";
 import { sanitize } from 'string-sanitizer';
-import { BadRequestError } from "../../errors/bad-request-error";
-import { isFileTypeAllowed } from "../security/filetype-allowed.infra";
+import { BadRequestError } from "errors/bad-request-error";
+import { isFileTypeAllowed } from "infrastructure/security/filetype-allowed.infra";
 
 /**
  * Get AWS S3 Config Params.
@@ -78,7 +78,7 @@ const s3BucketConfig = ( expiresInSeconds: number, allowedMimeTypes: string[] ) 
       host,
       protocol: process.env.PROTOCOL,
       // This MUST match the path you specify in `app.use()` below:
-      path: process.env.S3_UPLOAD_PATH,
+      path: path.join( __dirname, '../../../public' ),
     },
     redisUrl: process.env.USING_CACHE === "true" ? process.env.REDIS_URL : "",
     debug: process.env.NODE_ENV === 'development',

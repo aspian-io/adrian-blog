@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import emoji from "node-emoji";
-import { postCommentSettingsData } from "../../../data/settings/post-comment-settings.data";
-import { CommentSettings } from "../../../models/post-comments/post-comments-settings.model";
+import { postCommentSettingsData } from "data/settings/post-comment-settings.data";
+import { CommentSettings } from "models/post-comments/post-comments-settings.model";
 import { connectToMongoDB } from "../mongodb/mongoose-connection.infra";
 
 connectToMongoDB();

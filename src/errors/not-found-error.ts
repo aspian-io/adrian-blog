@@ -1,4 +1,4 @@
-import { CoreLocaleEnum } from "../locales/service-locale-keys/core.locale";
+import { CoreLocaleEnum } from "locales/service-locale-keys/core.locale";
 import { CustomError } from "./custom-error";
 
 export class NotFoundError extends CustomError {

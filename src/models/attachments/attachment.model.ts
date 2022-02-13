@@ -1,5 +1,5 @@
-import { model, Model, Schema, Document, Types } from 'mongoose';
-import { BaseMinimalAttrs, BaseMinimalDoc, baseMinimalSchema, baseSchemaOptions } from '../base/base.model';
+import { BaseMinimalAttrs, BaseMinimalDoc, baseMinimalSchema, baseSchemaOptions } from 'models/base/base.model';
+import { model, Model, Schema, Document } from 'mongoose';
 import { PostDoc } from '../posts/post.model';
 
 interface AttachmentAttrs extends BaseMinimalAttrs {

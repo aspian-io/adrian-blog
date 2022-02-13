@@ -1,7 +1,7 @@
-import { NotFoundError } from '../../errors/not-found-error';
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from '../../infrastructure/cache/cache-options.infra';
-import { clearCache } from '../../infrastructure/cache/clear-cache.infra';
-import { Post } from '../../models/posts/post.model';
+import { NotFoundError } from 'errors/not-found-error';
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { clearCache } from 'infrastructure/cache/clear-cache.infra';
+import { Post } from 'models/posts/post.model';
 import mongoose from 'mongoose';
 
 export async function postDeleteService ( slug: string ) {

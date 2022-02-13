@@ -1,12 +1,12 @@
-import { Post, PostAttrs, PostStatusEnum } from "../../models/posts/post.model";
+import { Post, PostAttrs, PostStatusEnum } from "models/posts/post.model";
 import mongoose from 'mongoose';
-import { BadRequestError } from "../../errors/bad-request-error";
-import { CoreLocaleEnum } from "../../locales/service-locale-keys/core.locale";
-import { NotFoundError } from "../../errors/not-found-error";
-import { PostLocaleEnum } from "../../locales/service-locale-keys/posts.locale";
+import { BadRequestError } from "errors/bad-request-error";
+import { CoreLocaleEnum } from "locales/service-locale-keys/core.locale";
+import { NotFoundError } from "errors/not-found-error";
+import { PostLocaleEnum } from "locales/service-locale-keys/posts.locale";
 import slugify from "slugify";
-import { clearCache } from "../../infrastructure/cache/clear-cache.infra";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "../../infrastructure/cache/cache-options.infra";
+import { clearCache } from "infrastructure/cache/clear-cache.infra";
+import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
 import { scheduledPostsQueue } from "./post-queue.service";
 
 export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "child">;
