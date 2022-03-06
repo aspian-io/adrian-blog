@@ -6,6 +6,8 @@ import chalk from 'chalk';
 import { redisWrapper } from 'infrastructure/database/redis/redis-client.infra';
 import { startCacheMongooseQueries } from 'infrastructure/cache/redis-cache-extension.infra';
 import { connectToMongoDB } from 'infrastructure/database/mongodb/mongoose-connection.infra';
+import { smsProviderInit } from 'infrastructure/sms/provider-init.infra';
+
 const boldGreen = chalk.bold.green;
 
 const start = async () => {
@@ -17,6 +19,8 @@ const start = async () => {
   await redisWrapper.connect( process.env.REDIS_URL! );
   // Start Mongoose cache queries
   await startCacheMongooseQueries();
+  // Initialize sms provider if exists
+  smsProviderInit();
 
   const PORT = process.env.PORT;
   const server = app.listen(

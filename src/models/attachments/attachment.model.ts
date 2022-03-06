@@ -1,19 +1,25 @@
-import { BaseMinimalAttrs, BaseMinimalDoc, baseMinimalSchema, baseSchemaOptions } from 'models/base/base.model';
+import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from 'models/base/base.model';
 import { model, Model, Schema, Document } from 'mongoose';
-import { PostDoc } from '../posts/post.model';
 
-interface AttachmentAttrs extends BaseMinimalAttrs {
+export interface AttachmentAttrs extends BaseAttrs {
   url: string;
+  policy: AttachmentPolicyEnum;
+  fileName: string;
   caption: string;
   size: number;
-  posts: string[];
 }
 
-export interface AttachmentDoc extends BaseMinimalDoc, Document {
+export interface AttachmentDoc extends BaseDoc, Document {
   url: string;
+  policy: AttachmentPolicyEnum;
+  fileName: string;
   caption: string;
   size: number;
-  posts: PostDoc[];
+}
+
+export enum AttachmentPolicyEnum {
+  DOWNLOAD = "DOWNLOAD",
+  PRIVATE = "PRIVATE"
 }
 
 interface AttachmentModel extends Model<AttachmentDoc> {
@@ -22,10 +28,11 @@ interface AttachmentModel extends Model<AttachmentDoc> {
 
 const attachmentSchema = new Schema<AttachmentDoc, AttachmentModel>( {
   url: { type: String, required: true },
-  caption: String,
+  policy: { type: String, required: true, enum: Object.values( AttachmentPolicyEnum ) },
+  fileName: { type: String, required: true },
+  caption: { type: String, required: false },
   size: { type: Number, required: true },
-  posts: [ { type: Schema.Types.ObjectId, ref: "Post" } ],
-  ...baseMinimalSchema.obj
+  ...baseSchema.obj
 }, baseSchemaOptions );
 
 attachmentSchema.statics.build = ( attrs: AttachmentAttrs ) => {

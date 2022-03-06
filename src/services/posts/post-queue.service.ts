@@ -1,6 +1,6 @@
 import Queue from 'bull';
 import chalk from 'chalk';
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
 import { clearCache } from 'infrastructure/cache/clear-cache.infra';
 import { Post, PostStatusEnum } from 'models/posts/post.model';
 
@@ -18,7 +18,7 @@ scheduledPostsQueue.process( async ( job ) => {
     } );
 
     await post.save();
-    clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST );
+    clearCache( CacheOptionServiceEnum.POST );
     console.log(
       chalk.bold.green.inverse( " Queue Info " ),
       chalk.bold.green( `A scheduled post with the id of ${ post.id } published successfully` )

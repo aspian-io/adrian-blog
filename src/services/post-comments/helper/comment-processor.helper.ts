@@ -1,8 +1,8 @@
 import sanitizeHtml from 'sanitize-html';
-import { commaSeparatedToArray } from "helpers/comma-separated-to-array.helper";
 import { sanitizeHtmlOptions } from "infrastructure/security/html-allowed.infra";
-import { CommentSettingsKeyEnum } from "models/post-comments/post-comments-settings.model";
-import { postCommentSettingGetValueByKey } from "../settings/get-value.service";
+import { settingGetValueService } from 'services/settings/get-value.service';
+import { SettingsKeyEnum } from 'models/settings/settings.model';
+import { commaSeparatedToArray } from 'infrastructure/string-utils/comma-separated-to-array.infra';
 
 export interface ICommentProcessorParams {
   title: string;
@@ -26,9 +26,9 @@ export async function postCommentProcessor ( data: ICommentProcessorParams ): Pr
   const { title, content } = data;
   let sanitizedTitle = sanitizeHtml( title, sanitizeHtmlOptions );
   let sanitizedContent = sanitizeHtml( content, sanitizeHtmlOptions );
-  let isApproved = await postCommentSettingGetValueByKey( CommentSettingsKeyEnum.IS_APPROVED ) === "true";
-  const forbiddenExps = commaSeparatedToArray( await postCommentSettingGetValueByKey( CommentSettingsKeyEnum.FORBIDDEN_EXPRESSIONS ) );
-  const suspIfForbidden = ( await postCommentSettingGetValueByKey( CommentSettingsKeyEnum.FORBIDDEN_COMMENT_SUSPEND ) ) === "true";
+  let isApproved = await settingGetValueService( SettingsKeyEnum.COMMENT_IS_APPROVED ) === "true";
+  const forbiddenExps = commaSeparatedToArray( await settingGetValueService( SettingsKeyEnum.COMMENT_FORBIDDEN_EXPRESSIONS ) );
+  const suspIfForbidden = ( await settingGetValueService( SettingsKeyEnum.COMMENT_FORBIDDEN_SUSPEND ) ) === "true";
 
   forbiddenExps.map( exp => {
     const titleForbidden = sanitizedTitle.includes( exp );

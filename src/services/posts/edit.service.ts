@@ -1,13 +1,13 @@
 import { Post, PostAttrs, PostStatusEnum } from "models/posts/post.model";
 import mongoose from 'mongoose';
-import { BadRequestError } from "errors/bad-request-error";
-import { CoreLocaleEnum } from "locales/service-locale-keys/core.locale";
-import { NotFoundError } from "errors/not-found-error";
-import { PostLocaleEnum } from "locales/service-locale-keys/posts.locale";
 import slugify from "slugify";
 import { clearCache } from "infrastructure/cache/clear-cache.infra";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
 import { scheduledPostsQueue } from "./post-queue.service";
+import { BadRequestError } from "infrastructure/errors/bad-request-error";
+import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
+import { NotFoundError } from "infrastructure/errors/not-found-error";
+import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
 
 export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "child">;
 
@@ -90,7 +90,7 @@ export async function postEditService ( data: PostEditService ) {
     parentDoc.set( { child: post.id } );
     await parentDoc.save( { session } );
   }
-  clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST );
+  clearCache( CacheOptionServiceEnum.POST );
 
   await session.commitTransaction();
   session.endSession(); // Transaction session ended

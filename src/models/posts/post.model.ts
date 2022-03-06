@@ -22,7 +22,8 @@ export enum PostTypeEnum {
   PAGE = "PAGE",
   PRODUCT = "PRODUCT",
   NEWS = "NEWS",
-  BANNER = "BANNER"
+  BANNER = "BANNER",
+  EMAIL_TEMPLATE = "EMAIL_TEMPLATE"
 }
 
 export interface PostAttrs extends BaseAttrs {

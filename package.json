@@ -7,10 +7,9 @@
     "start": "NODE_PATH=dist/ node dist/index.js",
     "dev": "nodemon --config nodemon.json src/index.ts",
     "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.ts",
-    "data:import": "nodemon src/infrastructure/database/seed-data/data-seeder.infra.ts",
-    "data:destroy": "nodemon src/infrastructure/database/seed-data/data-seeder.infra.ts -d",
-    "settings:import": "nodemon src/infrastructure/database/seed-data/settings-seeder.infra.ts",
-    "settings:destroy": "nodemon src/infrastructure/database/seed-data/settings-seeder.infra.ts -d",
+    "data:import": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/data-seeder.infra.ts",
+    "data:destroy": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/data-seeder.infra.ts -d",
+    "smspattern:import": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/faraz-sms-pattern-seeder.infra.ts",
     "build": "tsc -p ."
   },
   "author": "Omid Rouhani",
@@ -26,6 +25,7 @@
     "@types/node": "^17.0.9",
     "@types/node-emoji": "^1.8.1",
     "@types/nodemailer": "^6.4.4",
+    "@types/request": "^2.48.8",
     "@types/response-time": "^2.3.5",
     "@types/sanitize-html": "^2.6.2",
     "@types/uuid": "^8.3.3",
@@ -37,8 +37,10 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@uppy/companion": "^3.1.5",
+    "@aspianet/faraz-sms": "^1.1.1",
+    "@uppy/companion": "^3.3.1",
     "aws-sdk": "^2.1058.0",
+    "axios": "^0.26.0",
     "bcryptjs": "^2.4.3",
     "bull": "^4.5.1",
     "chalk": "^4.1.2",

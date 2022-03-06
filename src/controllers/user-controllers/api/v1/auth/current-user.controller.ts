@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
 
-export async function currentUserController ( req: Request, res: Response ) {
+export async function authCurrentUserController ( req: Request, res: Response ) {
   res.send( { currentUser: req.currentUser || null } );
 };

@@ -1,5 +1,5 @@
-import { BadRequestError } from "errors/bad-request-error";
-import { AuthLocaleEnum } from "locales/service-locale-keys/auth.locale";
+import { BadRequestError } from "infrastructure/errors/bad-request-error";
+import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { User } from "models/auth/auth-user.model";
 import { authSignInService } from "./sign-in.service";
 
@@ -29,7 +29,7 @@ export async function authSignUpService ( { firstName, lastName, email, password
   } );
   // return basic details and tokens
   return {
-    user,
+    ...user,
     jwtToken,
     refreshToken
   };

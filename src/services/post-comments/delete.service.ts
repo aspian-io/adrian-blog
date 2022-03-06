@@ -1,6 +1,6 @@
-import { NotFoundError } from "errors/not-found-error";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
 import { clearCache } from "infrastructure/cache/clear-cache.infra";
+import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { Comment } from "models/post-comments/post-comment.model";
 import mongoose from 'mongoose';
 
@@ -20,7 +20,7 @@ export async function postCommentDeleteService ( id: string ) {
     $unset: { parent: "" }
   }, { session } );
   await comment.delete( { session } );
-  clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST_COMMENT );
+  clearCache( CacheOptionServiceEnum.POST_COMMENT );
 
   await session.commitTransaction();
   session.endSession(); // Transaction session ended

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { logSerializer } from "../../../../../helpers/log-serializer.helper";
-import { TaxonomyLocaleEnum } from "../../../../../locales/service-locale-keys/taxonomies.locale";
-import { taxonomyListService } from "../../../../../services/taxonomies/list.service";
-import { logger } from "../../../../../services/winston-logger/logger.service";
+import { TaxonomyLocaleEnum } from "infrastructure/locales/service-locale-keys/taxonomies.locale";
+import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { taxonomyListService } from "services/taxonomies/list.service";
+import { logger } from "services/winston-logger/logger.service";
 
 export async function adminTaxonomyListController ( req: Request, res: Response ) {
   const taxonomies = await taxonomyListService();

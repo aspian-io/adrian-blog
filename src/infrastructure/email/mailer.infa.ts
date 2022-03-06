@@ -1,7 +1,7 @@
+import { BadRequestError } from 'infrastructure/errors/bad-request-error';
+import { CoreLocaleEnum } from 'infrastructure/locales/service-locale-keys/core.locale';
 import nodemailer, { getTestMessageUrl } from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
-import { BadRequestError } from 'errors/bad-request-error';
-import { CoreLocaleEnum } from 'locales/service-locale-keys/core.locale';
 
 const testHost = "smtp.ethereal.email";
 const testPort = 587;
@@ -46,6 +46,8 @@ export const sendMail = async ( mailOptions: Mail.Options ): Promise<ISendMailRe
 
   try {
     const info = await transporter.sendMail( mailOptions );
+
+    console.log( "msg url: ", getTestMessageUrl( info ) );
 
     return {
       messageId: info.messageId,

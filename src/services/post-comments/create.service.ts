@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import { Comment } from 'models/post-comments/post-comment.model';
-import { BadRequestError } from 'errors/bad-request-error';
-import { CommentLocaleEnum } from 'locales/service-locale-keys/post-comment.locale';
-import { postCommentProcessor } from './helper/comment-processor.helper';
 import { clearCache } from 'infrastructure/cache/clear-cache.infra';
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { postCommentProcessor } from './helper/comment-processor.helper';
+import { BadRequestError } from 'infrastructure/errors/bad-request-error';
+import { CommentLocaleEnum } from 'infrastructure/locales/service-locale-keys/post-comment.locale';
 
 export interface IPostCommentCreateService {
   title: string;
@@ -57,7 +57,7 @@ export async function postCommentCreateService ( data: IPostCommentCreateService
     } );
     await parentComment.save( { session } );
   }
-  clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST_COMMENT_SETTINGS );
+  clearCache( CacheOptionServiceEnum.POST_COMMENT );
 
   await session.commitTransaction();
   session.endSession(); // Transaction session ended

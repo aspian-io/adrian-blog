@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import emoji from "node-emoji";
-import { claimsData } from "data/user-claims.data";
-import { usersData } from "data/users.data";
+import { claimsData } from "infrastructure/data/user-claims.data";
+import { usersData } from "infrastructure/data/users.data";
 import { Activity } from "models/activities/activity.model";
 import { Claim } from "models/auth/auth-claim.model";
 import { RefreshToken } from "models/auth/auth-refresh-token.model";
@@ -10,6 +10,8 @@ import { Comment } from "models/post-comments/post-comment.model";
 import { Post } from "models/posts/post.model";
 import { Taxonomy } from "models/taxonomies/taxonomy.model";
 import { connectToMongoDB } from "../mongodb/mongoose-connection.infra";
+import { Settings, SettingsKeyEnum, SettingsServiceEnum } from "models/settings/settings.model";
+import { settingsData } from "infrastructure/data/settings.data";
 
 connectToMongoDB();
 
@@ -25,7 +27,18 @@ const importData = async () => {
     await Post.deleteMany();
     await Taxonomy.deleteMany();
     await Comment.deleteMany();
+    await Settings.deleteMany();
 
+    let settingsDataArr = settingsData;
+    if ( process.env.NODE_ENV === "development" ) {
+      settingsDataArr = [ ...settingsData, {
+        key: SettingsKeyEnum.SMS_VERIFICATION_CODE_PATTERN,
+        value: process.env.SMS_PATTERN_CODE__VERIFICATION,
+        service: SettingsServiceEnum.SMS,
+        userAgent: "SYSTEM"
+      } ];
+    }
+    await Settings.insertMany( settingsDataArr );
     await User.insertMany( await usersData() );
     await Claim.insertMany( claimsData );
 
@@ -49,6 +62,7 @@ const destroyData = async () => {
     await Post.deleteMany();
     await Taxonomy.deleteMany();
     await Comment.deleteMany();
+    await Settings.deleteMany();
 
     console.log( chalk.bold.red( `Data destroyed successfully` ) );
     process.exit();

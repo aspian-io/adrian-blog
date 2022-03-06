@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
-import { logSerializer } from "../../../../../../helpers/log-serializer.helper";
-import { CommentLocaleEnum } from "../../../../../../locales/service-locale-keys/post-comment.locale";
-import { postCommentSettingsListService } from "../../../../../../services/post-comments/settings/list.service";
-import { logger } from "../../../../../../services/winston-logger/logger.service";
+import { SettingsServiceEnum } from "models/settings/settings.model";
+import { settingsListService } from "services/settings/list.service";
+import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { logger } from "services/winston-logger/logger.service";
+import { CommentLocaleEnum } from "infrastructure/locales/service-locale-keys/post-comment.locale";
 
 export async function adminPostCommentSettingsListController ( req: Request, res: Response ) {
-  const commentSettings = await postCommentSettingsListService();
+  const commentSettings = await settingsListService( SettingsServiceEnum.POST_COMMENTS );
   res.send( commentSettings );
   logger.info(
     "Post comment settings list retrieved successfully",

@@ -1,0 +1,308 @@
+{
+  "errors": {
+    "400": {
+      "msg": "خطایی رخ داده است"
+    },
+    "401": {
+      "msg": "ورود به حساب کاربری جهت دسترسی الزامی است"
+    },
+    "403": {
+      "msg": "دسترسی به این قسمت برای شما مجاز نمی باشد"
+    },
+    "404": {
+      "msg": "نتیجه ای برای این درخواست پیدا نشد"
+    },
+    "dbConnectionError": {
+      "msg": "خطای اتصال به پایگاه داده"
+    },
+    "requestValidationError": "پارامترهای ورودی صحیح نمی باشد",
+    "userId": "شناسه کاربری میبایست یک شناسه استاندارد باشد",
+    "auth": {
+      "userIsSuspended": "کاربر تعلیق شده است",
+      "authenticateService": {
+        "passMatchErr": "اطلاعات کاربری صحیح نمی باشد"
+      },
+      "resetPasswordService": {
+        "resetPassLinkExpiredErr": "پیوند بازنشانی گذرواژه نادرست بوده یا منقضی شده است"
+      },
+      "confirmEmailService": {
+        "confirmEmailLinkExpiredErr": "پیوند تایید نشانی پست الکترونیک نادرست بوده یا منقضی شده است",
+        "emailAlreadyConfirmed": "نشانی پست الکترونیک شما قبلا تایید شده است"
+      },
+      "getRefreshTokenService": {
+        "invalidRefreshToken": "توکن تمدید کننده اشتباه است"
+      },
+      "getUserByIdService": {
+        "userNotFound": "کاربری با این مشخصات یافت نگردید"
+      },
+      "registerService": {
+        "emailInUse": "این آدرس پست الکترونیک قبلا استفاده شده است"
+      },
+      "mobileVerificationService": {
+        "alreadyVerified": "شماره تلفن همراه شما قبلا تایید شده است",
+        "verificationCodeExpired": "زمان اعتبار کد تایید سپری شده یا تا کنون ایجاد نشده است"
+      },
+      "signinSchema": {
+        "email": "ورود نشانی پست الکترونیک صحیح الزامی است",
+        "password": "وارد کردن کلمه عبور الزامی است"
+      },
+      "signupSchema": {
+        "firstName": "ورود نام الزامی است",
+        "lastName": "ورود نام خانوادگی الزامی است",
+        "email": "نشانی پست الکترونیک میبایست صحیح وارد شود",
+        "passwordLength": "ورود گذرواژه با طول بیش از ۳۰ کاراکتر مجاز نمی باشد",
+        "passwordTooWeak": "ورود گذرواژه ضعبف مجاز نمی باشد",
+        "passwordDifficulty": "گذرواژه میبایست حداقل ۸ کاراکتر و دربرگیرنده حروف کوچک، بزرگ و اعداد باشد"
+      },
+      "changePasswordSchema": {
+        "currentPassSupplyErr": "ورود گذرواژه کنونی صحیح الزامی است",
+        "newPassSupplyErr": "ورود گذرواژه جدید الزامی است"
+      },
+      "profileModificationSchema": {
+        "firstName": "وارد کردن نام الزامی است",
+        "lastName": "وارد کردن نام خانوادگی الزامی است"
+      }
+    },
+    "attachments": {
+      "create": {
+        "fileTypeNotAllowedErr": "بارگزاری این نوع فایل مجاز نمی باشد"
+      }
+    },
+    "taxonomies": {
+      "createService": {
+        "duplicateTaxonomyErr": "ایجاد دسته بندی تکراری مجاز نمی باشد"
+      },
+      "editService": {
+        "parentNotFoundErr": "دسته والد پیدا نشد"
+      },
+      "deleteService": {
+        "taxonomyIdErr": "شناسه دسته بندی میبایست یک شناسه استاندارد باشد"
+      },
+      "createSchema": {
+        "typeErr": "وارد کردن نوع دسته الزامی است",
+        "termEmptyErr": "وارد کردن نام دسته الزامی است",
+        "termMinMaxLengthErr": "طول نام دسته باید بین حداقل ۱ و حداکثر ۶۰ کاراکتر باشد"
+      },
+      "editSchema": {
+        "typeErr": "وارد کردن نوع دسته الزامی است",
+        "termEmptyErr": "وارد کردن نام دسته الزامی است",
+        "termMinMaxLengthErr": "طول نام دسته باید بین حداقل ۱ و حداکثر ۶۰ کاراکتر باشد"
+      }
+    },
+    "posts": {
+      "common": {
+        "parentNotFoundErr": "پست والد پیدا نشد",
+        "duplicateParentPostErr": "پست والد قبلا استفاده شده و قابل استفاده مجدد نیست"
+      },
+      "createService": {
+        "duplicatePostErr": "پست با عنوان تکراری مجاز نمی باشد"
+      },
+      "deleteService": {
+        "taxonomyIdErr": "شناسه پست میبایست یک شناسه استاندارد باشد"
+      },
+      "createSchema": {
+        "titleEmptyErr": "وارد کردن عنوان پست الزامی است",
+        "excerptEmptyErr": "وارد کردن متن برگزیده پست الزامی است",
+        "contentEmptyErr": "وارد کردن محتوای متنی پست الزامی است",
+        "taxonomiesEmptyErr": "انتخاب حداقل یک دسته برای پست الزامی است"
+      },
+      "editSchema": {
+        "titleEmptyErr": "وارد کردن عنوان پست الزامی است",
+        "excerptEmptyErr": "وارد کردن متن برگزیده پست الزامی است",
+        "contentEmptyErr": "وارد کردن محتوای متنی پست الزامی است",
+        "taxonomiesEmptyErr": "انتخاب حداقل یک دسته برای پست الزامی است"
+      }
+    },
+    "postComments": {
+      "settings": {
+        "editValueErr": "وارد کردن مقدار جدید برای این تنظیم الزامی است"
+      },
+      "createService": {
+        "replyLevelNotAllowed": "پاسخ به این نظر مجاز نمی باشد"
+      },
+      "createSchema": {
+        "titleEmptyErr": "وارد کردن عنوان دیدگاه الزامی است",
+        "titleLengthErr": "عنوان دیدگاه میبایست کمتر از ۶۰ کاراکتر باشد",
+        "contentEmptyErr": "وارد کردن متن دیدگاه الزامی است",
+        "contentLengthErr": "متن دیدگاه میبایست کمتر از ۲۵۰ کاراکتر باشد"
+      },
+      "editSchema": {
+        "titleEmptyErr": "وارد کردن عنوان دیدگاه الزامی است",
+        "titleLengthErr": "عنوان دیدگاه میبایست کمتر از ۶۰ کاراکتر باشد",
+        "contentEmptyErr": "وارد کردن متن دیدگاه الزامی است",
+        "contentLengthErr": "متن دیدگاه میبایست کمتر از ۲۵۰ کاراکتر باشد"
+      }
+    }
+  },
+  "info": {
+    "activities": {
+      "list": {
+        "successMsg": "دریافت لیست فعالیت ها"
+      }
+    },
+    "auth": {
+      "signin": {
+        "successMsg": "کاربر وارد شد"
+      },
+      "signout": {
+        "successMsg": "کاربر خارج شد"
+      },
+      "signup": {
+        "successMsg": "کاربر ثبت نام کرد"
+      },
+      "sendResetPassLink": {
+        "successMsg": "پیوند بازنشانی گذرواژه با موفقیت به نشانی پست الکترونیک کاربر ارسال گردید"
+      },
+      "resetPassword": {
+        "successMsg": "گذرواژه کاربر با موفقیت بازنشانی گردید"
+      },
+      "changePassword": {
+        "successMsg": "گذرواژه کاربر با موفقیت تغییر کرد"
+      },
+      "userList": {
+        "successMsg": "لیست کاربران با موفقیت دریافت گردید"
+      },
+      "userChangeSuspension": {
+        "suspended": "کاربر با موفقیت تعلیق شد",
+        "unsuspended": "کاربر با موفقیت رفع تعلیق شد"
+      },
+      "avatarChanged": {
+        "successMsg": "تصویر کاربر با موفقیت تغییر کرد"
+      },
+      "profileModified": {
+        "successMsg": "نمایه کاربر با موفقیت بروزرسانی شد"
+      },
+      "profileViewed": {
+        "successMsg": "کاربر از نمایه خود بازدید نمود"
+      },
+      "sendConfirmationEmailLink": {
+        "successMsg": "پیوند تایید نشانی پست الکترونیک به پست الکترونیک کاربر ارسال شد"
+      },
+      "emailConfirmed": {
+        "successMsg": "نشانی پست الکترونیک کاربر با موفقیت تایید شد"
+      },
+      "admin": {
+        "claims": "لیست دسترسی ها توسط مدیر مشاهده شد",
+        "userDetails": "مدیر اطلاعات کاربر را مشاهده نمود",
+        "userDeleted": "مدیر کاربری را حذف نمود",
+        "userClaimsModified": "مدیر دسترسی های کاربر را تغییر داد"
+      },
+      "verificationCodeSent": {
+        "successMsg": "کد اعتبارسنجی با موفقیت به کاربر ارسال شد"
+      },
+      "verificationCodeConfirm": {
+        "successMsg": "کد اعتبارسنجی با موفقیت تایید شد"
+      },
+      "claims": {
+        "coreAdmin": "مدیر - ( دسترسی به تمامی سرویس ها بدون محدودیت )",
+        "coreUser": "کاربر معمولی",
+        "claimList": "دریافت لیست سطوح دسترسی",
+        "activityList": "دسترسی به لیت فعالیت های همه کاربران",
+        "taxonomyList": "دسترسی به لیست همه دسته ها",
+        "taxonomyDetails": "دسترسی به جزئیات یک دسته",
+        "taxonomyCreate": "توانایی افزودن یک دسته",
+        "taxonomyEdit": "توانایی ویرایش یک دسته",
+        "taxonomyDelete": "توانایی حذف یک دسته",
+        "attachmentCreate": "توانایی ارسال فایل",
+        "postList": "دسترسی به لیست پست ها",
+        "postDetails": "دسترسی به جزئیات یک پست",
+        "postCreate": "توانایی اضافه کردن پست",
+        "postEdit": "توانایی ویرایش پست",
+        "postDelete": "توانایی حذف پست",
+        "postCommentApprove": "توانایی تایید کردن دیدگاه‌ها",
+        "postCommentList": "دسترسی به لیست دیدگاه‌های پست‌ها",
+        "postCommentDetails": "دسترسی به جزئیات دیدگاه‌های پست‌ها",
+        "postCommentCreate": "توانایی افزودن دیدگاه برای پست",
+        "postCommentEdit": "توانایی ویرایش دیدگاه پست",
+        "postCommentDelete": "توانایی حذف دیدگاه پست‌ها",
+        "postCommentSettingsList": "دسترسی به لیست تنظیمات دیدگاه پست‌ها",
+        "postCommentSettingsEdit": "توانایی تغییر تنظیمات دیدگاه پست‌ها"
+      }
+    },
+    "attachments": {
+      "list": {
+        "successMsg": "لیست فایل ها با موفقیت دریافت گردید"
+      },
+      "create": {
+        "successMsg": "اطلاعات فایل بارگزاری شده با موفقیت در پایگاه داده ذخیره گردید"
+      },
+      "edit": {
+        "successMsg": "اطلاعات فایل بارگزاری شده با موفقیت ویرایش گردید"
+      },
+      "details": {
+        "successMsg": "اطلاعات فایل بارگزاری شده با موفقیت دریافت گردید"
+      },
+      "delete": {
+        "successMsg": "یک فایل با موفقیت حذف گردید"
+      },
+      "deleteMany": {
+        "successMsg": "تعدادی فایل با موفقیت حذف شدند"
+      },
+      "getPresignedUrl": {
+        "successMsg": "پیوند امضا شده زماندار با موفقیت دریافت گردید"
+      }
+    },
+    "taxonomies": {
+      "create": {
+        "successMsg": "دسته جدید ساخته شد"
+      },
+      "delete": {
+        "successMsg": "دسته حذف گردید"
+      },
+      "details": {
+        "successMsg": "جزئیات دسته دریافت گردید"
+      },
+      "edit": {
+        "successMsg": "دسته ویرایش گردید"
+      },
+      "list": {
+        "successMsg": "لیست همه دسته ها دریافت گردید"
+      }
+    },
+    "posts": {
+      "create": {
+        "successMsg": "پست جدید ساخته شد"
+      },
+      "delete": {
+        "successMsg": "پست حذف گردید"
+      },
+      "details": {
+        "successMsg": "جزئیات پست دریافت گردید"
+      },
+      "edit": {
+        "successMsg": "پست ویرایش گردید"
+      },
+      "list": {
+        "successMsg": "لیست همه پست ها دریافت گردید"
+      }
+    },
+    "postComments": {
+      "settings": {
+        "list": {
+          "successMsg": "لیست تنظیمات دیدگاه پست با موفقیت دریافت گردید"
+        },
+        "edit": {
+          "successMsg": "تنظیمات دیدگاه پست با موفقیت ویرایش گردید"
+        }
+      },
+      "create": {
+        "successMsg": "دیدگاه پست با موفقیت ثبت گردید"
+      },
+      "edit": {
+        "successMsg": "دیدگاه پست با موفقیت ویرایش گردید"
+      },
+      "details": {
+        "successMsg": "جزئیات دیدگاه پست با موفقیت دریافت گردید"
+      },
+      "list": {
+        "successMsg": "لیست دیدگاه‌های پست با موفقیت دریافت گردید"
+      },
+      "delete": {
+        "successMsg": "دیدگاه پست مورد نظر با موفقیت حذف گردید"
+      },
+      "approve": {
+        "successMsg": "وضعیت تایید دیدگاه پست مورد نظر با موفقیت ویرایش شد"
+      }
+    }
+  }
+}

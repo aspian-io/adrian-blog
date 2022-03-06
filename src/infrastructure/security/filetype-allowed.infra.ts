@@ -1,5 +1,4 @@
-import { matchRules } from "helpers/match-rules.helper";
-
+import { matchRules } from "infrastructure/string-utils/match-rules.infra";
 
 export const isFileTypeAllowed = ( mimeType: string, allowedTypes: string[] ): boolean => {
   for ( let i = 0; i < allowedTypes.length; i++ ) {

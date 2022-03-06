@@ -1,12 +1,12 @@
 import { Post, PostAttrs, PostStatusEnum } from "models/posts/post.model";
 import mongoose from 'mongoose';
-import { BadRequestError } from "errors/bad-request-error";
-import { CoreLocaleEnum } from "locales/service-locale-keys/core.locale";
 import slugify from "slugify";
-import { PostLocaleEnum } from "locales/service-locale-keys/posts.locale";
 import { clearCache } from "infrastructure/cache/clear-cache.infra";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
 import { scheduledPostsQueue } from "./post-queue.service";
+import { BadRequestError } from "infrastructure/errors/bad-request-error";
+import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
+import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
 
 export type IPostCreateService = Omit<PostAttrs, "slug" | "child">;
 
@@ -18,7 +18,7 @@ export async function postCreateService ( data: IPostCreateService ) {
     createdBy, createdByIp, updatedBy, updatedByIp, userAgent
   } = data;
 
-  if ( !mongoose.isValidObjectId( createdBy ) || !mongoose.isValidObjectId( updatedBy ) ) {
+  if ( !mongoose.isValidObjectId( createdBy ) ) {
     throw new BadRequestError( "User id must be a standard id", CoreLocaleEnum.ERROR_USER_ID );
   }
   const isDuplicated = await Post.find( { title } );
@@ -77,7 +77,7 @@ export async function postCreateService ( data: IPostCreateService ) {
     parentPost.set( { child: post.id } );
     await parentPost.save( { session } );
   }
-  clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST );
+  clearCache( CacheOptionServiceEnum.POST );
 
   await session.commitTransaction();
   session.endSession(); // Transaction session ended

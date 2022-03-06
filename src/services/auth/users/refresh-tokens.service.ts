@@ -1,3 +1,5 @@
+import { BadRequestError } from "infrastructure/errors/bad-request-error";
+import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { authJwtTokenGen } from "../helpers/jwt-token-generator.helper";
 import { authRefreshTokenGen } from "../helpers/refresh-token-generator.helper";
 import { authRefreshTokenDetailsService } from "../tokens/details.service";
@@ -11,7 +13,11 @@ export interface IRefreshTokenService {
 export async function authRefreshTokensService ( { token, ipAddress, userAgent }: IRefreshTokenService ) {
   const refreshToken = await authRefreshTokenDetailsService( token );
   const { user } = refreshToken;
-  const { firstName, lastName, email } = user;
+  const { firstName, lastName, email, isSuspended } = user;
+
+  if ( isSuspended ) {
+    throw new BadRequestError( "User is suspended", AuthLocaleEnum.ERROR_USER_IS_SUSPENDED );
+  }
 
   // replace old refresh token with a new one and save
   const newRefreshToken = authRefreshTokenGen( user, ipAddress, userAgent );

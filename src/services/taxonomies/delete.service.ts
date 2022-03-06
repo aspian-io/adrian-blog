@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import { NotFoundError } from 'errors/not-found-error';
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
 import { clearCache } from 'infrastructure/cache/clear-cache.infra';
 import { Taxonomy } from 'models/taxonomies/taxonomy.model';
+import { NotFoundError } from 'infrastructure/errors/not-found-error';
 
 export async function taxonomyDeleteService ( slug: string ) {
   const taxonomy = await Taxonomy.findOne( { slug } );
@@ -21,7 +21,7 @@ export async function taxonomyDeleteService ( slug: string ) {
     }
   }, { session } );
   await taxonomy.delete( { session } );
-  clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
+  clearCache( CacheOptionServiceEnum.TAXONOMY );
 
   await session.commitTransaction();
   session.endSession(); // Transaction session ended

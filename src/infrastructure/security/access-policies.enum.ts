@@ -5,6 +5,11 @@ export enum AccessPoliciesEnum {
 
   // Auth Policies
   Auth_ClaimList = "Auth_ClaimList",
+  Auth_SetUserClaims = "Auth_SetUserClaims",
+  Auth_UserList = "Auth_UserList",
+  Auth_UserDetails = "Auth_UserDetails",
+  Auth_Suspension = "Auth_Suspension",
+  Auth_Delete = "Auth_Delete",
 
   // Activity Policies
   Activity_LIST = "Activity_LIST",
@@ -18,6 +23,11 @@ export enum AccessPoliciesEnum {
 
   // Attachment Policies
   Attachment_CREATE = "Attachment_CREATE",
+  Attachment_EDIT = "Attachment_EDIT",
+  Attachment_DETAILS = "Attachment_DETAILS",
+  Attachment_LIST = "Attachment_LIST",
+  Attachment_DELETE = "Attachment_DELETE",
+  Attachment_PRESIGNED = "Attachment_PRESIGNED",
 
   // Post Policies
   Post_LIST = "Post_LIST",

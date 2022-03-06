@@ -1,6 +1,6 @@
+import { BadRequestError } from "infrastructure/errors/bad-request-error";
+import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { RefreshToken } from "models/auth/auth-refresh-token.model";
-import { BadRequestError } from 'errors/bad-request-error';
-import { AuthLocaleEnum } from "locales/service-locale-keys/auth.locale";
 
 export async function authRefreshTokenDetailsService ( token: string ) {
   const refreshToken = await RefreshToken.findOne( { token } ).populate( 'user' );

@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
-import { validationMsgSerializer } from '../../../../../../errors/request-validation-error';
-import { PostLocaleEnum } from '../../../../../../locales/service-locale-keys/posts.locale';
+import { validationMsgSerializer } from 'infrastructure/errors/request-validation-error';
+import { PostLocaleEnum } from 'infrastructure/locales/service-locale-keys/posts.locale';
 
 export const postCreateSchema = [
   body( 'title' )

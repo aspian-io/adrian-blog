@@ -1,4 +1,3 @@
-import { UserDoc } from 'models/auth/auth-user.model';
 import { Schema, SchemaOptions } from 'mongoose';
 
 /**
@@ -16,9 +15,9 @@ export interface BaseAttrs {
  * Base Schema Document Type
  */
 export interface BaseDoc {
-  createdBy: UserDoc;
+  createdBy: string;
   createdByIp: string;
-  updatedBy?: UserDoc;
+  updatedBy?: string;
   updatedByIp?: string;
   userAgent: string;
 }
@@ -63,7 +62,7 @@ export interface BaseMinimalAttrs {
  * Base Minimal Schema Document Type
  */
 export interface BaseMinimalDoc {
-  createdBy: UserDoc;
+  createdBy: string;
   createdByIp: string;
   userAgent: string;
 }
@@ -92,7 +91,7 @@ export interface BaseOnlyUpdateAttrs {
  * Base Schema Document Type (Only update info)
  */
 export interface BaseOnlyUpdateDoc {
-  createdBy: UserDoc;
+  createdBy: string;
   createdByIp: string;
   userAgent: string;
 }

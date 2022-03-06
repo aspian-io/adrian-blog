@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
-import { validationMsgSerializer } from '../../../../../../errors/request-validation-error';
-import { TaxonomyLocaleEnum } from '../../../../../../locales/service-locale-keys/taxonomies.locale';
+import { validationMsgSerializer } from 'infrastructure/errors/request-validation-error';
+import { TaxonomyLocaleEnum } from 'infrastructure/locales/service-locale-keys/taxonomies.locale';
 
 export const taxonomyCreateSchema = [
   body( 'type' )

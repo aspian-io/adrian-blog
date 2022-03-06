@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import slugify from "slugify";
-import { BadRequestError } from "errors/bad-request-error";
-import { NotFoundError } from "errors/not-found-error";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
 import { clearCache } from 'infrastructure/cache/clear-cache.infra';
-import { TaxonomyLocaleEnum } from 'locales/service-locale-keys/taxonomies.locale';
 import { Taxonomy, TaxonomyTypeEnum } from "models/taxonomies/taxonomy.model";
+import { NotFoundError } from "infrastructure/errors/not-found-error";
+import { BadRequestError } from "infrastructure/errors/bad-request-error";
+import { TaxonomyLocaleEnum } from "infrastructure/locales/service-locale-keys/taxonomies.locale";
 
 export interface ITaxonomyEditService {
   slug: string;
@@ -69,7 +69,7 @@ export async function taxonomyEditService ( data: ITaxonomyEditService ) {
     } );
     await parentDoc.save( { session } );
   }
-  clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
+  clearCache( CacheOptionServiceEnum.TAXONOMY );
   await session.commitTransaction();
   session.endSession(); // Transaction session ended
   return taxonomy;

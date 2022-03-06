@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { setTokenCookie } from 'helpers/cookie.helper';
-import { NotAuthenticatedError } from 'errors/not-authenticated-error';
 import { authRefreshTokensService } from 'services/auth/users/refresh-tokens.service';
+import { setTokenCookie } from 'infrastructure/security/cookie.infra';
+import { NotAuthenticatedError } from 'infrastructure/errors/not-authenticated-error';
 
-export async function refreshTokenController ( req: Request, res: Response ) {
+export async function authRefreshTokenController ( req: Request, res: Response ) {
   const token = req.cookies.refreshToken;
   const ipAddress = req.ip;
   const userAgent = req.get( 'User-Agent' ) ?? "unknown_agent";

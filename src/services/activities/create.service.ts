@@ -11,7 +11,7 @@ export interface IActivityCreateService {
   userAgent?: string;
   message?: string;
   localizedMsgKey?: string;
-  name?: string;
+  meta?: Object;
 }
 
 export async function activityCreateService ( data: IActivityCreateService ) {

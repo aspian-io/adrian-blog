@@ -11,7 +11,7 @@ export interface ActivityAttrs {
   userAgent?: string;
   message?: string;
   localizedMsgKey?: string;
-  name?: string;
+  meta?: Object;
 }
 
 interface ActivityDoc extends Document {
@@ -25,7 +25,7 @@ interface ActivityDoc extends Document {
   userAgent?: string;
   message?: string;
   localizedMsgKey?: string;
-  name?: string;
+  meta?: Object;
 }
 
 interface ActivityModel extends Model<ActivityDoc> {
@@ -43,7 +43,7 @@ const activitySchema = new Schema<ActivityDoc, ActivityModel>( {
   userAgent: { type: String, required: false },
   message: { type: String, required: false },
   localizedMsgKey: { type: String, required: false },
-  name: { type: String, required: false }
+  meta: { type: Object, required: false }
 }, {
   toJSON: {
     transform ( doc, ret ) {

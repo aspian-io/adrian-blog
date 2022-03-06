@@ -1,5 +1,5 @@
 import { redisWrapper } from "infrastructure/database/redis/redis-client.infra";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "./cache-options.infra";
+import { CacheOptionServiceEnum } from "./cache-options.infra";
 
 /**
  * 
@@ -8,6 +8,6 @@ import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "./cache-options.inf
  * @param {CacheOptionAreaEnum} area - Area of the backend service
  * @param {CacheOptionServiceEnum} serviceName - Service name
  */
-export const clearCache = ( area: CacheOptionAreaEnum, serviceName: CacheOptionServiceEnum ) => {
-  redisWrapper.client.del( JSON.stringify( `${ area }_${ serviceName }` ) );
+export const clearCache = ( serviceName: CacheOptionServiceEnum ) => {
+  redisWrapper.client.del( JSON.stringify( serviceName ) );
 };

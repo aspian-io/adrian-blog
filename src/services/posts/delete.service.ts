@@ -1,6 +1,6 @@
-import { NotFoundError } from 'errors/not-found-error';
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
 import { clearCache } from 'infrastructure/cache/clear-cache.infra';
+import { NotFoundError } from 'infrastructure/errors/not-found-error';
 import { Post } from 'models/posts/post.model';
 import mongoose from 'mongoose';
 
@@ -14,7 +14,7 @@ export async function postDeleteService ( slug: string ) {
   await Post.updateMany( { parent: post.id }, { $unset: { parent: "" } }, { session } );
   await Post.updateMany( { child: post.id }, { $unset: { child: "" } }, { session } );
   await post.delete( { session } );
-  clearCache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.POST );
+  clearCache( CacheOptionServiceEnum.POST );
 
   await session.commitTransaction();
   session.endSession();

@@ -25,7 +25,7 @@ export class WinstonMongoDbConsoleTransport extends Transport {
         userAgent: info.userAgent,
         message: info.message,
         localizedMsgKey: info.localizedMsgKey,
-        name: info.name
+        meta: info.meta
       } );
     } catch ( error ) {
       console.log( "Something were wrong saving logs into database - ", error );

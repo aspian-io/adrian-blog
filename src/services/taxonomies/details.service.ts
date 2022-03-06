@@ -1,10 +1,10 @@
-import { NotFoundError } from "errors/not-found-error";
 import { Taxonomy } from "models/taxonomies/taxonomy.model";
-import { CacheOptionAreaEnum, CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { NotFoundError } from "infrastructure/errors/not-found-error";
 
 export async function taxonomyDetailsService ( slug: string ) {
   const taxonomy = await Taxonomy.findOne( { slug } )
-    .cache( CacheOptionAreaEnum.ADMIN, CacheOptionServiceEnum.TAXONOMY );
+    .cache( CacheOptionServiceEnum.TAXONOMY );
   if ( !taxonomy ) {
     throw new NotFoundError();
   }

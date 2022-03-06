@@ -1,18 +1,37 @@
-import { PasswordUtil } from 'helpers/password-util.helper';
-import mongoose from 'mongoose';
+import { PasswordUtil } from 'infrastructure/security/password-util.infra';
+import mongoose, { Schema } from 'mongoose';
 import { AccessPoliciesEnum } from 'infrastructure/security/access-policies.enum';
 
-interface UserAttrs {
+export enum GenderEnum {
+  FEMALE = "FEMALE",
+  MALE = "MALE"
+}
+
+export interface UserAttrs {
   firstName: string;
   lastName: string;
   displayName?: string;
   bio?: string;
+  gender?: GenderEnum;
+  birthDate?: Date;
+  country?: string;
+  city?: string;
+  address?: string;
+  postalCode?: string;
+  mobilePhone?: string;
+  isMobilePhoneVerified?: Boolean;
+  phone?: string;
   avatar?: string;
+  job?: string;
   email: string;
+  isEmailConfirmed?: boolean;
   password: string;
+  isSuspended?: boolean;
   createdByIp: string;
   lastIp: string;
   claims?: AccessPoliciesEnum[];
+  updatedBy?: string;
+  updatedByIp?: string;
   userAgent: string;
 }
 
@@ -21,12 +40,26 @@ export interface UserDoc extends mongoose.Document {
   lastName: string;
   displayName?: string;
   bio?: string;
+  gender?: GenderEnum;
+  birthDate?: Date;
+  country?: string;
+  city?: string;
+  address?: string;
+  postalCode?: string;
+  mobilePhone?: string;
+  isMobilePhoneVerified?: Boolean;
+  phone?: string;
   avatar?: string;
+  job?: string;
   email: string;
+  isEmailConfirmed?: boolean;
   password: string;
+  isSuspended: boolean;
   createdByIp: string;
   lastIp: string;
   claims: AccessPoliciesEnum[];
+  updatedBy?: UserDoc;
+  updatedByIp?: string;
   userAgent: string;
 }
 
@@ -39,9 +72,21 @@ const userSchema = new mongoose.Schema<UserDoc, UserModel>( {
   lastName: { type: String, required: true },
   displayName: { type: String, required: false },
   bio: { type: String, required: false },
+  gender: { type: String, required: false, enum: Object.values( GenderEnum ) },
+  birthDate: { type: String, required: false },
+  country: { type: String, required: false },
+  city: { type: String, required: false },
+  address: { type: String, required: false },
+  postalCode: { type: String, required: false },
+  mobilePhone: { type: String, required: false },
+  isMobilePhoneVerified: { type: Boolean, default: false },
+  phone: { type: String, required: false },
   avatar: { type: String, required: false },
+  job: { type: String, required: false },
   email: { type: String, unique: true, required: true },
+  isEmailConfirmed: { type: Boolean, default: false },
   password: { type: String, required: true },
+  isSuspended: { type: Boolean, default: false },
   createdByIp: { type: String, required: true },
   lastIp: { type: String, required: true },
   claims: [
@@ -51,6 +96,8 @@ const userSchema = new mongoose.Schema<UserDoc, UserModel>( {
       enum: Object.values( AccessPoliciesEnum ),
     }
   ],
+  updatedBy: { type: Schema.Types.ObjectId, ref: "User" },
+  updatedByIp: { type: String, required: false },
   userAgent: { type: String, required: true }
 }, {
   toJSON: {

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { logSerializer } from "../../../../../helpers/log-serializer.helper";
-import { PostLocaleEnum } from "../../../../../locales/service-locale-keys/posts.locale";
-import { postListService } from "../../../../../services/posts/list.service";
-import { logger } from "../../../../../services/winston-logger/logger.service";
+import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
+import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { postListService } from "services/posts/list.service";
+import { logger } from "services/winston-logger/logger.service";
 
 export async function adminPostListController ( req: Request, res: Response ) {
   const posts = await postListService();

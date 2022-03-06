@@ -1,20 +1,16 @@
 import { Request, Response } from "express";
-import { s3 } from "../../../../../infrastructure/s3/s3.infra";
+import { AttachmentLocaleEnum } from "infrastructure/locales/service-locale-keys/attachments.locale";
+import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { attachmentGetPresignedUrlService } from "services/attachments/presigned-url.service";
+import { logger } from "services/winston-logger/logger.service";
 
 export async function adminGetPresignedUrlController ( req: Request, res: Response ) {
-
-  const clientParams = {
-    Bucket: process.env.S3_PRIVATE_BUCKET,
-    Key: `file.png`,
-  };
-
-  const url = s3.getSignedUrl( 'getObject', {
-    Bucket: process.env.S3_PRIVATE_BUCKET,
-    Key: "user/scr1-2022-01-17_14.46.17.mp4",
-    Expires: 3600
-  } );
-
-
-  console.log( `download url: ${ url }` );
+  const url = await attachmentGetPresignedUrlService( req.params.id );
   res.send( url );
+  logger.info(
+    `${ req.currentUser!.email } retrieved a presigned url`,
+    logSerializer( req, res, AttachmentLocaleEnum.INFO_PRESIGNED_URL, {
+      attachment: { id: req.params.id }
+    } )
+  );
 }

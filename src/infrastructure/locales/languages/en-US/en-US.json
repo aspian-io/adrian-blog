@@ -1,0 +1,308 @@
+{
+  "errors": {
+    "400": {
+      "msg": "Something went wrong"
+    },
+    "401": {
+      "msg": "Authentication in required"
+    },
+    "403": {
+      "msg": "You are not authorized"
+    },
+    "404": {
+      "msg": "Not found"
+    },
+    "dbConnectionError": {
+      "msg": "Error connecting to database"
+    },
+    "requestValidationError": "Invalid request parameters",
+    "userId": "User id must be a standard id",
+    "auth": {
+      "userIsSuspended": "User is suspended",
+      "authenticateService": {
+        "passMatchErr": "Invalid credentials"
+      },
+      "resetPasswordService": {
+        "resetPassLinkExpiredErr": "Invalid reset password link or the link expired"
+      },
+      "confirmEmailService": {
+        "confirmEmailLinkExpiredErr": "Invalid confirmation email link or the link expired",
+        "emailAlreadyConfirmed": "Email has been already confirmed"
+      },
+      "getRefreshTokenService": {
+        "invalidRefreshToken": "Invalid refresh token"
+      },
+      "getUserByIdService": {
+        "userNotFound": "User not found"
+      },
+      "registerService": {
+        "emailInUse": "Email in use"
+      },
+      "mobileVerificationService": {
+        "alreadyVerified": "Your mobile phone number has been already verified",
+        "verificationCodeExpired": "The verification code has been expired or is undefined"
+      },
+      "signinSchema": {
+        "email": "Email must be valid",
+        "password": "You must supply a password"
+      },
+      "signupSchema": {
+        "firstName": "You must enter your first name",
+        "lastName": "You must enter your last name",
+        "email": "Email must be valid",
+        "passwordLength": "Supplied password must be less than 30 characters",
+        "passwordTooWeak": "Weak password is not allowed",
+        "passwordDifficulty": "Your password must have at least 8 letters including uppercase letters, lowercase letters and numbers"
+      },
+      "changePasswordSchema": {
+        "currentPassSupplyErr": "You must supply your current valid password",
+        "newPassSupplyErr": "You must supply your new password"
+      },
+      "profileModificationSchema": {
+        "firstName": "You must supply your first name",
+        "lastName": "You must supply your last name"
+      }
+    },
+    "attachments": {
+      "create": {
+        "fileTypeNotAllowedErr": "File type not allowed"
+      }
+    },
+    "taxonomies": {
+      "createService": {
+        "duplicateTaxonomyErr": "Duplicate taxonomy is not allowed"
+      },
+      "editService": {
+        "parentNotFoundErr": "Parent taxonomy not found"
+      },
+      "deleteService": {
+        "taxonomyIdErr": "Taxonomy Id must be a standard Id"
+      },
+      "createSchema": {
+        "typeErr": "Taxonomy type is required",
+        "termEmptyErr": "Taxonomy term is required",
+        "termMinMaxLengthErr": "Taxonomy term's length must be more than 1 and up to 60"
+      },
+      "editSchema": {
+        "typeErr": "Taxonomy type is required",
+        "termEmptyErr": "Taxonomy term is required",
+        "termMinMaxLengthErr": "Taxonomy term's length must be more than 1 and up to 60"
+      }
+    },
+    "posts": {
+      "common": {
+        "parentNotFoundErr": "Parent post not found",
+        "duplicateParentPostErr": "The parent post has been taken and is not reusable"
+      },
+      "createService": {
+        "duplicatePostErr": "Duplicate post title is not allowed"
+      },
+      "deleteService": {
+        "postIdErr": "Post Id must be a standard Id"
+      },
+      "createSchema": {
+        "titleEmptyErr": "Post title is required",
+        "excerptEmptyErr": "Post excerpt is required",
+        "contentEmptyErr": "Post content is required",
+        "taxonomiesEmptyErr": "A post needs to have at least one taxonomy"
+      },
+      "editSchema": {
+        "titleEmptyErr": "Post title is required",
+        "excerptEmptyErr": "Post excerpt is required",
+        "contentEmptyErr": "Post content is required",
+        "taxonomiesEmptyErr": "A post needs to have at least one taxonomy"
+      }
+    },
+    "postComments": {
+      "settings": {
+        "editValueErr": "Comment settings value is required"
+      },
+      "createService": {
+        "replyLevelNotAllowed": "Reply is now allowed"
+      },
+      "createSchema": {
+        "titleEmptyErr": "Comment title is required",
+        "titleLengthErr": "Comment title's length must be less than 60 characters",
+        "contentEmptyErr": "Comment content cannot be empty",
+        "contentLengthErr": "Comment content's length must be less than 250 characters"
+      },
+      "editSchema": {
+        "titleEmptyErr": "Comment title is required",
+        "titleLengthErr": "Comment title's length must be less than 60 characters",
+        "contentEmptyErr": "Comment content cannot be empty",
+        "contentLengthErr": "Comment content's length must be less than 250 characters"
+      }
+    }
+  },
+  "info": {
+    "activities": {
+      "list": {
+        "successMsg": "Getting list of activities"
+      }
+    },
+    "auth": {
+      "signin": {
+        "successMsg": "User signed in"
+      },
+      "signout": {
+        "successMsg": "User signed out"
+      },
+      "signup": {
+        "successMsg": "User signed up"
+      },
+      "sendResetPassLink": {
+        "successMsg": "Password reset link has been sent successfully"
+      },
+      "resetPassword": {
+        "successMsg": "User's password resets successfully"
+      },
+      "changePassword": {
+        "successMsg": "User's password changed successfully"
+      },
+      "userList": {
+        "successMsg": "User list retrieved successfully"
+      },
+      "userChangeSuspension": {
+        "suspended": "User suspended successfully",
+        "unsuspended": "User unsuspended successfully"
+      },
+      "avatarChanged": {
+        "successMsg": "User avatar changed successfully"
+      },
+      "profileModified": {
+        "successMsg": "User profile modified successfully"
+      },
+      "profileViewed": {
+        "successMsg": "User viewed their profile"
+      },
+      "sendConfirmationEmailLink": {
+        "successMsg": "Confirmation email link has been sent to the user's email"
+      },
+      "emailConfirmed": {
+        "successMsg": "User's email address confirmed successfully"
+      },
+      "admin": {
+        "claims": "List of claims retrieved by admin successfully",
+        "userDetails": "Admin retrieved user details successfully",
+        "userDeleted": "Admin deleted user successfully",
+        "userClaimsModified": "Admin modified a user's claims"
+      },
+      "verificationCodeSent": {
+        "successMsg": "Verification code has been sent to the user successfully"
+      },
+      "verificationCodeConfirm": {
+        "successMsg": "Verification code has been confirmed successfully"
+      },
+      "claims": {
+        "coreAdmin": "Administrator - ( having access to all services unlimited )",
+        "coreUser": "Ordinary user",
+        "claimList": "Access to claim list",
+        "activityList": "Access to activity list of all users",
+        "taxonomyList": "Access to taxonomy list",
+        "taxonomyDetails": "Access to a taxonomy details",
+        "taxonomyCreate": "Ability to add a taxonomy",
+        "taxonomyEdit": "Ability to edit a taxonomy",
+        "taxonomyDelete": "Ability to delete a taxonomy",
+        "attachmentCreate": "Ability to upload a file",
+        "postList": "Access to post list",
+        "postDetails": "Access to a post details",
+        "postCreate": "Ability to add a post",
+        "postEdit": "Ability to edit a post",
+        "postDelete": "Ability to delete a post",
+        "postCommentApprove": "Ability to approve a post comment",
+        "postCommentList": "Access to post comment list",
+        "postCommentDetails": "Access to post comment details",
+        "postCommentCreate": "Ability to add a post comment",
+        "postCommentEdit": "Ability to edit a post comment",
+        "postCommentDelete": "Ability to delete a post comment",
+        "postCommentSettingsList": "Access to post comment settings list",
+        "postCommentSettingsEdit": "Ability to change post comment settings"
+      }
+    },
+    "attachments": {
+      "list": {
+        "successMsg": "Attachment list retrieved successfully"
+      },
+      "create": {
+        "successMsg": "Uploaded file info added to database successfully"
+      },
+      "edit": {
+        "successMsg": "Uploaded file info modified successfully"
+      },
+      "details": {
+        "successMsg": "Attachment details retrieved successfully"
+      },
+      "delete": {
+        "successMsg": "A file deleted successfully"
+      },
+      "deleteMany": {
+        "successMsg": "Multiple files deleted successfully"
+      },
+      "getPresignedUrl": {
+        "successMsg": "A presigned url retrieved successfully"
+      }
+    },
+    "taxonomies": {
+      "create": {
+        "successMsg": "A new taxonomy has been created"
+      },
+      "delete": {
+        "successMsg": "Taxonomy has been deleted"
+      },
+      "details": {
+        "successMsg": "Details of the taxonomy retrieved"
+      },
+      "edit": {
+        "successMsg": "Taxonomy has been edited"
+      },
+      "list": {
+        "successMsg": "List of taxonomies retrieved"
+      }
+    },
+    "posts": {
+      "create": {
+        "successMsg": "A new post has been created"
+      },
+      "delete": {
+        "successMsg": "Post has been deleted"
+      },
+      "details": {
+        "successMsg": "Details of the post retrieved"
+      },
+      "edit": {
+        "successMsg": "Post has been edited"
+      },
+      "list": {
+        "successMsg": "List of posts retrieved"
+      }
+    },
+    "postComments": {
+      "settings": {
+        "list": {
+          "successMsg": "Post comment settings list retrieved successfully"
+        },
+        "edit": {
+          "successMsg": "Post comment setting changed successfully"
+        }
+      },
+      "create": {
+        "successMsg": "Post comment created successfully"
+      },
+      "edit": {
+        "successMsg": "Post comment edited successfully"
+      },
+      "details": {
+        "successMsg": "Post comment details retrieved successfully"
+      },
+      "list": {
+        "successMsg": "Post comment list retrieved successfully"
+      },
+      "delete": {
+        "successMsg": "Post comment deleted successfully"
+      },
+      "approve": {
+        "successMsg": "Post comment approval changed successfully"
+      }
+    }
+  }
+}
