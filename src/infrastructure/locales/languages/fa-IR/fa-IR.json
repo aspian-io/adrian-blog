@@ -17,6 +17,9 @@
     },
     "requestValidationError": "پارامترهای ورودی صحیح نمی باشد",
     "userId": "شناسه کاربری میبایست یک شناسه استاندارد باشد",
+    "settings": {
+      "editValueErr": "وارد کردن مقدار تنظیم الزامی است"
+    },
     "auth": {
       "userIsSuspended": "کاربر تعلیق شده است",
       "authenticateService": {
@@ -114,9 +117,6 @@
       }
     },
     "postComments": {
-      "settings": {
-        "editValueErr": "وارد کردن مقدار جدید برای این تنظیم الزامی است"
-      },
       "createService": {
         "replyLevelNotAllowed": "پاسخ به این نظر مجاز نمی باشد"
       },
@@ -135,6 +135,14 @@
     }
   },
   "info": {
+    "settings": {
+      "list": {
+        "successMsg": "لیست تنظیمات دیدگاه پست با موفقیت دریافت گردید"
+      },
+      "edit": {
+        "successMsg": "تنظیمات دیدگاه پست با موفقیت ویرایش گردید"
+      }
+    },
     "activities": {
       "list": {
         "successMsg": "دریافت لیست فعالیت ها"
@@ -277,14 +285,6 @@
       }
     },
     "postComments": {
-      "settings": {
-        "list": {
-          "successMsg": "لیست تنظیمات دیدگاه پست با موفقیت دریافت گردید"
-        },
-        "edit": {
-          "successMsg": "تنظیمات دیدگاه پست با موفقیت ویرایش گردید"
-        }
-      },
       "create": {
         "successMsg": "دیدگاه پست با موفقیت ثبت گردید"
       },

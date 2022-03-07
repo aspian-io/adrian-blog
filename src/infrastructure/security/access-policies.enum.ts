@@ -3,6 +3,10 @@ export enum AccessPoliciesEnum {
   Core_ADMIN = 'Core_ADMIN',
   Core_USER = 'Core_USER',
 
+  // Setting Policies
+  Setting_List = "Setting_List",
+  Setting_Edit = "Setting_Edit",
+
   // Auth Policies
   Auth_ClaimList = "Auth_ClaimList",
   Auth_SetUserClaims = "Auth_SetUserClaims",

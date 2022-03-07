@@ -5,9 +5,6 @@ import { adminPostCommentDeleteController } from 'controllers/admin-controllers/
 import { adminPostCommentDetailsController } from 'controllers/admin-controllers/api/v1/post-comments/details.controller';
 import { adminPostCommentEditController } from 'controllers/admin-controllers/api/v1/post-comments/edit.controller';
 import { adminPostCommentListController } from 'controllers/admin-controllers/api/v1/post-comments/list.controller';
-import { adminPostCommentSettingEditController } from 'controllers/admin-controllers/api/v1/post-comments/settings/edit.controller';
-import { adminPostCommentSettingsListController } from 'controllers/admin-controllers/api/v1/post-comments/settings/list.controller';
-import { postCommentSettingsEditSchema } from 'controllers/admin-controllers/api/v1/post-comments/settings/validation-schemas/comment-settings-edit.schema';
 import { postCommentCreateSchema } from 'controllers/admin-controllers/api/v1/post-comments/validation-schemas/comment-create.schema';
 import { postCommentEditSchema } from 'controllers/admin-controllers/api/v1/post-comments/validation-schemas/comment-edit.schema';
 import { AccessPoliciesEnum } from 'infrastructure/security/access-policies.enum';
@@ -60,24 +57,6 @@ adminPostCommentRouter.delete(
   requireAuth,
   authorize( [ AccessPoliciesEnum.PostComment_DELETE, AccessPoliciesEnum.Core_ADMIN ] ),
   asyncHandler( adminPostCommentDeleteController )
-);
-
-// PUT: Edit a Post Comment Setting
-adminPostCommentRouter.put(
-  '/edit-settings/:id',
-  requireAuth,
-  authorize( [ AccessPoliciesEnum.PostComment_SETTINGS_EDIT, AccessPoliciesEnum.Core_ADMIN ] ),
-  postCommentSettingsEditSchema,
-  validateRequest,
-  asyncHandler( adminPostCommentSettingEditController )
-);
-
-// GET: List of Post Comments Settings
-adminPostCommentRouter.get(
-  '/settings',
-  requireAuth,
-  authorize( [ AccessPoliciesEnum.PostComment_SETTINGS_LIST, AccessPoliciesEnum.Core_ADMIN ] ),
-  asyncHandler( adminPostCommentSettingsListController )
 );
 
 // PUT: Approve a comment

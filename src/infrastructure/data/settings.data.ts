@@ -38,4 +38,10 @@ export const settingsData = [
     service: SettingsServiceEnum.POST_COMMENTS,
     userAgent: "SYSTEM"
   },
+  {
+    key: SettingsKeyEnum.ATTACHMENT_URL_EXP_HOURS,
+    value: "24",
+    service: SettingsServiceEnum.ATTACHMENTS,
+    userAgent: "SYSTEM"
+  },
 ];

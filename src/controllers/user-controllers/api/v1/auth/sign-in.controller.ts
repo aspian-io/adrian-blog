@@ -25,9 +25,12 @@ export async function authSigninController ( req: Request, res: Response ) {
     jwtToken: user.jwtToken
   } );
 
-  logger.info( "user successfully signed-in", logSerializer( req, res, AuthLocaleEnum.INFO_SIGNIN, {
-    user: {
-      id: user.id
-    }
-  } ) );
+  logger.info(
+    "user successfully signed-in",
+    logSerializer( req, res, AuthLocaleEnum.INFO_SIGNIN, {
+      user: {
+        id: user.id
+      }
+    } )
+  );
 };

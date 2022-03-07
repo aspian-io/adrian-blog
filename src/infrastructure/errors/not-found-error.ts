@@ -6,7 +6,7 @@ export class NotFoundError extends CustomError {
   localizedMsgKey = CoreLocaleEnum.ERROR_404_MSG;
 
   constructor () {
-    super( 'Not found' );
+    super( 'Not Found' );
 
     // Uncomment this line if typescript target is es5 and below
     //Object.setPrototypeOf( this, NotFoundError.prototype );

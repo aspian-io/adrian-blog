@@ -17,6 +17,7 @@ import { i18nextConfiguration } from 'infrastructure/locales/i18next-config';
 import { currentUser } from 'infrastructure/middleware/current-user.middleware';
 import { NotFoundError } from 'infrastructure/errors/not-found-error';
 import { errorHandler } from 'infrastructure/middleware/error-handler.middleware';
+import { adminSettingRouter } from 'infrastructure/routes/api/v1/admin/setting.router';
 
 const app = express();
 app.use( express.json() );
@@ -25,22 +26,13 @@ app.use( session( {
   resave: true,
   saveUninitialized: true
 } ) );
-app.use( express.urlencoded( { extended: false } ) );
+//app.use( express.urlencoded( { extended: false } ) );
 app.use( cookieParser() );
 app.use( responseTime() );
 i18nextConfiguration();
 app.use( i18middleware.handle( i18next ) );
 
-// const whitelist = [ 'http://localhost:5000' ]
-// allow cors requests from whitelist origins and with credentials
 app.use( cors( {
-  // origin: ( origin, callback ) => {
-  //   if ( origin && whitelist.indexOf( origin ) !== -1 ) {
-  //     callback( null, true )
-  //   } else {
-  //     callback( new Error( 'Not allowed by CORS' ) )
-  //   }
-  // },
   origin: '*',
   credentials: true,
   methods: [ 'get', 'post', 'put', 'patch', 'OPTIONS', 'delete', 'DELETE' ]
@@ -51,11 +43,10 @@ app.use( express.static( path.join( __dirname, '../public' ) ) );
 
 // Assign current user to Express Request object
 app.use( currentUser );
-// Uppy Companion
-//app.use( '/upload', requireAuth, companion.app( getS3ConfigParams( 5 * 60 * 60 ) ) );
 // Routes
 app.use( '/:lng?/api/v1/users', authRouter );
 
+app.use( '/:lng?/api/v1/admin/settings', adminSettingRouter );
 app.use( '/:lng?/api/v1/admin/users', adminAuthRouter );
 app.use( '/:lng?/api/v1/admin/attachments', adminAttachmentRouter );
 app.use( '/:lng?/api/v1/admin/taxonomies', adminTaxonomyRouter );

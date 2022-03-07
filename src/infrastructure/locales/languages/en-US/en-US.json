@@ -17,6 +17,9 @@
     },
     "requestValidationError": "Invalid request parameters",
     "userId": "User id must be a standard id",
+    "settings": {
+      "editValueErr": "Setting value is required"
+    },
     "auth": {
       "userIsSuspended": "User is suspended",
       "authenticateService": {
@@ -114,9 +117,6 @@
       }
     },
     "postComments": {
-      "settings": {
-        "editValueErr": "Comment settings value is required"
-      },
       "createService": {
         "replyLevelNotAllowed": "Reply is now allowed"
       },
@@ -135,6 +135,14 @@
     }
   },
   "info": {
+    "settings": {
+      "list": {
+        "successMsg": "Settings list retrieved successfully"
+      },
+      "edit": {
+        "successMsg": "Setting modified successfully"
+      }
+    },
     "activities": {
       "list": {
         "successMsg": "Getting list of activities"
@@ -277,14 +285,6 @@
       }
     },
     "postComments": {
-      "settings": {
-        "list": {
-          "successMsg": "Post comment settings list retrieved successfully"
-        },
-        "edit": {
-          "successMsg": "Post comment setting changed successfully"
-        }
-      },
       "create": {
         "successMsg": "Post comment created successfully"
       },

@@ -77,7 +77,7 @@ async function farazSendSMSHandler ( message: string, recipients: string[] ) {
 // FarazSMS send pattern sms handler
 async function farazSendPatternSMSHandler<T> ( patternName: PatternNameEnum, recipient: string, values: T ) {
   const patternSettingKey: SettingsKeyEnum = SettingsKeyEnum[ <any>patternName as keyof typeof SettingsKeyEnum ];
-  const patternCode = await settingGetValueService( SettingsKeyEnum[ patternSettingKey ] );
+  const patternCode = await settingGetValueService( patternSettingKey );
   const originator = await settingGetValueService( SettingsKeyEnum.SMS_ORIGINATOR );
   if ( originator === '0' || !patternCode ) {
     return;
