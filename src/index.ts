@@ -3,10 +3,10 @@ import emoji from 'node-emoji';
 import companion from '@uppy/companion';
 import { envTypeGuards } from 'infrastructure/env/env-type-guards';
 import chalk from 'chalk';
-import { redisWrapper } from 'infrastructure/database/redis/redis-client.infra';
-import { startCacheMongooseQueries } from 'infrastructure/cache/redis-cache-extension.infra';
-import { connectToMongoDB } from 'infrastructure/database/mongodb/mongoose-connection.infra';
-import { smsProviderInit } from 'infrastructure/sms/provider-init.infra';
+import { redisWrapper } from 'infrastructure/database/redis/redis-client';
+import { startCacheMongooseQueries } from 'infrastructure/cache/redis-cache-extension';
+import { connectToMongoDB } from 'infrastructure/database/mongodb/mongoose-connection';
+import { smsProviderInit } from 'infrastructure/sms/provider-init';
 
 const boldGreen = chalk.bold.green;
 

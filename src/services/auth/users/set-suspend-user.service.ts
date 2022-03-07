@@ -1,8 +1,8 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
-import { clearCache } from "infrastructure/cache/clear-cache.infra";
-import { sendMail } from "infrastructure/email/mailer.infa";
-import { suspendAccountTemplate } from "infrastructure/email/templates/suspend-account.infra";
-import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
+import { sendMail } from "infrastructure/email/mailer";
+import { suspendAccountTemplate } from "infrastructure/email/templates/suspend-account";
+import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { User } from "models/auth/auth-user.model";
 

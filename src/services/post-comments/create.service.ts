@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Comment } from 'models/post-comments/post-comment.model';
-import { clearCache } from 'infrastructure/cache/clear-cache.infra';
-import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
+import { clearCache } from 'infrastructure/cache/clear-cache';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options';
 import { postCommentProcessor } from './helper/comment-processor.helper';
 import { BadRequestError } from 'infrastructure/errors/bad-request-error';
 import { CommentLocaleEnum } from 'infrastructure/locales/service-locale-keys/post-comment.locale';

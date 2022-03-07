@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthLocaleEnum } from 'infrastructure/locales/service-locale-keys/auth.locale';
-import { setTokenCookie } from 'infrastructure/security/cookie.infra';
-import { logSerializer } from 'infrastructure/serializers/log-serializer.infra';
+import { setTokenCookie } from 'infrastructure/security/cookie';
+import { logSerializer } from 'infrastructure/serializers/log-serializer';
 import { authSignUpService } from 'services/auth/users/sign-up.service';
 import { logger } from 'services/winston-logger/logger.service';
 

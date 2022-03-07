@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import slugify from "slugify";
-import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
-import { clearCache } from 'infrastructure/cache/clear-cache.infra';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options';
+import { clearCache } from 'infrastructure/cache/clear-cache';
 import { Taxonomy, TaxonomyTypeEnum } from "models/taxonomies/taxonomy.model";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";

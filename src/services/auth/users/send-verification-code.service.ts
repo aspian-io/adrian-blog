@@ -1,7 +1,7 @@
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
-import { VerificationCode } from "infrastructure/sms/verification-code.infra";
+import { VerificationCode } from "infrastructure/sms/verification-code";
 import { User } from "models/auth/auth-user.model";
 import { ISmsPatternVerificationValues } from "services/sms/helpers/types";
 import { PatternNameEnum, sendPatternSMS, sendSMS } from "services/sms/send-sms.service";

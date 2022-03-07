@@ -1,4 +1,4 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { Post } from "models/posts/post.model";
 
 export async function postListService () {

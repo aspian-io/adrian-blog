@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { Request, Response } from "express";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
-import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { authSetSuspendUserService } from "services/auth/users/set-suspend-user.service";
 import { logger } from "services/winston-logger/logger.service";
 

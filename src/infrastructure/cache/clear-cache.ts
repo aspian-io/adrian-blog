@@ -1,5 +1,5 @@
-import { redisWrapper } from "infrastructure/database/redis/redis-client.infra";
-import { CacheOptionServiceEnum } from "./cache-options.infra";
+import { redisWrapper } from "infrastructure/database/redis/redis-client";
+import { CacheOptionServiceEnum } from "./cache-options";
 
 /**
  * 

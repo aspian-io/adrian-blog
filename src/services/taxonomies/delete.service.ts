@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
-import { clearCache } from 'infrastructure/cache/clear-cache.infra';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options';
+import { clearCache } from 'infrastructure/cache/clear-cache';
 import { Taxonomy } from 'models/taxonomies/taxonomy.model';
 import { NotFoundError } from 'infrastructure/errors/not-found-error';
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { settingEditByIdService } from "services/settings/edit.service";
-import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { logger } from "services/winston-logger/logger.service";
 import { SettingLocaleEnum } from "infrastructure/locales/service-locale-keys/settings.locale";
 

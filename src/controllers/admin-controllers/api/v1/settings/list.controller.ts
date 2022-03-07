@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { SettingsServiceEnum } from "models/settings/settings.model";
 import { settingsListService } from "services/settings/list.service";
-import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { logger } from "services/winston-logger/logger.service";
 import { SettingLocaleEnum } from "infrastructure/locales/service-locale-keys/settings.locale";
 

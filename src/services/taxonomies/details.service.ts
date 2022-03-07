@@ -1,5 +1,5 @@
 import { Taxonomy } from "models/taxonomies/taxonomy.model";
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 
 export async function taxonomyDetailsService ( slug: string ) {

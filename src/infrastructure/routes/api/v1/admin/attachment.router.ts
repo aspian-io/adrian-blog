@@ -2,7 +2,7 @@ import express from "express";
 import companion from '@uppy/companion';
 import { adminGetPresignedUrlController } from "controllers/admin-controllers/api/v1/attachments/get-presigned-url.controller";
 import { AccessPoliciesEnum } from "infrastructure/security/access-policies.enum";
-import { getS3ConfigParams } from "infrastructure/s3/config.infra";
+import { getS3ConfigParams } from "infrastructure/s3/config";
 import { adminAttachmentCreateController } from "controllers/admin-controllers/api/v1/attachments/create.controller";
 import { adminAttachmentEditController } from "controllers/admin-controllers/api/v1/attachments/edit.controller";
 import { adminAttachmentDeleteController } from "controllers/admin-controllers/api/v1/attachments/delete.controller";

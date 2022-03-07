@@ -1,10 +1,10 @@
-import { PasswordUtil } from "infrastructure/security/password-util.infra";
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
-import { clearCache } from "infrastructure/cache/clear-cache.infra";
+import { PasswordUtil } from "infrastructure/security/password-util";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
 import { User } from "models/auth/auth-user.model";
-import { changePasswordTemplate } from "infrastructure/email/templates/change-password.infra";
-import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs.infra";
-import { sendMail } from "infrastructure/email/mailer.infa";
+import { changePasswordTemplate } from "infrastructure/email/templates/change-password";
+import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs";
+import { sendMail } from "infrastructure/email/mailer";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";

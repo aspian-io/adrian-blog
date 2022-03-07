@@ -1,6 +1,6 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
-import { clearCache } from "infrastructure/cache/clear-cache.infra";
-import { redisWrapper } from "infrastructure/database/redis/redis-client.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
+import { redisWrapper } from "infrastructure/database/redis/redis-client";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { User } from "models/auth/auth-user.model";

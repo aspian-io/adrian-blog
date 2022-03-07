@@ -1,8 +1,8 @@
-import { redisWrapper } from "infrastructure/database/redis/redis-client.infra";
+import { redisWrapper } from "infrastructure/database/redis/redis-client";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
-import { sixDigitRandomCodeGen } from "infrastructure/security/six-digit-code-gen.infra";
+import { sixDigitRandomCodeGen } from "infrastructure/security/six-digit-code-gen";
 
 /**
  * Generate or get temporary verification code

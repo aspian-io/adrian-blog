@@ -1,10 +1,10 @@
 import { farazCreatePattern } from "@aspianet/faraz-sms";
 import chalk from "chalk";
-import { farazSMSDefaultPatterns } from "infrastructure/sms/faraz-sms-patterns.infra";
-import { smsProviderInit } from "infrastructure/sms/provider-init.infra";
+import { farazSMSDefaultPatterns } from "infrastructure/sms/faraz-sms-patterns";
+import { smsProviderInit } from "infrastructure/sms/provider-init";
 import { Settings, SettingsServiceEnum } from "models/settings/settings.model";
 import emoji from "node-emoji";
-import { connectToMongoDB } from "../mongodb/mongoose-connection.infra";
+import { connectToMongoDB } from "../mongodb/mongoose-connection";
 
 connectToMongoDB();
 smsProviderInit();

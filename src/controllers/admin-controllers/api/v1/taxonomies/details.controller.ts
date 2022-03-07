@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { TaxonomyLocaleEnum } from "infrastructure/locales/service-locale-keys/taxonomies.locale";
-import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { taxonomyDetailsService } from "services/taxonomies/details.service";
 import { logger } from "services/winston-logger/logger.service";
 

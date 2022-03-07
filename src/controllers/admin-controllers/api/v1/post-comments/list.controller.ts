@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { CommentLocaleEnum } from "infrastructure/locales/service-locale-keys/post-comment.locale";
-import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { postCommentListService } from "services/post-comments/list.service";
 import { logger } from "services/winston-logger/logger.service";
 

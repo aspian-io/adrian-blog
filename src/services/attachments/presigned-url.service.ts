@@ -1,6 +1,6 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
-import { s3 } from "infrastructure/s3/s3.infra";
+import { s3 } from "infrastructure/s3/s3";
 import { Attachment } from "models/attachments/attachment.model";
 import { SettingsKeyEnum } from "models/settings/settings.model";
 import { settingGetValueService } from "services/settings/get-value.service";

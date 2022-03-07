@@ -1,8 +1,7 @@
-import { farazSMS } from "@aspianet/faraz-sms";
 import chalk from "chalk";
 import { SettingsKeyEnum } from "models/settings/settings.model";
 import { settingGetValueService } from "services/settings/get-value.service";
-import { farazSMSInit } from "./faraz-sms-init.infra";
+import { farazSMSInit } from "./faraz-sms-init";
 
 interface ISMSProviders {
   [ providerName: string ]: () => Promise<void>;

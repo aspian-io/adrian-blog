@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { logger } from 'services/winston-logger/logger.service';
-import { logSerializer } from 'infrastructure/serializers/log-serializer.infra';
+import { logSerializer } from 'infrastructure/serializers/log-serializer';
 import { authSignInService } from 'services/auth/users/sign-in.service';
-import { setTokenCookie } from 'infrastructure/security/cookie.infra';
+import { setTokenCookie } from 'infrastructure/security/cookie';
 import { AuthLocaleEnum } from 'infrastructure/locales/service-locale-keys/auth.locale';
 
 export async function authSigninController ( req: Request, res: Response ) {

@@ -7,9 +7,9 @@
     "start": "NODE_PATH=dist/ node dist/index.js",
     "dev": "nodemon --config nodemon.json src/index.ts",
     "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.ts",
-    "data:import": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/data-seeder.infra.ts",
-    "data:destroy": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/data-seeder.infra.ts -d",
-    "smspattern:import": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/faraz-sms-pattern-seeder.infra.ts",
+    "data:import": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/data-seeder.ts",
+    "data:destroy": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/data-seeder.ts -d",
+    "smspattern:import": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config src/infrastructure/database/seed-data/faraz-sms-pattern-seeder.ts",
     "build": "tsc -p ."
   },
   "author": "Omid Rouhani",

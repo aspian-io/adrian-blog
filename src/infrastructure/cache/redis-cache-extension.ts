@@ -1,7 +1,7 @@
 import chalk from 'chalk';
-import { redisWrapper } from 'infrastructure/database/redis/redis-client.infra';
+import { redisWrapper } from 'infrastructure/database/redis/redis-client';
 import mongoose from 'mongoose';
-import { CacheOptionServiceEnum } from './cache-options.infra';
+import { CacheOptionServiceEnum } from './cache-options';
 
 /**
  * Custom type for mongoose Document to use Redis cache

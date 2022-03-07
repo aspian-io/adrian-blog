@@ -1,4 +1,4 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { Attachment } from "models/attachments/attachment.model";
 
 export async function attachmentListService () {

@@ -1,5 +1,5 @@
 import { AWSError, S3 } from "aws-sdk";
-import { s3 } from "./s3.infra";
+import { s3 } from "./s3";
 
 // S3 delete single object params
 export interface IS3DeleteObject {

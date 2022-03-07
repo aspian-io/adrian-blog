@@ -1,8 +1,8 @@
 import sanitizeHtml from 'sanitize-html';
-import { sanitizeHtmlOptions } from "infrastructure/security/html-allowed.infra";
+import { sanitizeHtmlOptions } from "infrastructure/security/html-allowed";
 import { settingGetValueService } from 'services/settings/get-value.service';
 import { SettingsKeyEnum } from 'models/settings/settings.model';
-import { commaSeparatedToArray } from 'infrastructure/string-utils/comma-separated-to-array.infra';
+import { commaSeparatedToArray } from 'infrastructure/string-utils/comma-separated-to-array';
 
 export interface ICommentProcessorParams {
   title: string;

@@ -1,8 +1,8 @@
 import { Taxonomy, TaxonomyTypeEnum } from "models/taxonomies/taxonomy.model";
 import mongoose from 'mongoose';
 import slugify from "slugify";
-import { clearCache } from "infrastructure/cache/clear-cache.infra";
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { clearCache } from "infrastructure/cache/clear-cache";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
 import { TaxonomyLocaleEnum } from "infrastructure/locales/service-locale-keys/taxonomies.locale";

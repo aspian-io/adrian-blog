@@ -1,7 +1,7 @@
-import { EmailTemplateLangEnum } from "./types/email-template-langs.infra";
-import { enEmailVerificationTemplate } from "./languages/en/email-verification-template.infra";
-import { faEmailVerificationTemplate } from "./languages/fa/email-verification-template.infra";
-import { IEmailTemplate } from "./types/template-type.infra";
+import { EmailTemplateLangEnum } from "./types/email-template-langs";
+import { enEmailVerificationTemplate } from "./languages/en/email-verification.template";
+import { faEmailVerificationTemplate } from "./languages/fa/email-verification.template";
+import { IEmailTemplate } from "./types/template-type";
 
 export const emailVerificationTemplate = ( lang: EmailTemplateLangEnum, email: string, verificationLink: string ): IEmailTemplate => {
   switch ( lang ) {

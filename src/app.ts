@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import i18next from 'i18next';
 import i18middleware from 'i18next-http-middleware';
-import cors from 'cors';
 import session from 'express-session';
 import { authRouter } from 'infrastructure/routes/api/v1/user/auth.router';
 import { adminAuthRouter } from 'infrastructure/routes/api/v1/admin/auth.router';
@@ -18,6 +17,7 @@ import { currentUser } from 'infrastructure/middleware/current-user.middleware';
 import { NotFoundError } from 'infrastructure/errors/not-found-error';
 import { errorHandler } from 'infrastructure/middleware/error-handler.middleware';
 import { adminSettingRouter } from 'infrastructure/routes/api/v1/admin/setting.router';
+import { corsInit } from 'infrastructure/security/cors-init';
 
 const app = express();
 app.use( express.json() );
@@ -32,11 +32,8 @@ app.use( responseTime() );
 i18nextConfiguration();
 app.use( i18middleware.handle( i18next ) );
 
-app.use( cors( {
-  origin: '*',
-  credentials: true,
-  methods: [ 'get', 'post', 'put', 'patch', 'OPTIONS', 'delete', 'DELETE' ]
-} ) );
+// CORS policy config
+corsInit( app );
 
 // static public path for Uppy S3 multipart upload
 app.use( express.static( path.join( __dirname, '../public' ) ) );

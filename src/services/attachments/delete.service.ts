@@ -1,9 +1,9 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
-import { clearCache } from "infrastructure/cache/clear-cache.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
-import { IS3DeleteSingleObjectType, s3DeleteObject, s3DeleteObjects } from "infrastructure/s3/s3-delete.infra";
+import { IS3DeleteSingleObjectType, s3DeleteObject, s3DeleteObjects } from "infrastructure/s3/s3-delete";
 import { Attachment } from "models/attachments/attachment.model";
 
 export async function attachmentDeleteSingleFileService ( attachmentId: string ) {

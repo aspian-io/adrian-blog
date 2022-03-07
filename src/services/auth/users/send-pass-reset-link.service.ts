@@ -1,7 +1,7 @@
-import { redisWrapper } from "infrastructure/database/redis/redis-client.infra";
-import { sendMail } from "infrastructure/email/mailer.infa";
-import { resetPasswordEmailTemplate } from "infrastructure/email/templates/reset-password.infra";
-import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs.infra";
+import { redisWrapper } from "infrastructure/database/redis/redis-client";
+import { sendMail } from "infrastructure/email/mailer";
+import { resetPasswordEmailTemplate } from "infrastructure/email/templates/reset-password";
+import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { authRefreshTokensService } from 'services/auth/users/refresh-tokens.service';
-import { setTokenCookie } from 'infrastructure/security/cookie.infra';
+import { setTokenCookie } from 'infrastructure/security/cookie';
 import { NotAuthenticatedError } from 'infrastructure/errors/not-authenticated-error';
 
 export async function authRefreshTokenController ( req: Request, res: Response ) {

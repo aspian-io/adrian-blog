@@ -1,4 +1,4 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { User } from "models/auth/auth-user.model";
 

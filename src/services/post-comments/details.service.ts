@@ -1,4 +1,4 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { Comment } from "models/post-comments/post-comment.model";
 

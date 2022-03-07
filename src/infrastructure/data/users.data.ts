@@ -1,4 +1,4 @@
-import { PasswordUtil } from "infrastructure/security/password-util.infra";
+import { PasswordUtil } from "infrastructure/security/password-util";
 import { AccessPoliciesEnum } from "infrastructure/security/access-policies.enum";
 
 export const usersData = async () => [

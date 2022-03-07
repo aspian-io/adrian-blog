@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
-import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { authClaimListService } from "services/auth/claims/list.service";
 import { logger } from "services/winston-logger/logger.service";
 

@@ -1,6 +1,6 @@
 import path from "path";
 import { sanitize } from 'string-sanitizer';
-import { isFileTypeAllowed } from "infrastructure/security/filetype-allowed.infra";
+import { isFileTypeAllowed } from "infrastructure/security/filetype-allowed";
 import { AttachmentPolicyEnum } from "models/attachments/attachment.model";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";

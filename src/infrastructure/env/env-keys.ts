@@ -5,6 +5,7 @@ export const envKeys = [
   'PROTOCOL',
   'HOST',
   'BASE_URL',
+  'CORS_ORIGINS',
   'SUPPORT_PATH',
   'RESET_PASS_PATH',
   'EMAIL_VERIFICATION_PATH',

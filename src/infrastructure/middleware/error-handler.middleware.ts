@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from 'services/winston-logger/logger.service';
-import { logSerializer } from 'infrastructure/serializers/log-serializer.infra';
+import { logSerializer } from 'infrastructure/serializers/log-serializer';
 import { CustomError } from 'infrastructure/errors/custom-error';
 import { RequestValidationError } from 'infrastructure/errors/request-validation-error';
 import { CoreLocaleEnum } from 'infrastructure/locales/service-locale-keys/core.locale';

@@ -5,6 +5,7 @@ namespace NodeJS {
     PROTOCOL?: string;
     HOST?: string;
     BASE_URL?: string;
+    CORS_ORIGINS?: string;
     SUPPORT_PATH?: string;
     RESET_PASS_PATH?: string;
     EMAIL_VERIFICATION_PATH?: string;

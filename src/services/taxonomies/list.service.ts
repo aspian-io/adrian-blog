@@ -1,4 +1,4 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { Taxonomy } from "models/taxonomies/taxonomy.model";
 
 export async function taxonomyListService () {

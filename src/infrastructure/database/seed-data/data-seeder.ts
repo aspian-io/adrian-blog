@@ -9,7 +9,7 @@ import { User } from "models/auth/auth-user.model";
 import { Comment } from "models/post-comments/post-comment.model";
 import { Post } from "models/posts/post.model";
 import { Taxonomy } from "models/taxonomies/taxonomy.model";
-import { connectToMongoDB } from "../mongodb/mongoose-connection.infra";
+import { connectToMongoDB } from "../mongodb/mongoose-connection";
 import { Settings, SettingsKeyEnum, SettingsServiceEnum } from "models/settings/settings.model";
 import { settingsData } from "infrastructure/data/settings.data";
 

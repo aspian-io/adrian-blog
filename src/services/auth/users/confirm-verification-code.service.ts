@@ -1,9 +1,9 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
-import { clearCache } from "infrastructure/cache/clear-cache.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
-import { VerificationCode } from "infrastructure/sms/verification-code.infra";
+import { VerificationCode } from "infrastructure/sms/verification-code";
 import { User } from "models/auth/auth-user.model";
 
 export async function authConfirmVerificationCodeService ( userId: string, verificationCode: string ) {

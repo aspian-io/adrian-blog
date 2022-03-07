@@ -1,5 +1,5 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
-import { clearCache } from "infrastructure/cache/clear-cache.infra";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { Attachment } from "models/attachments/attachment.model";
 

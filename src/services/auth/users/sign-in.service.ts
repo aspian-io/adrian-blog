@@ -1,6 +1,6 @@
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
-import { PasswordUtil } from "infrastructure/security/password-util.infra";
+import { PasswordUtil } from "infrastructure/security/password-util";
 import { User } from "models/auth/auth-user.model";
 import { authJwtTokenGen } from "../helpers/jwt-token-generator.helper";
 import { authRefreshTokenGen } from "../helpers/refresh-token-generator.helper";

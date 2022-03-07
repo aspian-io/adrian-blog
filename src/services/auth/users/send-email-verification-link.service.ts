@@ -1,9 +1,9 @@
-import { sendMail } from "infrastructure/email/mailer.infa";
-import { emailVerificationTemplate } from "infrastructure/email/templates/email-verification.infra";
+import { sendMail } from "infrastructure/email/mailer";
+import { emailVerificationTemplate } from "infrastructure/email/templates/email-verification";
 import { User } from "models/auth/auth-user.model";
 import { authEmailConfirmationRedisKeyGen, authEmailConfirmationTokenGen } from "../helpers/email-confirmation.helper";
-import { redisWrapper } from "infrastructure/database/redis/redis-client.infra";
-import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs.infra";
+import { redisWrapper } from "infrastructure/database/redis/redis-client";
+import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";

@@ -1,7 +1,7 @@
 import Queue from 'bull';
 import chalk from 'chalk';
-import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options.infra';
-import { clearCache } from 'infrastructure/cache/clear-cache.infra';
+import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options';
+import { clearCache } from 'infrastructure/cache/clear-cache';
 import { Post, PostStatusEnum } from 'models/posts/post.model';
 
 interface Payload {

@@ -1,8 +1,8 @@
 import { Post, PostAttrs, PostStatusEnum } from "models/posts/post.model";
 import mongoose from 'mongoose';
 import slugify from "slugify";
-import { clearCache } from "infrastructure/cache/clear-cache.infra";
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options.infra";
+import { clearCache } from "infrastructure/cache/clear-cache";
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { scheduledPostsQueue } from "./post-queue.service";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";

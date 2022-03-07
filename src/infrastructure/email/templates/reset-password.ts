@@ -1,7 +1,7 @@
-import { EmailTemplateLangEnum } from "./types/email-template-langs.infra";
-import { enEmailResetPasswordTemplate } from "./languages/en/reset-pass-template.infra";
-import { faEmailResetPasswordTemplate } from "./languages/fa/reset-pass-template.infra";
-import { IEmailTemplate } from "./types/template-type.infra";
+import { EmailTemplateLangEnum } from "./types/email-template-langs";
+import { enEmailResetPasswordTemplate } from "./languages/en/reset-pass.template";
+import { faEmailResetPasswordTemplate } from "./languages/fa/reset-pass.template";
+import { IEmailTemplate } from "./types/template-type";
 
 export const resetPasswordEmailTemplate = ( lang: EmailTemplateLangEnum, email: string, resetLink: string ): IEmailTemplate => {
   switch ( lang ) {

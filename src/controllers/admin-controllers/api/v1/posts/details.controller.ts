@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
-import { logSerializer } from "infrastructure/serializers/log-serializer.infra";
+import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { postDetailsService } from "services/posts/details.service";
 import { logger } from "services/winston-logger/logger.service";
 
