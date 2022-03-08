@@ -35,4 +35,5 @@ export const errorHandler = async (
     ]
   } );
   logger.error( err.message, logSerializer( req, res, CoreLocaleEnum.ERROR_400_MSG, {}, 400 ) );
+  return;
 };

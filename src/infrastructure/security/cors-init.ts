@@ -12,6 +12,17 @@ import { CoreLocaleEnum } from 'infrastructure/locales/service-locale-keys/core.
  * @param app - Express app instance
  */
 export function corsInit ( app: Express ) {
+  // Development
+  if ( process.env.NODE_ENV && process.env.NODE_ENV === 'development' ) {
+    app.use( cors( {
+      origin: "*",
+      credentials: true,
+      methods: [ 'get', 'post', 'put', 'patch', 'OPTIONS', 'delete', 'DELETE' ]
+    } ) );
+    return;
+  }
+
+  // Production
   if ( !process.env.CORS_ORIGINS ) {
     throw new Error( chalk.bold.red( 'CORS_ORIGINS env must be defined!' ) );
   }
