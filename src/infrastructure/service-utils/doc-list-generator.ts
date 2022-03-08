@@ -21,7 +21,12 @@ export interface IListQueryParams<T> {
 
 // Result type
 export interface IListQueryResult<T> {
-  list: T[];                          // List of documents after processing
+  data: T[];                                // List of documents after processing
+  metadata: IListQueryMetadata;             // Metadata
+}
+
+// Result metadata
+export interface IListQueryMetadata {
   total: number;                      // Total number of documents after filtering
   page: number;                       // Number of the page
   totalPages: number;                 // Total number of pages
@@ -154,10 +159,12 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   }
 
   return {
-    list: resultList,
-    page,
-    totalPages,
-    total,
-    numberPerPage: limit
+    data: resultList,
+    metadata: {
+      page,
+      totalPages,
+      total,
+      numberPerPage: limit
+    }
   };
 }

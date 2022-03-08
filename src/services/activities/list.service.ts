@@ -22,13 +22,7 @@ interface ISortActivityQuery {
 }
 
 export async function activityListService ( req: Request ) {
-  const {
-    list,
-    numberPerPage,
-    page,
-    total,
-    totalPages
-  } = await docListGenerator( {
+  const { data, metadata } = await docListGenerator( {
     fieldsToExclude: [],
     filterBy: req.query.filterBy,
     model: Activity,
@@ -39,10 +33,10 @@ export async function activityListService ( req: Request ) {
     orderParam: req.query.orderParam ? parseInt( req.query.orderParam.toString() ) : -1
   } );
 
-  if ( list.length ) {
-    list.forEach( a => {
+  if ( data.length ) {
+    data.forEach( a => {
       if ( a.localizedMsgKey ) a.localizedMsgKey = req.t( a.localizedMsgKey );
     } );
   }
-  return { list, numberPerPage, page, total, totalPages };
+  return { data, metadata };
 }

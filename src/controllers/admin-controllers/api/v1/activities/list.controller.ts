@@ -5,8 +5,8 @@ import { activityListService } from "services/activities/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminActivityListController ( req: Request, res: Response ) {
-  const activityListObj = await activityListService( req );
-  res.send( activityListObj );
+  const { data, metadata } = await activityListService( req );
+  res.send( { metadata, data } );
   logger.info(
     "User gets list of activities",
     logSerializer( req, res, ActivityLocaleEnum.INFO_LIST, { user: { id: req.currentUser!.id } } )
