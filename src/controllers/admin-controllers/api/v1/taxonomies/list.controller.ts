@@ -5,7 +5,7 @@ import { taxonomyListService } from "services/taxonomies/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminTaxonomyListController ( req: Request, res: Response ) {
-  const taxonomies = await taxonomyListService();
+  const taxonomies = await taxonomyListService( req.query );
   res.send( taxonomies );
   logger.info( "Taxonomy list retrieved successfully", logSerializer( req, res, TaxonomyLocaleEnum.INFO_LIST ) );
 }

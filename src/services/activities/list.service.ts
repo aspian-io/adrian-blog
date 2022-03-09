@@ -22,21 +22,16 @@ interface ISortActivityQuery {
 }
 
 export async function activityListService ( req: Request ) {
-  const { data, metadata } = await docListGenerator( {
-    fieldsToExclude: [],
-    filterBy: req.query.filterBy,
+  const result = await docListGenerator( {
+    fieldsToExclude: [ "localizedMsgKey", "message" ],
     model: Activity,
-    page: req.query.page ? parseInt( req.query.page.toString() ) : 1,
     queryStringParams: req.query,
-    size: req.query.size ? parseInt( req.query.size.toString() ) : 10,
-    orderBy: req.query.orderBy?.toString() || "createdAt",
-    orderParam: req.query.orderParam ? parseInt( req.query.orderParam.toString() ) : -1
   } );
 
-  if ( data.length ) {
-    data.forEach( a => {
+  if ( result.data.length ) {
+    result.data.forEach( a => {
       if ( a.localizedMsgKey ) a.localizedMsgKey = req.t( a.localizedMsgKey );
     } );
   }
-  return { data, metadata };
+  return result;
 }

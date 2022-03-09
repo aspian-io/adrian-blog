@@ -9,7 +9,7 @@ export async function revokeTokenService ( { token, ipAddress }: IRevokeTokenSer
   const refreshToken = await authRefreshTokenDetailsService( token );
 
   // revoke token and save
-  refreshToken.revoked = Date.now();
+  refreshToken.revoked = new Date();
   refreshToken.revokedByIp = ipAddress;
   await refreshToken.save();
 }

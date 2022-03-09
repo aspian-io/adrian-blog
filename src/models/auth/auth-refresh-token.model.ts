@@ -1,37 +1,35 @@
-import mongoose from 'mongoose'
-import { UserDoc } from './auth-user.model'
+import mongoose from 'mongoose';
+import { UserDoc } from './auth-user.model';
 
 interface RefreshTokenAttrs {
-  user: UserDoc
-  token: string
-  expires: Date
-  createdByIp: string
-  userAgent: string
+  user: UserDoc;
+  token: string;
+  expires: Date;
+  createdByIp: string;
+  userAgent: string;
 }
 
 interface RefreshTokenModel extends mongoose.Model<RefreshTokenDoc> {
-  build ( attrs: RefreshTokenAttrs ): RefreshTokenDoc
+  build ( attrs: RefreshTokenAttrs ): RefreshTokenDoc;
 }
 
 interface RefreshTokenDoc extends mongoose.Document {
-  user: UserDoc
-  token: string
-  expires: Date
-  created: Date
-  createdByIp: string
-  revoked: number
-  revokedByIp: string
-  replacedByToken: string
-  isExpired: boolean
-  isActive: boolean
-  userAgent: string
+  user: UserDoc;
+  token: string;
+  expires: Date;
+  createdByIp: string;
+  revoked: Date;
+  revokedByIp: string;
+  replacedByToken: string;
+  isExpired: boolean;
+  isActive: boolean;
+  userAgent: string;
 }
 
-const refreshTokenSchema = new mongoose.Schema( {
+const refreshTokenSchema = new mongoose.Schema<RefreshTokenDoc, RefreshTokenModel>( {
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   token: String,
   expires: Date,
-  created: { type: Date, default: Date.now },
   createdByIp: String,
   revoked: Date,
   revokedByIp: String,
@@ -40,30 +38,30 @@ const refreshTokenSchema = new mongoose.Schema( {
 }, {
   toJSON: {
     transform ( doc, ret ) {
-      ret.id = ret._id
-      delete ret._id
-      delete ret.user
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.user;
     },
     versionKey: false,
     virtuals: true
   },
   timestamps: true
-} )
+} );
 
 //refreshTokenSchema.index({createdAt: 1}, {expireAfterSeconds: 7 * 24 * 60 * 60})
 
 refreshTokenSchema.statics.build = ( attrs: RefreshTokenAttrs ) => {
-  return new RefreshToken( attrs )
-}
+  return new RefreshToken( attrs );
+};
 
 refreshTokenSchema.virtual( 'isExpired' ).get( function ( this: RefreshTokenDoc ) {
-  return Date.now() >= this.expires.getTime()
-} )
+  return Date.now() >= this.expires.getTime();
+} );
 
 refreshTokenSchema.virtual( 'isActive' ).get( function ( this: RefreshTokenDoc ) {
-  return !this.revoked && !this.isExpired
-} )
+  return !this.revoked && !this.isExpired;
+} );
 
-const RefreshToken = mongoose.model<RefreshTokenDoc, RefreshTokenModel>( 'RefreshToken', refreshTokenSchema )
+const RefreshToken = mongoose.model<RefreshTokenDoc, RefreshTokenModel>( 'RefreshToken', refreshTokenSchema );
 
-export { RefreshToken }
+export { RefreshToken };

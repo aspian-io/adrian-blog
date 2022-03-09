@@ -10,27 +10,24 @@ export interface IListQueryParams<T> {
   model: Model<T>;                                                  // Mongoose Model (T is type of the Model's Document)
   fieldsToExclude: string[];                                        // Model fields we do not want to use for filtering
   cache?: IListQueryCache;                                          // Enable or disable Redis cache for the result
-  page: number;                                                     // Number of the page
-  size: number;                                                     // Number of documents per page
-  orderBy?: string;                                                 // End result will be ordered by the field specified here
-  orderParam?: number;                                              // Use to specify descending or ascending order (1 | -1)
-  filterBy: string | ParsedQs | string[] | ParsedQs[] | undefined;  // End result will be filtered by using these fields
   queryStringParams: ParsedQs;                                      // Query string params to use for filtering (req.query)
-  dateFields?: string[];                                            // Specifying Model field names of type Date
+  preDefinedFilters?: IListQueryPreDefinedFilters[];                 // Pre-defined filters to apply
 }
 
 // Result type
 export interface IListQueryResult<T> {
-  data: T[];                                // List of documents after processing
-  metadata: IListQueryMetadata;             // Metadata
+  data: T[];                                                        // List of documents after processing
+  metadata: IListQueryMetadata;                                     // Metadata
 }
 
 // Result metadata
 export interface IListQueryMetadata {
-  total: number;                      // Total number of documents after filtering
-  page: number;                       // Number of the page
-  totalPages: number;                 // Total number of pages
-  numberPerPage: number;              // Number of documents per page
+  total: number;                                                    // Total number of documents after filtering
+  page: number;                                                     // Number of the page
+  totalPages: number;                                               // Total number of pages
+  numberPerPage: number;                                            // Number of documents per page
+  currentPageResultsNumber: number;                                 // Number of current page returned results
+  skipped: number;                                                  // Number of skipped results
 }
 
 // Cache params type
@@ -39,9 +36,15 @@ interface IListQueryCache {
   cacheOptionService: CacheOptionServiceEnum;
 }
 
+// Pre-defined filters type
+interface IListQueryPreDefinedFilters {
+  filterBy: string;
+  filterParam: string;
+}
+
 // Filter Object Type
 interface IFilterQuery {
-  [ key: string ]: RegExp | { $gte: Date; $lt: Date; };
+  [ key: string ]: RegExp | { $gte: Date; $lte: Date; } | number | string;
 }
 
 // Sort Object Type
@@ -57,19 +60,15 @@ interface ISortQuery {
  * @returns {Promise<IListQueryResult<T>>} A Promise of type `IListQueryResult<T>`
  */
 export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promise<IListQueryResult<T>> {
-  const {
-    model,
-    fieldsToExclude,
-    page,
-    size,
-    filterBy,
-    queryStringParams,
-    dateFields,
-    orderBy,
-    orderParam,
-    cache } = params;
+  const { model, fieldsToExclude, queryStringParams, cache, preDefinedFilters } = params;
 
   let modelKeys = [ ...Object.keys( model.schema.paths ) ];
+  const page = queryStringParams.page ? parseInt( queryStringParams.page.toString() ) : 1;
+  const size = queryStringParams.size ? parseInt( queryStringParams.size.toString() ) : 10;
+  const filterBy = queryStringParams.filterBy;
+  const orderBy = queryStringParams.orderBy?.toString() || "createdAt";
+  const orderParam = queryStringParams.orderParam ? parseInt( queryStringParams.orderParam.toString() ) : -1;
+  const dateFields = modelKeys.filter( key => model.schema.path( key ).instance === "Date" );
 
   if ( fieldsToExclude.length ) {
     if ( fieldsToExclude.includes( "createdAt" ) ) {
@@ -88,25 +87,44 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   if ( isFilterByArray ) {
     filterByVal = Array.from( new Set( modelKeys.filter( key => filterBy.includes( key as any ) ) ) );
   } else {
-    filterByVal = filterBy ? [ filterBy.toString() ] : [];
+    const filterByAsArray = filterBy ? [ filterBy.toString() ] : [];
+    filterByVal = filterByAsArray.length
+      ? Array.from( new Set( modelKeys.filter( key => filterByAsArray.includes( key as any ) ) ) )
+      : [];
   }
 
   const nonDateFilterBy = filterByVal.filter( f => !dateFieldsVal.includes( f ) );
-  const dateFilterBy = dateFieldsVal;
+  const dateFilterBy = filterByVal.filter( f => dateFieldsVal.includes( f ) );
+
+  const nonDatePreDefinedFilterBY = preDefinedFilters?.filter( pdf => !dateFieldsVal.includes( pdf.filterBy ) );
+  const datePreDefinedFilterBY = preDefinedFilters?.filter( pdf => dateFieldsVal.includes( pdf.filterBy ) );
 
   const orderByVal = orderBy && modelKeys.includes( orderBy.toString() ) ? orderBy : "createdAt";
   const orderParamVal = ( orderParam !== 1 && orderParam !== -1 ) ? -1 : orderParam;
 
   const filter: IFilterQuery = {};
 
-  let resultList: T[] = [];
+  let resultsList: T[] = [];
   let total = 0;
+  let currentPageResultsNumber = 0;
 
   if ( nonDateFilterBy.length ) {
     nonDateFilterBy.forEach( nonDateFilter => {
       if ( queryStringParams[ nonDateFilter ] ) {
-        filter[ nonDateFilter ] = new RegExp( queryStringParams[ nonDateFilter ]!.toString() );
+        const filterValue = isNaN( parseInt( queryStringParams[ nonDateFilter ]!.toString() ) )
+          ? new RegExp( queryStringParams[ nonDateFilter ]!.toString() )
+          : queryStringParams[ nonDateFilter ]!.toString();
+        filter[ nonDateFilter ] = filterValue;
       }
+    } );
+  }
+
+  if ( nonDatePreDefinedFilterBY && nonDatePreDefinedFilterBY.length ) {
+    nonDatePreDefinedFilterBY.forEach( pdf => {
+      const filterValue = isNaN( parseInt( pdf.filterParam ) )
+        ? new RegExp( pdf.filterParam )
+        : pdf.filterParam;
+      filter[ pdf.filterBy ] = filterValue;
     } );
   }
 
@@ -121,8 +139,23 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
           ? !isNaN( new Date( qStrParam[ 1 ].toString() ).getTime() )
           : false;
         if ( isStartDateValid && isEndDateValid && Array.isArray( qStrParam ) ) {
-          filter[ dateFilter ] = { $gte: new Date( qStrParam[ 0 ].toString() ), $lt: new Date( qStrParam[ 1 ].toString() ) };
+          filter[ dateFilter ] = { $gte: new Date( qStrParam[ 0 ].toString() ), $lte: new Date( qStrParam[ 1 ].toString() ) };
         }
+      }
+    } );
+  }
+
+  if ( datePreDefinedFilterBY && datePreDefinedFilterBY.length ) {
+    datePreDefinedFilterBY.forEach( pdf => {
+      let datesToArr = commaSeparatedToArray( pdf.filterParam );
+      const isStartDateValid = Array.isArray( datesToArr ) && datesToArr.length === 2
+        ? !isNaN( new Date( datesToArr[ 0 ].toString() ).getTime() )
+        : false;
+      const isEndDateValid = Array.isArray( datesToArr ) && datesToArr.length === 2
+        ? !isNaN( new Date( datesToArr[ 1 ].toString() ).getTime() )
+        : false;
+      if ( isStartDateValid && isEndDateValid ) {
+        filter[ pdf.filterBy ] = { $gte: new Date( datesToArr[ 0 ].toString() ), $lte: new Date( datesToArr[ 1 ].toString() ) };
       }
     } );
   }
@@ -132,8 +165,8 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   let limit = 10;
   if ( size < 1 ) {
     limit = 1;
-  } else if ( size > total ) {
-    limit = total;
+  } else if ( size > 100 ) {
+    limit = 100;
   } else {
     limit = size;
   }
@@ -143,9 +176,9 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   if ( page < 1 ) {
     pageVal = 1;
   } else if ( page > totalPages ) {
-    pageVal = totalPages;
+    pageVal = totalPages > 0 ? totalPages : 1;
   } else {
-    pageVal = page;
+    pageVal = 1;
   }
   const skip = ( pageVal - 1 ) * limit;
 
@@ -153,18 +186,22 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   sort[ orderByVal ] = orderParamVal;
 
   if ( cache && cache?.useCache ) {
-    resultList = await model.find( filter as FilterQuery<T>, null, { skip, limit, sort } ).cache( cache.cacheOptionService );
+    resultsList = await model.find( filter as FilterQuery<T>, null, { skip, limit, sort } ).cache( cache.cacheOptionService );
+    currentPageResultsNumber = resultsList.length;
   } else {
-    resultList = await model.find( filter as FilterQuery<T>, null, { skip, limit, sort } );
+    resultsList = await model.find( filter as FilterQuery<T>, null, { skip, limit, sort } );
+    currentPageResultsNumber = resultsList.length;
   }
 
   return {
-    data: resultList,
     metadata: {
-      page,
+      page: pageVal,
       totalPages,
       total,
-      numberPerPage: limit
-    }
+      numberPerPage: limit,
+      currentPageResultsNumber,
+      skipped: skip
+    },
+    data: resultsList
   };
 }

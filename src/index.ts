@@ -16,10 +16,13 @@ const start = async () => {
   envTypeGuards();
   // Connect to database
   await connectToMongoDB();
-  // Connect to Redis
-  await redisWrapper.connect( process.env.REDIS_URL! );
-  // Start Mongoose cache queries
-  await startCacheMongooseQueries();
+  // If using Redis cache server is enabled
+  if ( process.env.USING_CACHE === "true" ) {
+    // Connect to Redis
+    await redisWrapper.connect( process.env.REDIS_URL! );
+    // Start Mongoose cache queries
+    await startCacheMongooseQueries();
+  }
   // Initialize sms provider if exists
   smsProviderInit();
 

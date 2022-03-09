@@ -21,7 +21,7 @@ export async function authRefreshTokensService ( { token, ipAddress, userAgent }
 
   // replace old refresh token with a new one and save
   const newRefreshToken = authRefreshTokenGen( user, ipAddress, userAgent );
-  refreshToken.revoked = Date.now();
+  refreshToken.revoked = new Date();
   refreshToken.revokedByIp = ipAddress;
   refreshToken.replacedByToken = newRefreshToken.token;
   await refreshToken.save();

@@ -5,7 +5,7 @@ import { postListService } from "services/posts/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminPostListController ( req: Request, res: Response ) {
-  const posts = await postListService();
+  const posts = await postListService( req.query );
   res.send( posts );
   logger.info(
     "Post list has been retrieved successfully",

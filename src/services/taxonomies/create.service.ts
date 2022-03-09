@@ -23,7 +23,7 @@ export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
   const slug = slugify( term );
 
   const taxonomy = Taxonomy.build( { type, description, term, slug, parent, createdBy, createdByIp, userAgent } );
-  if ( !mongoose.isValidObjectId( parent ) ) {
+  if ( parent && !mongoose.isValidObjectId( parent ) ) {
     throw new BadRequestError( "Something went wrong with parent taxonomy", CoreLocaleEnum.ERROR_400_MSG );
   }
   const parentTaxonomy = parent

@@ -5,7 +5,7 @@ import { attachmentListService } from "services/attachments/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminAttachmentListController ( req: Request, res: Response ) {
-  const attachments = await attachmentListService();
+  const attachments = await attachmentListService( req.query );
   res.send( attachments );
   logger.info(
     `${ req.currentUser!.email } retrieved attachment list successfully`,

@@ -5,7 +5,7 @@ import { postCommentListService } from "services/post-comments/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminPostCommentListController ( req: Request, res: Response ) {
-  const comments = await postCommentListService();
+  const comments = await postCommentListService( req.query );
   res.send( comments );
   logger.info(
     "Post comment list retrieved successfully",

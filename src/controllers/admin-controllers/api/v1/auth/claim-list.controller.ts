@@ -5,7 +5,7 @@ import { authClaimListService } from "services/auth/claims/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminAuthClaimListController ( req: Request, res: Response ) {
-  const claims = await authClaimListService( req.t );
+  const claims = await authClaimListService( req.t, req.query );
   res.send( claims );
   logger.info(
     `List of claims retrieved by admin <${ req.currentUser!.email }> successfully`,
