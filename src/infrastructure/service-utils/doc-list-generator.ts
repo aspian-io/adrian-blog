@@ -42,16 +42,6 @@ interface IListQueryPreDefinedFilters {
   filterParam: string;
 }
 
-// Filter Object Type
-interface IFilterQuery {
-  [ key: string ]: RegExp | { $gte: Date; $lte: Date; } | number | string;
-}
-
-// Sort Object Type
-interface ISortQuery {
-  [ key: string ]: 1 | -1;
-}
-
 /**
  * 
  * Generate conditional list (filtered, sorted, TimeSpanned and paginated) from a specific mongoose model
@@ -102,7 +92,7 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   const orderByVal = orderBy && modelKeys.includes( orderBy.toString() ) ? orderBy : "createdAt";
   const orderParamVal = ( orderParam !== 1 && orderParam !== -1 ) ? -1 : orderParam;
 
-  const filter: IFilterQuery = {};
+  const filter: Record<string, RegExp | { $gte: Date; $lte: Date; } | number | string> = {};
 
   let resultsList: T[] = [];
   let total = 0;
@@ -182,7 +172,7 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   }
   const skip = ( pageVal - 1 ) * limit;
 
-  const sort: ISortQuery = {};
+  const sort: Record<string, 1 | -1> = {};
   sort[ orderByVal ] = orderParamVal;
 
   if ( cache && cache?.useCache ) {
