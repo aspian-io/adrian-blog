@@ -19,7 +19,7 @@ export const usersData = async () => [
     password: await PasswordUtil.hash( '123456' ),
     createdByIp: '::1',
     lastIp: '::1',
-    claims: [ AccessPoliciesEnum.Core_USER ],
+    claims: [],
     userAgent: "SEEDED"
   }
 ];

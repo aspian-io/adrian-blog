@@ -28,7 +28,7 @@ export async function authRefreshTokensService ( { token, ipAddress, userAgent }
   await newRefreshToken.save();
 
   // generate new jwt
-  const jwtToken = authJwtTokenGen( user, user.claims );
+  const jwtToken = authJwtTokenGen( user );
 
   // return basic details and tokens
   return {

@@ -92,7 +92,6 @@ const userSchema = new mongoose.Schema<UserDoc, UserModel>( {
   claims: [
     {
       type: String,
-      default: AccessPoliciesEnum.Core_USER,
       enum: Object.values( AccessPoliciesEnum ),
     }
   ],

@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { logger } from 'services/winston-logger/logger.service';
 import { logSerializer } from 'infrastructure/serializers/log-serializer';
 import { authSignInService } from 'services/auth/users/sign-in.service';
-import { setTokenCookie } from 'infrastructure/security/cookie';
 import { AuthLocaleEnum } from 'infrastructure/locales/service-locale-keys/auth.locale';
+import { setRefreshTokenCookie } from 'infrastructure/security/set-refresh-token-cookie';
 
 export async function authSigninController ( req: Request, res: Response ) {
   const { email, password } = req.body;
@@ -17,7 +17,7 @@ export async function authSigninController ( req: Request, res: Response ) {
     userAgent
   } );
 
-  setTokenCookie( res, refreshToken );
+  setRefreshTokenCookie( res, refreshToken );
   res.status( 200 ).send( {
     firstName: user.firstName,
     lastName: user.lastName,

@@ -9,11 +9,6 @@ export const claimsData: ClaimAttrs[] = [
     localizedDescKey: AuthLocaleEnum.POLICY_CORE_ADMIN
   },
   {
-    claim: AccessPoliciesEnum.Core_USER,
-    description: "Ordinary user",
-    localizedDescKey: AuthLocaleEnum.POLICY_CORE_USER
-  },
-  {
     claim: AccessPoliciesEnum.Auth_ClaimList,
     description: "Access to claim list",
     localizedDescKey: AuthLocaleEnum.POLICY_AUTH_CLAIMLIST

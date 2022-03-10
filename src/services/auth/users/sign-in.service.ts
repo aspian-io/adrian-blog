@@ -29,7 +29,7 @@ export async function authSignInService ( { userEmail, userPassword, userIpAddre
   }
 
   // authentication successful so generate jwt and refresh tokens
-  const jwtToken = authJwtTokenGen( user, user.claims );
+  const jwtToken = authJwtTokenGen( user );
   const refreshToken = authRefreshTokenGen( user, userIpAddress, userAgent );
 
   // save refresh token
