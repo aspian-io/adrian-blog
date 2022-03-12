@@ -8,7 +8,7 @@ export async function adminPostDeleteController ( req: Request, res: Response ) 
   const post = await postDeleteService( req.params.slug );
   res.send( post );
   logger.info(
-    "The post has been deleted successfully",
+    `The post ${ post.title } of type ${ post.type } has been deleted by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, PostLocaleEnum.INFO_DELETE, { post } )
   );
 }

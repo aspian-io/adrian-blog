@@ -16,7 +16,7 @@ export async function adminPostEditController ( req: Request, res: Response ) {
   } );
   res.send( post );
   logger.info(
-    "A new post has been edited successfully",
+    `The post ${ post.title } of type ${ post.type } has been modified by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, PostLocaleEnum.INFO_EDIT, { post: { id: post.id } } )
   );
 }

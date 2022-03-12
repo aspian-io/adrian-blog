@@ -8,7 +8,7 @@ export async function adminAuthEditUserClaimsController ( req: Request, res: Res
   const user = await authEditUserClaimsService( req.params.id, req.body.claims );
   res.send( user );
   logger.info(
-    `${ user.email } claims edited by admin`,
+    `${ user.email } claims edited by admin <${ req.currentUser!.email }>`,
     logSerializer( req, res, AuthLocaleEnum.INFO_ADMIN_USER_CLAIMS_MODIFIED, {
       user: {
         id: user.id

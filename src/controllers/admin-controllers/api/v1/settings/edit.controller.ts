@@ -15,7 +15,7 @@ export async function adminSettingEditController ( req: Request, res: Response )
   } );
   res.send( setting );
   logger.info(
-    "Setting modified successfully",
+    `The setting ${ setting.key } of the service ${ setting.service } has been changed by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, SettingLocaleEnum.INFO_EDIT, {
       settings: setting
     } )

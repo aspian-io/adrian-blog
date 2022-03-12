@@ -8,7 +8,7 @@ export async function adminPostListController ( req: Request, res: Response ) {
   const posts = await postListService( req.query );
   res.send( posts );
   logger.info(
-    "Post list has been retrieved successfully",
+    `List of posts has been retrieved by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, PostLocaleEnum.INFO_LIST )
   );
 }

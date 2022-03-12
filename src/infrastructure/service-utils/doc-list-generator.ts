@@ -4,19 +4,21 @@ import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.
 import { commaSeparatedToArray } from "infrastructure/string-utils/comma-separated-to-array";
 import { FilterQuery, Model } from "mongoose";
 import { ParsedQs } from 'qs';
+import { dtoMapper } from "./dto-mapper";
 
 // Input params
-export interface IListQueryParams<T> {
+export interface IListQueryParams<T, U = T> {
   model: Model<T>;                                                  // Mongoose Model (T is type of the Model's Document)
   fieldsToExclude: string[];                                        // Model fields we do not want to use for filtering
   cache?: IListQueryCache;                                          // Enable or disable Redis cache for the result
   queryStringParams: ParsedQs;                                      // Query string params to use for filtering (req.query)
-  preDefinedFilters?: IListQueryPreDefinedFilters[];                 // Pre-defined filters to apply
+  preDefinedFilters?: IListQueryPreDefinedFilters[];                // Pre-defined filters to apply
+  dataMapTo?: new () => U;                                          // An instance of DTO class to map data to
 }
 
 // Result type
-export interface IListQueryResult<T> {
-  data: T[];                                                        // List of documents after processing
+export interface IListQueryResult<T, U = T> {
+  data: T[] | U[];                                                  // List of documents after processing
   metadata: IListQueryMetadata;                                     // Metadata
 }
 
@@ -37,7 +39,7 @@ interface IListQueryCache {
 }
 
 // Pre-defined filters type
-interface IListQueryPreDefinedFilters {
+export interface IListQueryPreDefinedFilters {
   filterBy: string;
   filterParam: string;
 }
@@ -49,10 +51,10 @@ interface IListQueryPreDefinedFilters {
  * @param {IListQueryParams<T>} params - Params to generate conditional list of type `IListQueryParams<T>`
  * @returns {Promise<IListQueryResult<T>>} A Promise of type `IListQueryResult<T>`
  */
-export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promise<IListQueryResult<T>> {
-  const { model, fieldsToExclude, queryStringParams, cache, preDefinedFilters } = params;
+export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U> ): Promise<IListQueryResult<T, U>> {
+  const { model, fieldsToExclude, queryStringParams, cache, preDefinedFilters, dataMapTo } = params;
 
-  let modelKeys = [ ...Object.keys( model.schema.paths ) ];
+  let modelKeys = Object.keys( model.schema.paths );
   const page = queryStringParams.page ? parseInt( queryStringParams.page.toString() ) : 1;
   const size = queryStringParams.size ? parseInt( queryStringParams.size.toString() ) : 10;
   const filterBy = queryStringParams.filterBy;
@@ -73,7 +75,7 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   const dateFieldsVal = dateFields && dateFields.length ? dateFields : [ 'createdAt', 'updatedAt' ];
   const isFilterByArray = Array.isArray( filterBy );
 
-  let filterByVal = [];
+  let filterByVal: string[] = [];
   if ( isFilterByArray ) {
     filterByVal = Array.from( new Set( modelKeys.filter( key => filterBy.includes( key as any ) ) ) );
   } else {
@@ -95,6 +97,7 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
   const filter: Record<string, RegExp | { $gte: Date; $lte: Date; } | number | string> = {};
 
   let resultsList: T[] = [];
+  let dtoResultsList: U[] = [];
   let total = 0;
   let currentPageResultsNumber = 0;
 
@@ -183,6 +186,10 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
     currentPageResultsNumber = resultsList.length;
   }
 
+  if ( dataMapTo ) {
+    dtoResultsList = dtoMapper<T, U>( resultsList, dataMapTo );
+  }
+
   return {
     metadata: {
       page: pageVal,
@@ -192,6 +199,6 @@ export async function docListGenerator<T> ( params: IListQueryParams<T> ): Promi
       currentPageResultsNumber,
       skipped: skip
     },
-    data: resultsList
+    data: dataMapTo ? dtoResultsList : resultsList
   };
 }

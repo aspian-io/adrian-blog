@@ -8,7 +8,7 @@ export async function adminTaxonomyDetailsController ( req: Request, res: Respon
   const taxonomy = await taxonomyDetailsService( req.params.slug );
   res.send( taxonomy );
   logger.info(
-    "Taxonomy details has been retrieved successfully",
+    `The taxonomy ${ taxonomy.term } of type ${ taxonomy.type } details has been retrieved by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, TaxonomyLocaleEnum.INFO_DETAILS, { taxonomy: { id: taxonomy.id } } )
   );
 }

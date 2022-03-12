@@ -16,9 +16,11 @@ export async function authSignupController ( req: Request, res: Response ) {
     email: user.email,
     jwtToken: user.jwtToken
   } );
-  logger.info( "User signed up successfully", logSerializer( req, res, AuthLocaleEnum.INFO_SIGNUP, {
-    user: {
-      id: user.id
-    }
-  } ) );
+  logger.info(
+    `The new user <${ user.email }> signed up successfully`,
+    logSerializer( req, res, AuthLocaleEnum.INFO_SIGNUP, {
+      user: {
+        id: user.id
+      }
+    } ) );
 };

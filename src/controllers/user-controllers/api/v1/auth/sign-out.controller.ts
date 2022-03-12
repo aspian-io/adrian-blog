@@ -11,7 +11,7 @@ export async function authSignoutController ( req: Request, res: Response ) {
   res.clearCookie( 'refreshToken' );
   res.status( 200 ).send( {} );
   logger.info(
-    "User signed out successfully",
+    `${ req.currentUser!.email } signed out successfully`,
     logSerializer( req, res, AuthLocaleEnum.INFO_SIGNOUT, { user: { id: req.currentUser!.id } } )
   );
 };

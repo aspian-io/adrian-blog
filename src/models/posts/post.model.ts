@@ -20,7 +20,6 @@ export enum PostStatusEnum {
 export enum PostTypeEnum {
   BLOG = "BLOG",
   PAGE = "PAGE",
-  PRODUCT = "PRODUCT",
   NEWS = "NEWS",
   BANNER = "BANNER",
   EMAIL_TEMPLATE = "EMAIL_TEMPLATE"

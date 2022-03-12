@@ -266,6 +266,11 @@
       },
       "list": {
         "successMsg": "List of taxonomies retrieved"
+      },
+      "userArea": {
+        "categoryList": "List of categories retrieved successfully",
+        "tagList": "List of tags retrieved successfully",
+        "menuItemsList": "Menu items retrieved successfully"
       }
     },
     "posts": {

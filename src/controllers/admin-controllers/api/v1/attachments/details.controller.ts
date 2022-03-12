@@ -8,7 +8,7 @@ export async function adminAttachmentDetailsController ( req: Request, res: Resp
   const attachment = await attachmentDetailsService( req.params.id );
   res.send( attachment );
   logger.info(
-    `${ req.currentUser!.email } retrieved an attachment details successfully`,
+    `Admin <${ req.currentUser!.email }> retrieved an attachment details successfully`,
     logSerializer( req, res, AttachmentLocaleEnum.INFO_DETAILS, {
       attachment: { id: attachment.id }
     } )

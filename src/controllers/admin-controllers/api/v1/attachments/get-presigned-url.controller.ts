@@ -8,7 +8,7 @@ export async function adminGetPresignedUrlController ( req: Request, res: Respon
   const url = await attachmentGetPresignedUrlService( req.params.id );
   res.send( url );
   logger.info(
-    `${ req.currentUser!.email } retrieved a presigned url`,
+    `Admin <${ req.currentUser!.email }> retrieved a presigned url`,
     logSerializer( req, res, AttachmentLocaleEnum.INFO_PRESIGNED_URL, {
       attachment: { id: req.params.id }
     } )

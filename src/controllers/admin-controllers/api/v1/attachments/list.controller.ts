@@ -8,7 +8,7 @@ export async function adminAttachmentListController ( req: Request, res: Respons
   const attachments = await attachmentListService( req.query );
   res.send( attachments );
   logger.info(
-    `${ req.currentUser!.email } retrieved attachment list successfully`,
+    `Admin <${ req.currentUser!.email }> retrieved attachment list successfully`,
     logSerializer( req, res, AttachmentLocaleEnum.INFO_LIST )
   );
 }

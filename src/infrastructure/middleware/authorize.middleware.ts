@@ -8,8 +8,6 @@ export const authorize = ( policies: string[] ) => {
     const isAuthorized = policies.some( p => {
       if ( req.currentUser ) {
         return req.currentUser.claims.includes( p );
-      } else {
-        return false;
       }
     } );
 

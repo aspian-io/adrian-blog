@@ -16,7 +16,7 @@ export async function adminPostCommentCreateController ( req: Request, res: Resp
 
   res.status( 201 ).send( comment );
   logger.info(
-    "Post comment created successfully",
+    `Post comment created by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, CommentLocaleEnum.INFO_CREATE, {
       postComment: {
         id: comment.id

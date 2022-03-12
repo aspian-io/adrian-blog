@@ -8,7 +8,7 @@ export async function adminPostCommentListController ( req: Request, res: Respon
   const comments = await postCommentListService( req.query );
   res.send( comments );
   logger.info(
-    "Post comment list retrieved successfully",
+    `Post comment list retrieved by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, CommentLocaleEnum.INFO_LIST )
   );
 }

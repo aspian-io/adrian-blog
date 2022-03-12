@@ -8,7 +8,7 @@ export async function adminActivityListController ( req: Request, res: Response 
   const activities = await activityListService( req );
   res.send( activities );
   logger.info(
-    "User gets list of activities",
+    `Admin <${ req.currentUser!.email }> gets list of activities`,
     logSerializer( req, res, ActivityLocaleEnum.INFO_LIST, { user: { id: req.currentUser!.id } } )
   );
 }

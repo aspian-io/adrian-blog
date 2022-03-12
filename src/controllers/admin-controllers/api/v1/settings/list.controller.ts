@@ -10,7 +10,7 @@ export async function adminSettingsListController ( req: Request, res: Response 
   const settings = await settingsListService( service );
   res.send( settings );
   logger.info(
-    "Settings list retrieved successfully",
+    `Settings list have been retrieved by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, SettingLocaleEnum.INFO_LIST )
   );
 }

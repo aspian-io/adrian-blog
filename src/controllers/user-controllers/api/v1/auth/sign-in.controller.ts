@@ -26,7 +26,7 @@ export async function authSigninController ( req: Request, res: Response ) {
   } );
 
   logger.info(
-    "user successfully signed-in",
+    `${ user.email } signed-in successfully`,
     logSerializer( req, res, AuthLocaleEnum.INFO_SIGNIN, {
       user: {
         id: user.id

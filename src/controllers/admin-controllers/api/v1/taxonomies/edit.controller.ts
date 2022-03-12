@@ -15,7 +15,7 @@ export async function adminTaxonomyEditController ( req: Request, res: Response 
 
   res.send( taxonomy );
   logger.info(
-    "Taxonomy edited successfully",
+    `The taxonomy ${ taxonomy.term } of type ${ taxonomy.type } has been modified by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, TaxonomyLocaleEnum.INFO_EDIT, { taxonomy: { id: taxonomy.id } } )
   );
 }

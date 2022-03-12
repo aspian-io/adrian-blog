@@ -5,6 +5,10 @@ export enum TaxonomyLocaleEnum {
   INFO_LIST = "info.taxonomies.list.successMsg",
   INFO_DELETE = "info.taxonomies.delete.successMsg",
 
+  INFO_USERAREA_CATEGORY_LIST = "info.taxonomies.userArea.categoryList",
+  INFO_USERAREA_TAG_LIST = "info.taxonomies.userArea.tagList",
+  INFO_USERAREA_MENU_ITEMS_LIST = "info.taxonomies.userArea.menuItemsList",
+
   ERROR_DUPLICATE_TAXONOMY = "errors.taxonomies.createService.duplicateTaxonomyErr",
   ERROR_PARENT_NOT_FOUND = "errors.taxonomies.editService.parentNotFoundErr",
   ERROR_TAXONOMY_ID = "errors.taxonomies.deleteService.taxonomyIdErr",

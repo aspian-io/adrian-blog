@@ -8,7 +8,7 @@ export async function adminTaxonomyDeleteController ( req: Request, res: Respons
   const taxonomy = await taxonomyDeleteService( req.params.slug );
   res.send( taxonomy );
   logger.info(
-    "The taxonomy has been deleted successfully",
+    `The taxonomy ${ taxonomy.term } of type ${ taxonomy.type } has been deleted by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, TaxonomyLocaleEnum.INFO_DELETE, { taxonomy } )
   );
 }

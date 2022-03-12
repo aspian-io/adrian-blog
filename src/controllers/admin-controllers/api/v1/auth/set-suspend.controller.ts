@@ -21,7 +21,8 @@ export async function adminAuthSetSuspendUserController ( req: Request, res: Res
 
   res.send( user );
   logger.info(
-    `User ${ user.email } ${ isSuspended ? chalk.underline.red( 'suspended' ) : chalk.underline.green( 'unsuspended' ) }successfully`,
+    `User ${ user.email } ${ isSuspended ? chalk.underline.red( 'suspended' ) : chalk.underline.green( 'unsuspended' ) } `
+    + `by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, isSuspended ? AuthLocaleEnum.INFO_USER_SUSPENDED : AuthLocaleEnum.INFO_USER_UNSUSPENDED, {
       user: {
         id: user.id

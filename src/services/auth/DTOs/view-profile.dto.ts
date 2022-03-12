@@ -1,4 +1,4 @@
-import { GenderEnum, UserDoc } from "models/auth/auth-user.model";
+import { GenderEnum } from "models/auth/auth-user.model";
 
 export class AuthViewProfileDto {
   firstName?: string = undefined;
@@ -18,10 +18,4 @@ export class AuthViewProfileDto {
   isMobilePhoneVerified?: boolean = undefined;
   isEmailConfirmed?: boolean = undefined;
   phone?: string = undefined;
-
-  constructor ( init: UserDoc ) {
-    Object.keys( this ).forEach( key => {
-      this[ key as keyof AuthViewProfileDto ] = <any>init[ key as keyof AuthViewProfileDto ];
-    } );
-  }
 }

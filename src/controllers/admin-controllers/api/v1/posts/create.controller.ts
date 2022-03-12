@@ -16,7 +16,7 @@ export async function adminPostCreateController ( req: Request, res: Response ) 
 
   res.status( 201 ).send( post );
   logger.info(
-    "A new post created successfully",
+    `A new post of type ${ post.type } created by admin <${req.currentUser!.email}> successfully`,
     logSerializer( req, res, PostLocaleEnum.INFO_CREATE, { post: { id: post.id } } )
   );
 }

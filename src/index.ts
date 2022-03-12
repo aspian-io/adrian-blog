@@ -7,7 +7,6 @@ import { redisWrapper } from 'infrastructure/database/redis/redis-client';
 import { startCacheMongooseQueries } from 'infrastructure/cache/redis-cache-extension';
 import { connectToMongoDB } from 'infrastructure/database/mongodb/mongoose-connection';
 import { smsProviderInit } from 'infrastructure/sms/provider-init';
-import { Activity } from 'models/activities/activity.model';
 
 const boldGreen = chalk.bold.green;
 
@@ -20,9 +19,9 @@ const start = async () => {
   if ( process.env.USING_CACHE === "true" ) {
     // Connect to Redis
     await redisWrapper.connect( process.env.REDIS_URL! );
-    // Start Mongoose cache queries
-    await startCacheMongooseQueries();
   }
+  // Start Mongoose cache queries
+  await startCacheMongooseQueries();
   // Initialize sms provider if exists
   smsProviderInit();
 
@@ -36,5 +35,4 @@ const start = async () => {
   // Uppy companion socket
   companion.socket( server );
 };
-
 start();

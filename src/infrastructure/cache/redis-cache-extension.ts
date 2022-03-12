@@ -38,10 +38,14 @@ export const startCacheMongooseQueries = async () => {
       // @ts-ignore
       return exec.apply( this, arguments );
     }
+
+    const queryObj = Object.assign( {}, this.getQuery() );
+    Object.entries( queryObj ).forEach( ( [ key, value ] ) => queryObj[ key ] = value.toString() );
+
     const key = JSON.stringify(
       Object.assign(
         {},
-        this.getQuery(),
+        queryObj,
         this.getOptions(),
         this.getPopulatedPaths(),
         {

@@ -17,7 +17,7 @@ export async function adminPostCommentEditController ( req: Request, res: Respon
 
   res.send( comment );
   logger.info(
-    "Post comment edited successfully",
+    `Post comment modified by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, CommentLocaleEnum.INFO_EDIT, {
       postComment: {
         id: comment.id

@@ -18,6 +18,9 @@ import { NotFoundError } from 'infrastructure/errors/not-found-error';
 import { errorHandler } from 'infrastructure/middleware/error-handler.middleware';
 import { adminSettingRouter } from 'infrastructure/routes/api/v1/admin/setting.router';
 import { corsInit } from 'infrastructure/security/cors-init';
+import { menuItemRouter } from 'infrastructure/routes/api/v1/user/menu-item.router';
+import { categoryRouter } from 'infrastructure/routes/api/v1/user/category.router';
+import { tagRouter } from 'infrastructure/routes/api/v1/user/tag.router';
 
 const app = express();
 app.use( express.json() );
@@ -41,6 +44,9 @@ app.use( express.static( path.join( __dirname, '../public' ) ) );
 // Assign current user to Express Request object
 app.use( currentUser );
 // Routes
+app.use( '/:lng?/api/v1/menu-items', menuItemRouter );
+app.use( '/:lng?/api/v1/categories', categoryRouter );
+app.use( '/:lng?/api/v1/tags', tagRouter );
 app.use( '/:lng?/api/v1/users', authRouter );
 
 app.use( '/:lng?/api/v1/admin/settings', adminSettingRouter );

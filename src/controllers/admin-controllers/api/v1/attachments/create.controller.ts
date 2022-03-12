@@ -14,7 +14,7 @@ export async function adminAttachmentCreateController ( req: Request, res: Respo
 
   res.send( attachment );
   logger.info(
-    `${ req.currentUser!.email } created ${ req.body.fileName } attachment successfully`,
+    `Admin <${ req.currentUser!.email }> created ${ req.body.fileName } attachment successfully`,
     logSerializer( req, res, AttachmentLocaleEnum.INFO_CREATE, {
       attachment: { id: attachment.id }
     } )

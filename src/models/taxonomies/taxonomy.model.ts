@@ -10,10 +10,9 @@ export enum TaxonomyTypeEnum {
 
 export interface TaxonomyAttrs extends BaseAttrs {
   type: TaxonomyTypeEnum;
-  description: string;
+  description?: string;
   term: string;
   slug: string;
-  posts?: string[];
   parent?: string;
   children?: string[];
 }
@@ -23,8 +22,7 @@ export interface TaxonomyDoc extends BaseDoc, Document {
   description: string;
   term: string;
   slug: string;
-  posts?: PostDoc[];
-  parent: TaxonomyDoc;
+  parent?: TaxonomyDoc;
   children: TaxonomyDoc[];
 }
 
@@ -36,7 +34,6 @@ const taxonomySchema = new Schema<TaxonomyDoc, TaxonomyModel>( {
   description: { type: String, required: false },
   term: { type: String, required: true },
   slug: { type: String, required: true, unique: true },
-  posts: [ { type: Schema.Types.ObjectId, ref: "Post" } ],
   parent: { type: Schema.Types.ObjectId, ref: "Taxonomy" },
   children: [ { type: Schema.Types.ObjectId, ref: "Taxonomy" } ],
   ...baseSchema.obj
@@ -45,16 +42,5 @@ const taxonomySchema = new Schema<TaxonomyDoc, TaxonomyModel>( {
 taxonomySchema.statics.build = ( attrs: TaxonomyAttrs ) => {
   return new Taxonomy( attrs );
 };
-
-// const autoPopulate = function (
-//   this: mongoose.Query<any, any, {}, any>,
-//   next: ( err?: mongoose.CallbackError | undefined ) => void
-// ) {
-//   this.populate( "parent" ).populate( "children" );
-//   next();
-// };
-
-// taxonomySchema.pre( "findOne", autoPopulate );
-// taxonomySchema.pre( "find", autoPopulate );
 
 export const Taxonomy = model<TaxonomyDoc, TaxonomyModel>( 'Taxonomy', taxonomySchema );

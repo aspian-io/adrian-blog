@@ -8,7 +8,7 @@ export async function adminAttachmentDeleteManyController ( req: Request, res: R
   const deletedUrls = await attachmentDeleteMultipleFilesService( req.body.attachmentIds );
   res.send( deletedUrls );
   logger.info(
-    `${ deletedUrls.length } file/files deleted successfully`,
+    `${ deletedUrls.length } file/files deleted by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, AttachmentLocaleEnum.INFO_DELETE_MANY, {
       attachment: {
         url: deletedUrls.join()

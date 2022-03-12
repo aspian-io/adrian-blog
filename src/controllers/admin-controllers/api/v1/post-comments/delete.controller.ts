@@ -8,7 +8,7 @@ export async function adminPostCommentDeleteController ( req: Request, res: Resp
   const comment = await postCommentDeleteService( req.params.id );
   res.send( comment );
   logger.info(
-    "Post comment deleted successfully",
+    `Post comment deleted by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, CommentLocaleEnum.INFO_DELETE, {
       postComment: comment
     } )

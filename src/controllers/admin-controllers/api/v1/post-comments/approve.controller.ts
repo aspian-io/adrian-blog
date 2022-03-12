@@ -8,7 +8,7 @@ export async function adminPostCommentApproveController ( req: Request, res: Res
   const comment = await postCommentApproveService( req.params.id, req.body.isApproved );
   res.send( comment );
   logger.info(
-    "Post comment approval changed successfully",
+    `Post comment approval changed by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, CommentLocaleEnum.INFO_APPROVE, {
       postComment: {
         id: comment.id

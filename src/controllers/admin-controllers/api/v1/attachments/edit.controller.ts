@@ -15,7 +15,7 @@ export async function adminAttachmentEditController ( req: Request, res: Respons
 
   res.send( attachment );
   logger.info(
-    `${ req.currentUser!.email } edited an uploaded file info successfully`,
+    `Admin <${ req.currentUser!.email }> edited an uploaded file info successfully`,
     logSerializer( req, res, AttachmentLocaleEnum.INFO_EDIT, {
       attachment: { id: attachment.id }
     } )

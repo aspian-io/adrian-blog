@@ -15,6 +15,6 @@ export async function adminTaxonomyCreateController ( req: Request, res: Respons
   } );
   res.status( 201 ).send( taxonomy );
   logger.info(
-    "Taxonomy is created successfully",
+    `A new taxonomy ${ taxonomy.term } of type ${ taxonomy.type } has been created by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, TaxonomyLocaleEnum.INFO_CREATE, { taxonomy: { id: taxonomy.id } } ) );
 }
