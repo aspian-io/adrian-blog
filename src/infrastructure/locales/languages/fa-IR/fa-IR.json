@@ -289,6 +289,9 @@
       },
       "list": {
         "successMsg": "لیست همه پست ها دریافت گردید"
+      },
+      "userArea": {
+        "bannersList": "لیست بنرها با موفقیت دریافت گردید"
       }
     },
     "postComments": {

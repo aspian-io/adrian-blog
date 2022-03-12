@@ -41,7 +41,7 @@ interface IListQueryCache {
 // Pre-defined filters type
 export interface IListQueryPreDefinedFilters {
   filterBy: string;
-  filterParam: string;
+  filterParam: string | boolean;
 }
 
 /**
@@ -94,8 +94,9 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
   const orderByVal = orderBy && modelKeys.includes( orderBy.toString() ) ? orderBy : "createdAt";
   const orderParamVal = ( orderParam !== 1 && orderParam !== -1 ) ? -1 : orderParam;
 
-  const filter: Record<string, RegExp | { $gte: Date; $lte: Date; } | number | string> = {};
+  const filter: Record<string, RegExp | { $gte: Date; $lte: Date; } | string> = {};
 
+  const stringBools = [ "true", "false" ];
   let resultsList: T[] = [];
   let dtoResultsList: U[] = [];
   let total = 0;
@@ -105,6 +106,7 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
     nonDateFilterBy.forEach( nonDateFilter => {
       if ( queryStringParams[ nonDateFilter ] ) {
         const filterValue = isNaN( parseInt( queryStringParams[ nonDateFilter ]!.toString() ) )
+          && !stringBools.includes( queryStringParams[ nonDateFilter ]!.toString() )
           ? new RegExp( queryStringParams[ nonDateFilter ]!.toString() )
           : queryStringParams[ nonDateFilter ]!.toString();
         filter[ nonDateFilter ] = filterValue;
@@ -114,9 +116,10 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
 
   if ( nonDatePreDefinedFilterBY && nonDatePreDefinedFilterBY.length ) {
     nonDatePreDefinedFilterBY.forEach( pdf => {
-      const filterValue = isNaN( parseInt( pdf.filterParam ) )
-        ? new RegExp( pdf.filterParam )
-        : pdf.filterParam;
+      const filterValue = isNaN( parseInt( pdf.filterParam.toString() ) )
+        && !stringBools.includes( pdf.filterParam.toString() )
+        ? new RegExp( pdf.filterParam.toString() )
+        : pdf.filterParam.toString();
       filter[ pdf.filterBy ] = filterValue;
     } );
   }
@@ -131,7 +134,7 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
         const isEndDateValid = Array.isArray( qStrParam ) && qStrParam.length === 2
           ? !isNaN( new Date( qStrParam[ 1 ].toString() ).getTime() )
           : false;
-        if ( isStartDateValid && isEndDateValid && Array.isArray( qStrParam ) ) {
+        if ( isStartDateValid && isEndDateValid ) {
           filter[ dateFilter ] = { $gte: new Date( qStrParam[ 0 ].toString() ), $lte: new Date( qStrParam[ 1 ].toString() ) };
         }
       }
@@ -140,7 +143,7 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
 
   if ( datePreDefinedFilterBY && datePreDefinedFilterBY.length ) {
     datePreDefinedFilterBY.forEach( pdf => {
-      let datesToArr = commaSeparatedToArray( pdf.filterParam );
+      let datesToArr = commaSeparatedToArray( pdf.filterParam.toString() );
       const isStartDateValid = Array.isArray( datesToArr ) && datesToArr.length === 2
         ? !isNaN( new Date( datesToArr[ 0 ].toString() ).getTime() )
         : false;

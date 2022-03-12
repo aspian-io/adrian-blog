@@ -9,6 +9,7 @@ export const usersData = async () => [
     password: await PasswordUtil.hash( '123456' ),
     createdByIp: '::1',
     lastIp: '::1',
+    isEmailConfirmed: true,
     claims: [ AccessPoliciesEnum.Core_ADMIN ],
     userAgent: "SEEDED"
   },
@@ -19,6 +20,7 @@ export const usersData = async () => [
     password: await PasswordUtil.hash( '123456' ),
     createdByIp: '::1',
     lastIp: '::1',
+    isEmailConfirmed: true,
     claims: [],
     userAgent: "SEEDED"
   }
