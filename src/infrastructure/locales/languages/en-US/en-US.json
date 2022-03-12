@@ -31,7 +31,8 @@
       },
       "confirmEmailService": {
         "confirmEmailLinkExpiredErr": "Invalid confirmation email link or the link expired",
-        "emailAlreadyConfirmed": "Email has been already confirmed"
+        "emailAlreadyConfirmed": "Email has been already confirmed",
+        "emailNotConfirmed": "Please confirm your email address through the confirmation link sent to your email, to be able to use your account"
       },
       "getRefreshTokenService": {
         "invalidRefreshToken": "Invalid refresh token"

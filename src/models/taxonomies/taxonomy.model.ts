@@ -1,5 +1,4 @@
 import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from 'models/base/base.model';
-import { PostDoc } from 'models/posts/post.model';
 import { Model, Schema, Document, model } from 'mongoose';
 
 export enum TaxonomyTypeEnum {

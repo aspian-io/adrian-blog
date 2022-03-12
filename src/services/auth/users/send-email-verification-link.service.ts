@@ -21,6 +21,11 @@ export async function authSendEmailVerificationLinkService ( userId: string ) {
   const key = authEmailConfirmationRedisKeyGen( userId );
   const token = authEmailConfirmationTokenGen();
 
+  const isTokenExist = await redisWrapper.client.get( key );
+  if ( isTokenExist ) {
+    await redisWrapper.client.del( key );
+  }
+
   await redisWrapper.client.set( key, token, {
     EX: 1 * 24 * 60 * 60,
     NX: true

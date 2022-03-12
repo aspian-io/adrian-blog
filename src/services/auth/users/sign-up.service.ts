@@ -21,16 +21,11 @@ export async function authSignUpService ( { firstName, lastName, email, password
   const userToRegister = User.build( { firstName, lastName, email, password, createdByIp: ipAddress, lastIp: ipAddress, userAgent } );
   await userToRegister.save();
 
-  const { refreshToken, jwtToken, ...user } = await authSignInService( {
-    userEmail: email,
-    userPassword: password,
-    userIpAddress: ipAddress,
-    userAgent
-  } );
   // return basic details and tokens
   return {
-    ...user,
-    jwtToken,
-    refreshToken
+    id: userToRegister.id,
+    firstName: userToRegister.firstName,
+    lastName: userToRegister.lastName,
+    email: userToRegister.email
   };
 }

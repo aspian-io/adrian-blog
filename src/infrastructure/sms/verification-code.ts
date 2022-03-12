@@ -28,6 +28,10 @@ export class VerificationCode {
   public async generateCode (): Promise<string> {
     const verificationCode = sixDigitRandomCodeGen();
     try {
+      const existedCode = await redisWrapper.client.get( this._verificationCodeKey );
+      if ( existedCode ) {
+        await redisWrapper.client.del( this._verificationCodeKey );
+      }
       await redisWrapper.client
         .set( this._verificationCodeKey, verificationCode, {
           EX: this._expiration,

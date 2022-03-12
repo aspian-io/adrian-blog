@@ -14,6 +14,8 @@ export enum SettingsKeyEnum {
   COMMENT_MAX_LENGTH = "COMMENT_MAX_LENGTH",
 
   ATTACHMENT_URL_EXP_HOURS = "ATTACHMENT_URL_EXPIRATION"
+
+  
 }
 
 export enum SettingsServiceEnum {

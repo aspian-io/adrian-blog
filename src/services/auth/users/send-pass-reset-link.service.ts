@@ -18,6 +18,10 @@ export async function authSendPassResetLinkService ( email: string ) {
   const key = authResetPassRedisKeyGen( user.id );
   const token = authResetPassTokenGen();
 
+  const isKeyExist = await redisWrapper.client.get( key );
+  if ( isKeyExist ) {
+    await redisWrapper.client.del( key );
+  }
   await redisWrapper.client.set( key, token, {
     EX: 60 * 60,
     NX: true

@@ -31,7 +31,8 @@
       },
       "confirmEmailService": {
         "confirmEmailLinkExpiredErr": "پیوند تایید نشانی پست الکترونیک نادرست بوده یا منقضی شده است",
-        "emailAlreadyConfirmed": "نشانی پست الکترونیک شما قبلا تایید شده است"
+        "emailAlreadyConfirmed": "نشانی پست الکترونیک شما قبلا تایید شده است",
+        "emailNotConfirmed": "لطفا ابتدا از طریق پیوند ارسالی به پست الکترونیک خود، نشانی آن را تایید نمایید تا بتوانید از حساب کاربری خود استفاده کنید"
       },
       "getRefreshTokenService": {
         "invalidRefreshToken": "توکن تمدید کننده اشتباه است"

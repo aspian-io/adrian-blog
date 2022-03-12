@@ -28,6 +28,10 @@ export async function authSignInService ( { userEmail, userPassword, userIpAddre
     throw new BadRequestError( 'Invalid Credentials', AuthLocaleEnum.ERROR_BADREQ_PASS_MISMATCH );
   }
 
+  if ( !user.isEmailConfirmed ) {
+    throw new BadRequestError( "New user's email has not confirmed", AuthLocaleEnum.ERROR_EMAIL_NOT_CONFIRMED );
+  }
+
   // authentication successful so generate jwt and refresh tokens
   const jwtToken = authJwtTokenGen( user );
   const refreshToken = authRefreshTokenGen( user, userIpAddress, userAgent );
