@@ -9,6 +9,7 @@ export interface IDtoMapperOptions {
  * 
  * @param {T} source - Source object to map from
  * @param {U} destination - Destination class to map to
+ * @param {IDtoMapperOptions[]} options - An array of DTO Mapper options of type `IDtoMapperOptions[]`
  * @returns {U} An object of type U
  */
 export function dtoMapper<T, U> ( source: T, destination: new () => U, options?: IDtoMapperOptions[] ): U;
@@ -18,6 +19,7 @@ export function dtoMapper<T, U> ( source: T, destination: new () => U, options?:
  * 
  * @param {T[]} source  - Source array of objects to map from
  * @param {U} destination - Destination class to which map each object from the source
+ * @param {IDtoMapperOptions[]} options - An array of DTO Mapper options of type `IDtoMapperOptions[]`
  * @returns {U[]} An array of type U
  */
 export function dtoMapper<T, U> ( source: T[], destination: new () => U, options?: IDtoMapperOptions[] ): U[];
