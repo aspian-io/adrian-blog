@@ -12,7 +12,7 @@ export interface IListQueryParams<T, U = T> {
   queryStringParams?: ParsedQs;                                     // Query string params to use for filtering (req.query)
   preDefinedFilters?: IListQueryPreDefinedFilters[];                // Pre-defined filters to apply
   preDefinedOrders?: IListQueryPreDefinedOrders[];                  // Pre-defined orders to apply
-  fieldsToPopulate?: string[];                                        //
+  fieldsToPopulate?: string[];                                      // Array of field to populate
   dataMapTo?: new () => U;                                          // An instance of DTO class to map data to
   mapperOptions?: IDtoMapperOptions[];                              // DTO Mapper options
 }
