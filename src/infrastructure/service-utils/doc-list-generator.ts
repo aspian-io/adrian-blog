@@ -2,17 +2,19 @@ import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { commaSeparatedToArray } from "infrastructure/string-utils/comma-separated-to-array";
 import { FilterQuery, Model } from "mongoose";
 import { ParsedQs } from 'qs';
-import { dtoMapper } from "./dto-mapper";
+import { dtoMapper, IDtoMapperOptions } from "./dto-mapper";
 
 // Input params
 export interface IListQueryParams<T, U = T> {
   model: Model<T>;                                                  // Mongoose Model (T is type of the Model's Document)
-  fieldsToExclude?: string[];                                        // Model fields we do not want to use for filtering
+  fieldsToExclude?: string[];                                       // Model fields we do not want to use for filtering
   cache?: IListQueryCache;                                          // Enable or disable Redis cache for the result
-  queryStringParams?: ParsedQs;                                      // Query string params to use for filtering (req.query)
+  queryStringParams?: ParsedQs;                                     // Query string params to use for filtering (req.query)
   preDefinedFilters?: IListQueryPreDefinedFilters[];                // Pre-defined filters to apply
   preDefinedOrders?: IListQueryPreDefinedOrders[];                  // Pre-defined orders to apply
+  fieldsToPopulate?: string[];                                        //
   dataMapTo?: new () => U;                                          // An instance of DTO class to map data to
+  mapperOptions?: IDtoMapperOptions[];                              // DTO Mapper options
 }
 
 // Result type
@@ -57,7 +59,17 @@ export interface IListQueryPreDefinedOrders {
  * @returns {Promise<IListQueryResult<T>>} A Promise of type `IListQueryResult<T>`
  */
 export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U> ): Promise<IListQueryResult<T, U>> {
-  const { model, fieldsToExclude, queryStringParams, cache, preDefinedFilters, preDefinedOrders, dataMapTo } = params;
+  const {
+    model,
+    fieldsToExclude,
+    queryStringParams,
+    cache,
+    preDefinedFilters,
+    preDefinedOrders,
+    dataMapTo,
+    mapperOptions,
+    fieldsToPopulate
+  } = params;
 
   let modelKeys = Object.keys( model.schema.paths );
   const page = queryStringParams?.page ? parseInt( queryStringParams.page.toString() ) : 1;
@@ -208,15 +220,20 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
   }
 
   if ( cache && cache?.useCache ) {
-    resultsList = await model.find( filter as FilterQuery<T>, null, { skip, limit, sort } ).cache( cache.cacheOptionService );
+    resultsList = await model
+      .find( filter as FilterQuery<T>, null, { skip, limit, sort } )
+      .populate( fieldsToPopulate )
+      .cache( cache.cacheOptionService );
     currentPageResultsNumber = resultsList.length;
   } else {
-    resultsList = await model.find( filter as FilterQuery<T>, null, { skip, limit, sort } );
+    resultsList = await model
+      .find( filter as FilterQuery<T>, null, { skip, limit, sort } )
+      .populate( fieldsToPopulate );
     currentPageResultsNumber = resultsList.length;
   }
 
   if ( dataMapTo ) {
-    dtoResultsList = dtoMapper<T, U>( resultsList, dataMapTo );
+    dtoResultsList = dtoMapper<T, U>( resultsList, dataMapTo, mapperOptions );
   }
 
   return {
