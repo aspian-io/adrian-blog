@@ -1,5 +1,5 @@
 import { AttachmentDoc } from 'models/attachments/attachment.model';
-import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from 'models/base/base.model';
+import { BaseAttrs, BaseDoc, BaseMinimalDoc, baseMinimalSchema, baseSchema, baseSchemaOptions } from 'models/base/base.model';
 import { TaxonomyDoc } from 'models/taxonomies/taxonomy.model';
 import { model, Schema, Model, Document, Types } from 'mongoose';
 
@@ -14,7 +14,8 @@ export enum PostStatusEnum {
   DRAFT = "DRAFT",
   PENDING = "PENDING",
   AUTO_DRAFT = "AUTO_DRAFT",
-  INHERIT = "INHERIT"
+  INHERIT = "INHERIT",
+  ARCHIVE = "ARCHIVE"
 }
 
 export enum PostTypeEnum {
@@ -34,15 +35,21 @@ export interface PostAttrs extends BaseAttrs {
   visibility: PostVisibilityEnum;
   status: PostStatusEnum;
   scheduledFor?: Date;
+  scheduledExpiration?: Date;
   commentAllowed: Boolean;
   viewCount?: Number;
   type: PostTypeEnum;
   isPinned?: Boolean;
+  order?: number;
   child?: string;
   parent?: string;
   taxonomies: string[];
   attachments: string[];
-  postmeta?: Postmeta[];
+  reviews?: PostReview[];
+  rating?: number;
+  numReviews?: number;
+  likes?: BaseMinimalDoc[];
+  numLikes?: number;
 }
 
 export interface PostDoc extends BaseDoc, Document {
@@ -54,32 +61,39 @@ export interface PostDoc extends BaseDoc, Document {
   visibility: PostVisibilityEnum;
   status: PostStatusEnum;
   scheduledFor?: Date;
+  scheduledExpiration?: Date;
   commentAllowed: Boolean;
   viewCount?: Number;
   type: PostTypeEnum;
   isPinned?: Boolean;
+  order?: number;
   child?: PostDoc;
   parent?: PostDoc;
   taxonomies: TaxonomyDoc[];
   attachments: AttachmentDoc[];
-  postmeta?: Postmeta[];
+  reviews: PostReview[];
+  rating: number;
+  numReviews: number;
+  likes: BaseMinimalDoc[];
+  numLikes: number;
 }
 
 interface PostModel extends Model<PostDoc> {
   build ( attrs: PostAttrs ): PostDoc;
 }
 
-// Postmeta Subdocument Interface
-export interface Postmeta {
-  key: string;
-  value: string;
+export interface PostReview extends BaseMinimalDoc {
+  rate: number;
 }
 
-// Postmeta Subdocument Schema
-const postmetaSchema = new Schema( {
-  key: { type: String, required: true },
-  value: { type: String, required: true }
-} );
+const reviewSchema = new Schema<PostReview>( {
+  rate: { type: Number, min: 0, max: 5 },
+  ...baseMinimalSchema.obj
+}, baseSchemaOptions );
+
+const postLike = new Schema<BaseMinimalDoc>( {
+  ...baseMinimalSchema.obj
+}, baseSchemaOptions );
 
 // Post Model Schema
 const postSchema = new Schema<PostDoc, PostModel>( {
@@ -91,15 +105,21 @@ const postSchema = new Schema<PostDoc, PostModel>( {
   visibility: { type: String, required: true, default: PostVisibilityEnum.PUBLIC, enum: Object.values( PostVisibilityEnum ) },
   status: { type: String, required: true, default: PostStatusEnum.PUBLISH, enum: Object.values( PostStatusEnum ) },
   scheduledFor: Date,
+  scheduledExpiration: Date,
   commentAllowed: { type: Boolean, required: true, default: true },
   viewCount: { type: Number, default: 0 },
   type: { type: String, required: true, default: PostTypeEnum.BLOG, enum: Object.values( PostTypeEnum ) },
   isPinned: { type: Boolean, default: false },
+  order: { type: Number, required: false },
   child: { type: Schema.Types.ObjectId, ref: "Post" },
   parent: { type: Schema.Types.ObjectId, ref: "Post" },
   taxonomies: [ { type: Schema.Types.ObjectId, ref: "Taxonomy" } ],
   attachments: [ { type: Schema.Types.ObjectId, ref: "Attachment" } ],
-  postmeta: [ postmetaSchema ],
+  reviews: [ reviewSchema ],
+  rating: { type: Number, default: 0 },
+  numReviews: { type: Number, default: 0 },
+  likes: [ postLike ],
+  numLikes: { type: Number, default: 0 },
   ...baseSchema.obj
 }, baseSchemaOptions );
 

@@ -105,6 +105,9 @@
       "deleteService": {
         "postIdErr": "Post Id must be a standard Id"
       },
+      "reviewService": {
+        "alreadyReviewed": "Post already reviewed"
+      },
       "createSchema": {
         "titleEmptyErr": "Post title is required",
         "excerptEmptyErr": "Post excerpt is required",
@@ -291,7 +294,14 @@
         "successMsg": "List of posts retrieved"
       },
       "userArea": {
-        "bannersList": "Banners List retrieved successfully"
+        "bannersList": "Banners list retrieved successfully",
+        "blogsList": "Blogs list retrieved successfully",
+        "blogDetails": "Blog details retrieved successfully",
+        "newsList": "News list retrieved successfully",
+        "newsDetails": "News post details retrieved successfully",
+        "pageDetails": "Page details retrieved successfully",
+        "postLike": "Post liked/unliked successfully",
+        "postReview": "Post reviewed successfully"
       }
     },
     "postComments": {
@@ -312,6 +322,9 @@
       },
       "approve": {
         "successMsg": "Post comment approval changed successfully"
+      },
+      "userArea": {
+        "commentLike": "Comment liked/unliked successfully"
       }
     }
   }

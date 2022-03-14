@@ -4,19 +4,20 @@ import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { postCommentCreateService } from "services/post-comments/create.service";
 import { logger } from "services/winston-logger/logger.service";
 
-export async function adminPostCommentCreateController ( req: Request, res: Response ) {
-  const userAgent = req.get( 'User-Agent' ) ?? "unknown_agent";
-
+export async function postCommentCreateController ( req: Request, res: Response ) {
   const comment = await postCommentCreateService( {
-    ...req.body,
+    title: req.body.title,
+    content: req.body.content,
+    post: req.body.post,
+    parent: req.body.parent,
     createdBy: req.currentUser!.id,
     createdByIp: req.ip,
-    userAgent
+    userAgent: req.get( 'User-Agent' ) || 'unknown_agent'
   } );
 
-  res.status( 201 ).send( comment );
+  res.send( comment );
   logger.info(
-    `Post comment created by admin <${ req.currentUser!.email }> successfully`,
+    `Comment created by user <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, CommentLocaleEnum.INFO_CREATE, {
       postComment: {
         id: comment.data.id

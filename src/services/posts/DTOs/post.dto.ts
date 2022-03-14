@@ -1,9 +1,11 @@
 import { AttachmentDoc } from "models/attachments/attachment.model";
-import { PostDoc, Postmeta } from "models/posts/post.model";
+import { PostDoc } from "models/posts/post.model";
 import { TaxonomyDoc } from "models/taxonomies/taxonomy.model";
 
 export class PostDto {
+  id: string = '';
   title: string = '';
+  slug: string = '';
   subtitle?: string = undefined;
   excerpt: string = '';
   content: string = '';
@@ -14,5 +16,4 @@ export class PostDto {
   parent?: PostDoc = undefined;
   taxonomies: TaxonomyDoc[] = [];
   attachments: AttachmentDoc[] = [];
-  postmeta?: Postmeta[] = undefined;
 }

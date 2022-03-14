@@ -8,9 +8,9 @@ interface Payload {
   postId: string;
 }
 
-const scheduledPostsQueue = new Queue<Payload>( 'post:scheduled', process.env.REDIS_URL! );
+const scheduledPostsQueueToPublish = new Queue<Payload>( 'post:publish', process.env.REDIS_URL! );
 
-scheduledPostsQueue.process( async ( job ) => {
+scheduledPostsQueueToPublish.process( async ( job ) => {
   const post = await Post.findById( job.data.postId );
   if ( post ) {
     post.set( {
@@ -26,4 +26,22 @@ scheduledPostsQueue.process( async ( job ) => {
   };
 } );
 
-export { scheduledPostsQueue };
+const scheduledPostsQueueToArchive = new Queue<Payload>( 'post:archive', process.env.REDIS_URL! );
+
+scheduledPostsQueueToArchive.process( async ( job ) => {
+  const post = await Post.findById( job.data.postId );
+  if ( post ) {
+    post.set( {
+      status: PostStatusEnum.ARCHIVE
+    } );
+
+    await post.save();
+    clearCache( CacheOptionServiceEnum.POST );
+    console.log(
+      chalk.bold.green.inverse( " Queue Info " ),
+      chalk.bold.green( `A scheduled post with the id of ${ post.id } archived successfully` )
+    );
+  };
+} );
+
+export { scheduledPostsQueueToPublish, scheduledPostsQueueToArchive };

@@ -8,7 +8,7 @@ export async function adminAuthUserDetailsController ( req: Request, res: Respon
   const userDetails = await authUserDetailsService( req.params.id );
   res.send( userDetails );
   logger.info(
-    `${ userDetails.email } retrieved by admin <${ req.currentUser!.email }> successfully`,
+    `${ userDetails.email } details retrieved by admin <${ req.currentUser!.email }> successfully`,
     logSerializer( req, res, AuthLocaleEnum.INFO_ADMIN_USER_DETAILS, {
       user: {
         id: userDetails.id

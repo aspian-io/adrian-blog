@@ -5,7 +5,7 @@ import { postListService } from "services/posts/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminPostListController ( req: Request, res: Response ) {
-  const posts = await postListService( { query: req.query } );
+  const posts = await postListService( { fieldsToExclude: [], query: req.query } );
   res.send( posts );
   logger.info(
     `List of posts has been retrieved by admin <${ req.currentUser!.email }> successfully`,

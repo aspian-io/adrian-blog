@@ -3,8 +3,8 @@ import { NotFoundError } from 'infrastructure/errors/not-found-error';
 import { Post, PostStatusEnum, PostTypeEnum } from 'models/posts/post.model';
 
 
-export async function postDetailsService ( slug: string ) {
-  const post = await Post.findOne( { slug } )
+export async function postDetailsService ( slug: string, type?: PostTypeEnum ) {
+  const post = await Post.findOne( { slug, type } )
     .populate( 'taxonomies' )
     .populate( 'attachments' )
     .cache( CacheOptionServiceEnum.POST );

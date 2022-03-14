@@ -20,6 +20,7 @@ import { adminSettingRouter } from 'infrastructure/routes/api/v1/admin/setting.r
 import { corsInit } from 'infrastructure/security/cors-init';
 import { taxonomyRouter } from 'infrastructure/routes/api/v1/user/taxonomy.router';
 import { postRouter } from 'infrastructure/routes/api/v1/user/post.router';
+import { postCommentRouter } from 'infrastructure/routes/api/v1/user/post-comment.router';
 
 const app = express();
 app.use( express.json() );
@@ -45,6 +46,7 @@ app.use( currentUser );
 // Routes
 app.use( '/:lng?/api/v1/taxonomies', taxonomyRouter );
 app.use( '/:lng?/api/v1/posts', postRouter );
+app.use( '/:lng?/api/v1/post-comments', postCommentRouter );
 app.use( '/:lng?/api/v1/users', authRouter );
 
 app.use( '/:lng?/api/v1/admin/settings', adminSettingRouter );

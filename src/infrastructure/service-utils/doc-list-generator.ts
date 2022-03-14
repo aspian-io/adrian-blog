@@ -1,6 +1,4 @@
 import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
-import { BadRequestError } from "infrastructure/errors/bad-request-error";
-import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
 import { commaSeparatedToArray } from "infrastructure/string-utils/comma-separated-to-array";
 import { FilterQuery, Model } from "mongoose";
 import { ParsedQs } from 'qs';
@@ -9,10 +7,11 @@ import { dtoMapper } from "./dto-mapper";
 // Input params
 export interface IListQueryParams<T, U = T> {
   model: Model<T>;                                                  // Mongoose Model (T is type of the Model's Document)
-  fieldsToExclude: string[];                                        // Model fields we do not want to use for filtering
+  fieldsToExclude?: string[];                                        // Model fields we do not want to use for filtering
   cache?: IListQueryCache;                                          // Enable or disable Redis cache for the result
-  queryStringParams: ParsedQs;                                      // Query string params to use for filtering (req.query)
+  queryStringParams?: ParsedQs;                                      // Query string params to use for filtering (req.query)
   preDefinedFilters?: IListQueryPreDefinedFilters[];                // Pre-defined filters to apply
+  preDefinedOrders?: IListQueryPreDefinedOrders[];                  // Pre-defined orders to apply
   dataMapTo?: new () => U;                                          // An instance of DTO class to map data to
 }
 
@@ -41,7 +40,13 @@ interface IListQueryCache {
 // Pre-defined filters type
 export interface IListQueryPreDefinedFilters {
   filterBy: string;
-  filterParam: string | boolean;
+  filterParam: string | boolean | string[];
+}
+
+// Pre-defined orders type
+export interface IListQueryPreDefinedOrders {
+  orderBy: string;
+  orderParam: 1 | -1;
 }
 
 /**
@@ -52,27 +57,23 @@ export interface IListQueryPreDefinedFilters {
  * @returns {Promise<IListQueryResult<T>>} A Promise of type `IListQueryResult<T>`
  */
 export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U> ): Promise<IListQueryResult<T, U>> {
-  const { model, fieldsToExclude, queryStringParams, cache, preDefinedFilters, dataMapTo } = params;
+  const { model, fieldsToExclude, queryStringParams, cache, preDefinedFilters, preDefinedOrders, dataMapTo } = params;
 
   let modelKeys = Object.keys( model.schema.paths );
-  const page = queryStringParams.page ? parseInt( queryStringParams.page.toString() ) : 1;
-  const size = queryStringParams.size ? parseInt( queryStringParams.size.toString() ) : 10;
-  const filterBy = queryStringParams.filterBy;
-  const orderBy = queryStringParams.orderBy?.toString() || "createdAt";
-  const orderParam = queryStringParams.orderParam ? parseInt( queryStringParams.orderParam.toString() ) : -1;
+  const page = queryStringParams?.page ? parseInt( queryStringParams.page.toString() ) : 1;
+  const size = queryStringParams?.size ? parseInt( queryStringParams.size.toString() ) : 10;
+  const filterBy = queryStringParams?.filterBy;
+  const orderBy = queryStringParams?.orderBy?.toString();
+  const orderParam = queryStringParams?.orderParam ? parseInt( queryStringParams.orderParam.toString() ) : -1;
   const dateFields = modelKeys.filter( key => model.schema.path( key ).instance === "Date" );
+  const arrayFields = modelKeys
+    .filter( key => model.schema.path( key ).instance === "Array" && model.schema.path( key ).schema === undefined );
 
-  if ( fieldsToExclude.length ) {
-    if ( fieldsToExclude.includes( "createdAt" ) ) {
-      throw new BadRequestError(
-        "Excluding `createdAt` while generating list query params is not allowed",
-        CoreLocaleEnum.ERROR_400_MSG
-      );
-    }
+  if ( fieldsToExclude && fieldsToExclude.length ) {
     modelKeys = modelKeys.filter( field => !fieldsToExclude.includes( field ) );
   }
 
-  const dateFieldsVal = dateFields && dateFields.length ? dateFields : [ 'createdAt', 'updatedAt' ];
+  const dateFieldsVal = dateFields && dateFields.length ? dateFields : [];
   const isFilterByArray = Array.isArray( filterBy );
 
   let filterByVal: string[] = [];
@@ -91,10 +92,10 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
   const nonDatePreDefinedFilterBY = preDefinedFilters?.filter( pdf => !dateFieldsVal.includes( pdf.filterBy ) );
   const datePreDefinedFilterBY = preDefinedFilters?.filter( pdf => dateFieldsVal.includes( pdf.filterBy ) );
 
-  const orderByVal = orderBy && modelKeys.includes( orderBy.toString() ) ? orderBy : "createdAt";
+  const orderByVal = orderBy && modelKeys.includes( orderBy.toString() ) ? orderBy : undefined;
   const orderParamVal = ( orderParam !== 1 && orderParam !== -1 ) ? -1 : orderParam;
 
-  const filter: Record<string, RegExp | { $gte: Date; $lte: Date; } | string> = {};
+  const filter: Record<string, RegExp | { $gte: Date; $lte: Date; } | { $all: string[]; } | string> = {};
 
   const stringBools = [ "true", "false" ];
   let resultsList: T[] = [];
@@ -102,29 +103,46 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
   let total = 0;
   let currentPageResultsNumber = 0;
 
-  if ( nonDateFilterBy.length ) {
+  if ( queryStringParams && nonDateFilterBy.length ) {
     nonDateFilterBy.forEach( nonDateFilter => {
       if ( queryStringParams[ nonDateFilter ] ) {
-        const filterValue = isNaN( parseInt( queryStringParams[ nonDateFilter ]!.toString() ) )
-          && !stringBools.includes( queryStringParams[ nonDateFilter ]!.toString() )
-          ? new RegExp( queryStringParams[ nonDateFilter ]!.toString() )
-          : queryStringParams[ nonDateFilter ]!.toString();
-        filter[ nonDateFilter ] = filterValue;
+        if ( !arrayFields.includes( nonDateFilter ) ) {
+          const filterValue = isNaN( parseInt( queryStringParams[ nonDateFilter ]!.toString() ) )
+            && !stringBools.includes( queryStringParams[ nonDateFilter ]!.toString() )
+            ? new RegExp( queryStringParams[ nonDateFilter ]!.toString() )
+            : queryStringParams[ nonDateFilter ]!.toString();
+          filter[ nonDateFilter ] = filterValue;
+        } else {
+          let qStrParam = commaSeparatedToArray( queryStringParams[ nonDateFilter ]!.toString() );
+          if ( Array.isArray( qStrParam ) ) {
+            filter[ nonDateFilter ] = { $all: qStrParam };
+          } else {
+            filter[ nonDateFilter ] = { $all: [ qStrParam ] };
+          }
+        }
       }
     } );
   }
 
   if ( nonDatePreDefinedFilterBY && nonDatePreDefinedFilterBY.length ) {
     nonDatePreDefinedFilterBY.forEach( pdf => {
-      const filterValue = isNaN( parseInt( pdf.filterParam.toString() ) )
-        && !stringBools.includes( pdf.filterParam.toString() )
-        ? new RegExp( pdf.filterParam.toString() )
-        : pdf.filterParam.toString();
-      filter[ pdf.filterBy ] = filterValue;
+      if ( !arrayFields.includes( pdf.filterBy ) ) {
+        const filterValue = isNaN( parseInt( pdf.filterParam.toString() ) )
+          && !stringBools.includes( pdf.filterParam.toString() )
+          ? new RegExp( pdf.filterParam.toString() )
+          : pdf.filterParam.toString();
+        filter[ pdf.filterBy ] = filterValue;
+      } else {
+        if ( Array.isArray( pdf.filterParam ) ) {
+          filter[ pdf.filterBy ] = { $all: pdf.filterParam };
+        } else {
+          filter[ pdf.filterBy ] = { $all: [ pdf.filterParam.toString() ] };
+        }
+      }
     } );
   }
 
-  if ( dateFilterBy.length ) {
+  if ( queryStringParams && dateFilterBy.length ) {
     dateFilterBy.forEach( dateFilter => {
       if ( queryStringParams[ dateFilter ] ) {
         let qStrParam = commaSeparatedToArray( queryStringParams[ dateFilter ]!.toString() );
@@ -178,8 +196,16 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
   }
   const skip = ( pageVal - 1 ) * limit;
 
-  const sort: Record<string, 1 | -1> = {};
-  sort[ orderByVal ] = orderParamVal;
+  let sort: Record<string, 1 | -1> = {};
+  if ( preDefinedOrders ) {
+    preDefinedOrders.forEach( o => {
+      sort[ o.orderBy ] = o.orderParam;
+    } );
+  }
+  if ( orderByVal ) {
+    sort = {};
+    sort[ orderByVal ] = orderParamVal;
+  }
 
   if ( cache && cache?.useCache ) {
     resultsList = await model.find( filter as FilterQuery<T>, null, { skip, limit, sort } ).cache( cache.cacheOptionService );

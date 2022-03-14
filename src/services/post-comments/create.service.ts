@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Comment } from 'models/post-comments/post-comment.model';
+import { Comment, CommentDoc } from 'models/post-comments/post-comment.model';
 import { clearCache } from 'infrastructure/cache/clear-cache';
 import { CacheOptionServiceEnum } from 'infrastructure/cache/cache-options';
 import { postCommentProcessor } from './helper/comment-processor.helper';
@@ -16,7 +16,18 @@ export interface IPostCommentCreateService {
   userAgent: string;
 }
 
-export async function postCommentCreateService ( data: IPostCommentCreateService ) {
+export interface IPostCommentCreateResult {
+  metadata: IPostCommentCreateResultMetadata;
+  data: CommentDoc;
+}
+
+export interface IPostCommentCreateResultMetadata {
+  isApproved: boolean;
+  allowedReplyLevel: number;
+  currentReplyLevel: number;
+}
+
+export async function postCommentCreateService ( data: IPostCommentCreateService ): Promise<IPostCommentCreateResult> {
   const { title, content, parent, post, createdBy, createdByIp, userAgent } = data;
   const allowedReplyLevel = parseInt( process.env.POSTCOMMENT_REPLY_ALLOWED_LEVEL! );
 
@@ -33,13 +44,14 @@ export async function postCommentCreateService ( data: IPostCommentCreateService
 
   const isReplyLevelAllowed = parentComment ? ( parentComment.replyLevel + 1 ) <= allowedReplyLevel : true;
   if ( !isReplyLevelAllowed ) throw new BadRequestError( "Reply is now allowed", CommentLocaleEnum.ERROR_REPLY_NOT_ALLOWED );
+  const currentReplyLevel = parentComment ? ( parentComment.replyLevel + 1 ) : 0;
 
   const postComment = Comment.build( {
     title: sanitizedTitle,
     content: sanitizedContent,
     parent,
     isApproved,
-    replyLevel: parentComment ? ( parentComment.replyLevel + 1 ) : 0,
+    replyLevel: currentReplyLevel,
     isReplyAllowed: parentComment ? ( parentComment.replyLevel + 1 ) < allowedReplyLevel : true,
     post,
     createdBy,
@@ -62,5 +74,12 @@ export async function postCommentCreateService ( data: IPostCommentCreateService
   await session.commitTransaction();
   session.endSession(); // Transaction session ended
 
-  return postComment;
+  return {
+    metadata: {
+      isApproved,
+      allowedReplyLevel,
+      currentReplyLevel
+    },
+    data: postComment
+  };
 }

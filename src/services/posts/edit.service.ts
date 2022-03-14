@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import slugify from "slugify";
 import { clearCache } from "infrastructure/cache/clear-cache";
 import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
-import { scheduledPostsQueue } from "./post-queue.service";
+import { scheduledPostsQueueToArchive, scheduledPostsQueueToPublish } from "./post-queue.service";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
@@ -14,8 +14,8 @@ export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "chi
 export async function postEditService ( data: PostEditService ) {
   const {
     slug, title, subtitle, excerpt, content, visibility,
-    status, scheduledFor, commentAllowed, viewCount, type,
-    isPinned, parent, taxonomies, attachments, postmeta,
+    status, scheduledFor, scheduledExpiration, commentAllowed, viewCount, type,
+    isPinned, parent, taxonomies, attachments,
     updatedBy, updatedByIp, userAgent
   } = data;
 
@@ -47,7 +47,10 @@ export async function postEditService ( data: PostEditService ) {
     );
   }
 
-  const isScheduled = scheduledFor && new Date( scheduledFor ).getTime() > Date.now();
+  const isScheduledForFuture = scheduledFor && new Date( scheduledFor ).getTime() > Date.now();
+  const isScheduledToArchive = scheduledFor
+    && scheduledExpiration
+    && new Date( scheduledExpiration ).getTime() > new Date( scheduledFor ).getTime();
   const slugified = slugify( title );
 
   post.set( {
@@ -57,7 +60,7 @@ export async function postEditService ( data: PostEditService ) {
     content,
     visibility,
     slug: slugified,
-    status: isScheduled ? PostStatusEnum.FUTURE : status,
+    status: isScheduledForFuture ? PostStatusEnum.FUTURE : status,
     scheduledFor,
     commentAllowed,
     viewCount,
@@ -66,7 +69,6 @@ export async function postEditService ( data: PostEditService ) {
     parent,
     taxonomies,
     attachments,
-    postmeta,
     updatedBy,
     updatedByIp,
     userAgent
@@ -76,11 +78,18 @@ export async function postEditService ( data: PostEditService ) {
   session.startTransaction();
 
   await post.save( { session } );
-  if ( isScheduled ) {
-    await scheduledPostsQueue.add( {
+  if ( isScheduledForFuture ) {
+    await scheduledPostsQueueToPublish.add( {
       postId: post.id
     }, {
       delay: new Date( post.scheduledFor! ).getTime() - new Date().getTime()
+    } );
+  }
+  if ( isScheduledToArchive ) {
+    await scheduledPostsQueueToArchive.add( {
+      postId: post.id
+    }, {
+      delay: new Date( post.scheduledExpiration! ).getTime() - Date.now()
     } );
   }
   if ( oldParent && oldParent !== parent ) {

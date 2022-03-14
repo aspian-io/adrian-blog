@@ -6,11 +6,19 @@ export enum PostLocaleEnum {
   INFO_DELETE = "info.posts.delete.successMsg",
 
   INFO_USERAREA_BANNERS = "info.posts.userArea.bannersList",
+  INFO_USERAREA_BLOGS = "info.posts.userArea.blogsList",
+  INFO_USERAREA_BLOG_DETAILS = "info.posts.userArea.blogsDetails",
+  INFO_USERAREA_NEWS = "info.posts.userArea.newsList",
+  INFO_USERAREA_NEWS_DETAILS = "info.posts.userArea.newsDetails",
+  INFO_USERAREA_PAGE_DETAILS = "info.posts.userArea.pagesDetails",
+  INFO_USERAREA_LIKE = "info.posts.userArea.postLike",
+  INFO_USERAREA_REVIEW = "info.posts.userArea.postReview",
 
   ERROR_DUPLICATE_POST = "errors.posts.createService.duplicatePostErr",
   ERROR_POST_ID = "errors.posts.deleteService.postIdErr",
   ERROR_PARENT_NOT_FOUND = "errors.posts.common.parentNotFoundErr",
   ERROR_DUPLICATE_PARENT = "errors.posts.common.duplicateParentPostErr",
+  ERROR_ALREADY_REVIEWED = "errors.post.reviewService.alreadyReviewed",
 
   ERROR_SCHEMA_CREATE_TITLE = "errors.posts.createSchema.titleEmptyErr",
   ERROR_SCHEMA_CREATE_EXCERPT = "errors.posts.createSchema.excerptEmptyErr",

@@ -34,3 +34,16 @@ function mapper<T, U> ( source: T, destination: U ): U {
 
   return destination;
 }
+
+// Return true if an object is a custom class
+function isCustomClass ( obj: any ) {
+  const excludedItems = [ "String", "Boolean", "Number", "Array", "Object", "null", "undefined" ];
+  return !excludedItems.includes( getAnyClass( obj ) );
+}
+
+// Return class name of an object
+function getAnyClass ( obj: any ) {
+  if ( typeof obj === "undefined" ) return "undefined";
+  if ( obj === null ) return "null";
+  return obj.constructor.name;
+}

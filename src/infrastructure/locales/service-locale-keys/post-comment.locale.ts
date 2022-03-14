@@ -6,6 +6,8 @@ export enum CommentLocaleEnum {
   INFO_LIST = "info.postComments.list",
   INFO_DELETE = "info.postComments.delete",
 
+  INFO_USERAREA_LIKE = "info.postComments.userArea.commentLike",
+
   ERROR_REPLY_NOT_ALLOWED = "errors.postComments.createService.replyLevelNotAllowed",
   ERROR_SCHEMA_CREATE_TITLE_EMPTY = "errors.postComments.createSchema.titleEmptyErr",
   ERROR_SCHEMA_CREATE_TITLE_LENGTH = "errors.postComments.createSchema.titleLengthErr",

@@ -6,11 +6,13 @@ import { PostDto } from "services/posts/DTOs/post.dto";
 import { postListService } from "services/posts/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
-export async function postBannerListController ( req: Request, res: Response ) {
-  const banners = await postListService( {
+export async function postNewsListController ( req: Request, res: Response ) {
+  const newsPostsList = await postListService( {
+    fieldsToExclude: [ "type", "taxonomies", "attachments", "postmeta" ],
+    query: req.query,
     preDefinedFilters: [ {
       filterBy: "type",
-      filterParam: PostTypeEnum.BANNER
+      filterParam: PostTypeEnum.NEWS
     }, {
       filterBy: "status",
       filterParam: PostStatusEnum.PUBLISH
@@ -27,10 +29,6 @@ export async function postBannerListController ( req: Request, res: Response ) {
     } ],
     dataMapTo: PostDto
   } );
-  res.send( banners.data );
-
-  logger.info(
-    `Banners list have been retrieved successfully`,
-    logSerializer( req, res, PostLocaleEnum.INFO_USERAREA_BANNERS )
-  );
+  res.send( newsPostsList );
+  logger.info( "List of news posts retrieved successfully", logSerializer( req, res, PostLocaleEnum.INFO_USERAREA_NEWS ) );
 }
