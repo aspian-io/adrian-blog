@@ -1,4 +1,3 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { docListGenerator, IListQueryPreDefinedFilters, IListQueryPreDefinedOrders } from "infrastructure/service-utils/doc-list-generator";
 import { Post } from "models/posts/post.model";
 import { ParsedQs } from 'qs';
@@ -18,10 +17,6 @@ export async function postListService ( params: IPostListService ) {
     fieldsToExclude,
     model: Post,
     queryStringParams: query,
-    cache: {
-      useCache: true,
-      cacheOptionService: CacheOptionServiceEnum.POST
-    },
     preDefinedFilters,
     preDefinedOrders,
     dataMapTo

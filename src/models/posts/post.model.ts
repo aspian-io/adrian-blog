@@ -63,7 +63,7 @@ export interface PostDoc extends BaseDoc, Document {
   scheduledFor?: Date;
   scheduledExpiration?: Date;
   commentAllowed: Boolean;
-  viewCount?: Number;
+  viewCount: number;
   type: PostTypeEnum;
   isPinned?: Boolean;
   order?: number;

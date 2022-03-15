@@ -1,3 +1,5 @@
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { authJwtTokenGen } from "../helpers/jwt-token-generator.helper";
@@ -29,6 +31,7 @@ export async function authRefreshTokensService ( { token, ipAddress, userAgent }
 
   // generate new jwt
   const jwtToken = authJwtTokenGen( user );
+  clearCache( CacheOptionServiceEnum.USER );
 
   // return basic details and tokens
   return {

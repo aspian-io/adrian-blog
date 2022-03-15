@@ -1,3 +1,5 @@
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { User } from "models/auth/auth-user.model";
@@ -20,6 +22,7 @@ export async function authSignUpService ( { firstName, lastName, email, password
 
   const userToRegister = User.build( { firstName, lastName, email, password, createdByIp: ipAddress, lastIp: ipAddress, userAgent } );
   await userToRegister.save();
+  clearCache( CacheOptionServiceEnum.USER );
 
   // return basic details and tokens
   return {

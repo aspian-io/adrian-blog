@@ -1,3 +1,5 @@
+import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
+import { clearCache } from "infrastructure/cache/clear-cache";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
@@ -17,6 +19,7 @@ export async function authEditUserClaimsService ( userId: string, claims: Access
   }
   user.set( { claims } );
   await user.save();
+  clearCache( CacheOptionServiceEnum.USER );
 
   return user;
 }
