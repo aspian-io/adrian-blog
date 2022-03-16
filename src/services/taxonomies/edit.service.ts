@@ -33,13 +33,9 @@ export async function taxonomyEditService ( data: ITaxonomyEditService ) {
     throw new BadRequestError( "Parent taxonomy not found", TaxonomyLocaleEnum.ERROR_PARENT_NOT_FOUND );
   }
 
-  const duplicateTaxonomies = await Taxonomy.find( { type, term } );
-  if ( duplicateTaxonomies.length ) {
-    duplicateTaxonomies.forEach( t => {
-      if ( t.id !== taxonomy.id ) {
-        throw new BadRequestError( "Duplicated taxonomy is not allowed", TaxonomyLocaleEnum.ERROR_DUPLICATE_TAXONOMY );
-      }
-    } );
+  const duplicateTaxonomy = await Taxonomy.findOne( { type, term, id: { $ne: taxonomy.id } } );
+  if ( duplicateTaxonomy ) {
+    throw new BadRequestError( "Duplicated taxonomy is not allowed", TaxonomyLocaleEnum.ERROR_DUPLICATE_TAXONOMY );
   }
 
   taxonomy.set( {

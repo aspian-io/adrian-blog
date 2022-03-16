@@ -33,8 +33,8 @@ export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
     throw new BadRequestError( "Something went worng getting parent taxonomy", CoreLocaleEnum.ERROR_400_MSG );
   }
 
-  const isDuplicated = await Taxonomy.find( { type, term } );
-  if ( isDuplicated.length ) {
+  const duplicateTaxonomy = await Taxonomy.findOne( { type, term } );
+  if ( duplicateTaxonomy ) {
     throw new BadRequestError( "Duplicate taxonomy is not allowed", TaxonomyLocaleEnum.ERROR_DUPLICATE_TAXONOMY );
   }
 

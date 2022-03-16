@@ -26,13 +26,9 @@ export async function postEditService ( data: PostEditService ) {
   const post = await Post.findOne( { slug } );
   if ( !post ) throw new NotFoundError();
 
-  const duplicatePostTitles = await Post.find( { title } );
-  if ( duplicatePostTitles.length ) {
-    duplicatePostTitles.forEach( p => {
-      if ( p.id !== post.id ) {
-        throw new BadRequestError( "Duplicate post title is not allowed", PostLocaleEnum.ERROR_DUPLICATE_POST );
-      }
-    } );
+  const duplicatePost = await Post.find( { title, id: { $ne: post.id } } );
+  if ( duplicatePost ) {
+    throw new BadRequestError( "Duplicate post title is not allowed", PostLocaleEnum.ERROR_DUPLICATE_POST );
   }
 
   const oldParent = post.parent ? post.parent.toString() : null;
