@@ -26,7 +26,7 @@ export async function postEditService ( data: PostEditService ) {
   const post = await Post.findOne( { slug } );
   if ( !post ) throw new NotFoundError();
 
-  const duplicatePost = await Post.find( { title, id: { $ne: post.id } } );
+  const duplicatePost = await Post.findOne( { title, id: { $ne: post.id } } );
   if ( duplicatePost ) {
     throw new BadRequestError( "Duplicate post title is not allowed", PostLocaleEnum.ERROR_DUPLICATE_POST );
   }
