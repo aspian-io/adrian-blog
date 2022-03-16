@@ -16,4 +16,6 @@ export class PostDto {
   parent?: PostDoc = undefined;
   taxonomies: TaxonomyDoc[] = [];
   attachments: AttachmentDoc[] = [];
+  createdAt: Date = new Date();
+  updatedAt: Date = new Date();
 }
