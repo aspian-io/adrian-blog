@@ -29,7 +29,7 @@ export async function postEditService ( data: PostEditService ) {
   const duplicatePostTitles = await Post.find( { title } );
   if ( duplicatePostTitles.length ) {
     duplicatePostTitles.forEach( p => {
-      if ( p.slug !== slug ) {
+      if ( p.id !== post.id ) {
         throw new BadRequestError( "Duplicate post title is not allowed", PostLocaleEnum.ERROR_DUPLICATE_POST );
       }
     } );

@@ -21,8 +21,8 @@ export async function postCreateService ( data: IPostCreateService ) {
   if ( !mongoose.isValidObjectId( createdBy ) ) {
     throw new BadRequestError( "User id must be a standard id", CoreLocaleEnum.ERROR_USER_ID );
   }
-  const isDuplicated = await Post.find( { title } );
-  if ( isDuplicated.length ) {
+  const isDuplicated = await Post.findOne( { title } );
+  if ( isDuplicated ) {
     throw new BadRequestError( "Duplicate post is not allowed", PostLocaleEnum.ERROR_DUPLICATE_POST );
   }
   const slug = slugify( title );
