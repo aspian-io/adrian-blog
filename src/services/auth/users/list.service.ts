@@ -1,13 +1,22 @@
-import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
-import { docListGenerator } from "infrastructure/service-utils/doc-list-generator";
+import { docListGenerator, IListQueryPreDefinedFilters, IListQueryPreDefinedOrders } from "infrastructure/service-utils/doc-list-generator";
 import { User } from "models/auth/auth-user.model";
 import { ParsedQs } from 'qs';
 
-export async function authUserListService ( query: ParsedQs ) {
+export interface IUserListService {
+  fieldsToExclude?: string[];
+  query?: ParsedQs;
+  preDefinedFilters?: IListQueryPreDefinedFilters[];
+  preDefinedOrders?: IListQueryPreDefinedOrders[];
+}
+
+export async function authUserListService ( params: IUserListService ) {
+  const { fieldsToExclude, query, preDefinedFilters, preDefinedOrders } = params;
   const result = await docListGenerator( {
-    fieldsToExclude: [],
+    fieldsToExclude,
     model: User,
-    queryStringParams: query
+    queryStringParams: query,
+    preDefinedFilters,
+    preDefinedOrders
   } );
 
   return result;

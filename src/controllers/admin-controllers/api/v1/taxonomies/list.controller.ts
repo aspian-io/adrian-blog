@@ -5,7 +5,13 @@ import { taxonomyListService } from "services/taxonomies/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminTaxonomyListController ( req: Request, res: Response ) {
-  const taxonomies = await taxonomyListService( { query: req.query } );
+  const taxonomies = await taxonomyListService( {
+    query: req.query,
+    preDefinedOrders: [ {
+      orderBy: 'createdAt',
+      orderParam: -1
+    } ]
+  } );
   res.send( taxonomies );
   logger.info(
     `List of taxonomies retrieved by admin <${ req.currentUser!.email }> successfully`,

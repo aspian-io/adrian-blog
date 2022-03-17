@@ -1,5 +1,5 @@
 import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
-import { docListGenerator, IListQueryPreDefinedFilters } from "infrastructure/service-utils/doc-list-generator";
+import { docListGenerator, IListQueryPreDefinedFilters, IListQueryPreDefinedOrders } from "infrastructure/service-utils/doc-list-generator";
 import { Taxonomy } from "models/taxonomies/taxonomy.model";
 import { ParsedQs } from 'qs';
 import { TaxonomyDto } from "./DTOs/taxonomy.dto";
@@ -7,6 +7,7 @@ import { TaxonomyDto } from "./DTOs/taxonomy.dto";
 export interface ITaxonomyListService {
   query: ParsedQs;
   preDefinedFilters?: IListQueryPreDefinedFilters[];
+  preDefinedOrders?: IListQueryPreDefinedOrders[];
   dataMapTo?: new () => TaxonomyDto;
 }
 

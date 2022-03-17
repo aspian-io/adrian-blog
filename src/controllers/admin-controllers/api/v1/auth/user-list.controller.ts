@@ -5,7 +5,13 @@ import { authUserListService } from "services/auth/users/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminAuthUserListController ( req: Request, res: Response ) {
-  const resultUsers = await authUserListService( req.query );
+  const resultUsers = await authUserListService( {
+    query: req.query,
+    preDefinedOrders: [ {
+      orderBy: "createdAt",
+      orderParam: -1
+    } ]
+  } );
 
   res.send( resultUsers );
   logger.info(

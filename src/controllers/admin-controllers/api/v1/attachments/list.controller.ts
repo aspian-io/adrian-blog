@@ -5,7 +5,13 @@ import { attachmentListService } from "services/attachments/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminAttachmentListController ( req: Request, res: Response ) {
-  const attachments = await attachmentListService( req.query );
+  const attachments = await attachmentListService( {
+    query: req.query,
+    preDefinedOrders: [ {
+      orderBy: "createdAt",
+      orderParam: -1
+    } ]
+  } );
   res.send( attachments );
   logger.info(
     `Admin <${ req.currentUser!.email }> retrieved attachment list successfully`,
