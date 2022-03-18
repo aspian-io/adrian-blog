@@ -5,12 +5,31 @@ import { dtoMapper } from "infrastructure/service-utils/dto-mapper";
 import { PostTypeEnum } from "models/posts/post.model";
 import { postDetailsService } from "services/posts/details.service";
 import { PostDto } from "services/posts/DTOs/post.dto";
+import { postListService } from "services/posts/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function postBlogDetailsController ( req: Request, res: Response ) {
   const blog = await postDetailsService( req.params.slug, PostTypeEnum.BLOG );
+  const taxonomies = blog.taxonomies.map<string>( t => t.id );
+  const relatedBlogs = await postListService( {
+    preDefinedFilters: [ {
+      filterBy: "taxonomies",
+      filterParam: taxonomies
+    } ],
+    preDefinedOrders: [ {
+      orderBy: "createdAt",
+      orderParam: -1,
+    }, {
+      orderBy: "updatedAt",
+      orderParam: -1
+    } ],
+    dataMapTo: PostDto
+  } );
   const postDto = dtoMapper( blog, PostDto );
-  res.send( postDto );
+  res.send( {
+    blog: postDto,
+    relatedBlogs
+  } );
   logger.info(
     `${ blog.title } (blog) details retrieved successfully`,
     logSerializer( req, res, PostLocaleEnum.INFO_USERAREA_BLOG_DETAILS, {
