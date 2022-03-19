@@ -11,6 +11,9 @@ export async function postNewsListController ( req: Request, res: Response ) {
     fieldsToExclude: [ "type", "taxonomies", "attachments", "postmeta" ],
     query: req.query,
     preDefinedFilters: [ {
+      filterBy: "lang",
+      filterParam: req.language
+    }, {
       filterBy: "type",
       filterParam: PostTypeEnum.NEWS
     }, {

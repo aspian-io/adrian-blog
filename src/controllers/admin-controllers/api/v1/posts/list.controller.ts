@@ -7,6 +7,10 @@ import { logger } from "services/winston-logger/logger.service";
 export async function adminPostListController ( req: Request, res: Response ) {
   const posts = await postListService( {
     query: req.query,
+    preDefinedFilters: [ {
+      filterBy: 'lang',
+      filterParam: req.language
+    } ],
     preDefinedOrders: [
       {
         orderBy: "isPinned",

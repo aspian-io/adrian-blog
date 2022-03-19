@@ -10,6 +10,9 @@ export async function taxonomyTagsController ( req: Request, res: Response ) {
   const tags = await taxonomyListService( {
     query: req.query,
     preDefinedFilters: [ {
+      filterBy: "lang",
+      filterParam: req.language
+    }, {
       filterBy: "type",
       filterParam: TaxonomyTypeEnum.TAG
     } ],

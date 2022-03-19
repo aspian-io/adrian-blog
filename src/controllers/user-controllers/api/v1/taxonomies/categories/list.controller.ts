@@ -10,6 +10,9 @@ export async function taxonomyCategoryListController ( req: Request, res: Respon
   const categoriesDto = await taxonomyListService( {
     query: req.query,
     preDefinedFilters: [ {
+      filterBy: "lang",
+      filterParam: req.language
+    }, {
       filterBy: "type",
       filterParam: TaxonomyTypeEnum.CATEGORY
     } ],

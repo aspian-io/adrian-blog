@@ -10,6 +10,9 @@ export async function taxonomyMenuItemsController ( req: Request, res: Response 
   const menuItems = await taxonomyListService( {
     query: req.query,
     preDefinedFilters: [ {
+      filterBy: "lang",
+      filterParam: req.language
+    }, {
       filterBy: "type",
       filterParam: TaxonomyTypeEnum.NAV_MENU
     } ],

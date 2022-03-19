@@ -13,6 +13,9 @@ export async function postBlogsByTaxonomyController ( req: Request, res: Respons
     fieldsToExclude: [ "type", "taxonomies", "attachments" ],
     query: req.query,
     preDefinedFilters: [ {
+      filterBy: "lang",
+      filterParam: req.language
+    }, {
       filterBy: "type",
       filterParam: PostTypeEnum.BLOG
     }, {

@@ -7,6 +7,10 @@ import { logger } from "services/winston-logger/logger.service";
 export async function adminTaxonomyListController ( req: Request, res: Response ) {
   const taxonomies = await taxonomyListService( {
     query: req.query,
+    preDefinedFilters: [ {
+      filterBy: 'lang',
+      filterParam: req.language
+    } ],
     preDefinedOrders: [ {
       orderBy: 'createdAt',
       orderParam: -1

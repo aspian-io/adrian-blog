@@ -9,6 +9,9 @@ import { logger } from "services/winston-logger/logger.service";
 export async function postBannerListController ( req: Request, res: Response ) {
   const banners = await postListService( {
     preDefinedFilters: [ {
+      filterBy: "lang",
+      filterParam: req.language
+    }, {
       filterBy: "type",
       filterParam: PostTypeEnum.BANNER
     }, {
