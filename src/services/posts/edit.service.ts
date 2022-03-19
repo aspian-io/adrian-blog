@@ -13,10 +13,26 @@ export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "chi
 
 export async function postEditService ( data: PostEditService ) {
   const {
-    slug, title, subtitle, excerpt, content, visibility,
-    status, scheduledFor, scheduledExpiration, commentAllowed, viewCount, type,
-    isPinned, parent, taxonomies, attachments,
-    updatedBy, updatedByIp, userAgent
+    lang,
+    slug,
+    title,
+    subtitle,
+    excerpt,
+    content,
+    visibility,
+    status,
+    scheduledFor,
+    scheduledExpiration,
+    commentAllowed,
+    viewCount,
+    type,
+    isPinned,
+    parent,
+    taxonomies,
+    attachments,
+    updatedBy,
+    updatedByIp,
+    userAgent
   } = data;
 
   if ( !mongoose.isValidObjectId( updatedBy ) ) {
@@ -50,6 +66,7 @@ export async function postEditService ( data: PostEditService ) {
   const slugified = slugify( title );
 
   post.set( {
+    lang,
     title,
     subtitle,
     excerpt,

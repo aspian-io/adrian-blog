@@ -6,8 +6,10 @@ import { Taxonomy, TaxonomyTypeEnum } from "models/taxonomies/taxonomy.model";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { TaxonomyLocaleEnum } from "infrastructure/locales/service-locale-keys/taxonomies.locale";
+import { LangEnum } from "infrastructure/locales/i18next-config";
 
 export interface ITaxonomyEditService {
+  lang: LangEnum;
   slug: string;
   type: TaxonomyTypeEnum;
   description: string;
@@ -19,7 +21,7 @@ export interface ITaxonomyEditService {
 }
 
 export async function taxonomyEditService ( data: ITaxonomyEditService ) {
-  const { slug, type, description, term, parent, updatedBy, updatedByIp, userAgent } = data;
+  const { lang, slug, type, description, term, parent, updatedBy, updatedByIp, userAgent } = data;
   const taxonomy = await Taxonomy.findOne( { slug } );
   const slugified = slugify( term );
 
@@ -39,6 +41,7 @@ export async function taxonomyEditService ( data: ITaxonomyEditService ) {
   }
 
   taxonomy.set( {
+    lang,
     type,
     description,
     term,

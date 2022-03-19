@@ -1,3 +1,4 @@
+import { LangEnum } from 'infrastructure/locales/i18next-config';
 import { AttachmentDoc } from 'models/attachments/attachment.model';
 import { BaseAttrs, BaseDoc, BaseMinimalDoc, baseMinimalSchema, baseSchema, baseSchemaOptions } from 'models/base/base.model';
 import { TaxonomyDoc } from 'models/taxonomies/taxonomy.model';
@@ -27,6 +28,7 @@ export enum PostTypeEnum {
 }
 
 export interface PostAttrs extends BaseAttrs {
+  lang: LangEnum;
   title: string;
   subtitle?: string;
   excerpt: string;
@@ -53,6 +55,7 @@ export interface PostAttrs extends BaseAttrs {
 }
 
 export interface PostDoc extends BaseDoc, Document {
+  lang: LangEnum;
   title: string;
   subtitle?: string;
   excerpt: string;
@@ -97,6 +100,7 @@ const postLike = new Schema<BaseMinimalDoc>( {
 
 // Post Model Schema
 const postSchema = new Schema<PostDoc, PostModel>( {
+  lang: { type: String, required: true, enum: Object.values( LangEnum ) },
   title: { type: String, required: true },
   subtitle: String,
   excerpt: { type: String, required: true },

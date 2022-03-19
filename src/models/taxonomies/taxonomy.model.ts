@@ -1,3 +1,4 @@
+import { LangEnum } from 'infrastructure/locales/i18next-config';
 import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from 'models/base/base.model';
 import { Model, Schema, Document, model } from 'mongoose';
 
@@ -8,6 +9,7 @@ export enum TaxonomyTypeEnum {
 }
 
 export interface TaxonomyAttrs extends BaseAttrs {
+  lang: LangEnum;
   type: TaxonomyTypeEnum;
   description?: string;
   term: string;
@@ -17,6 +19,7 @@ export interface TaxonomyAttrs extends BaseAttrs {
 }
 
 export interface TaxonomyDoc extends BaseDoc, Document {
+  lang: LangEnum;
   type: TaxonomyTypeEnum;
   description: string;
   term: string;
@@ -29,6 +32,7 @@ interface TaxonomyModel extends Model<TaxonomyDoc> {
   build ( attrs: TaxonomyAttrs ): TaxonomyDoc;
 }
 const taxonomySchema = new Schema<TaxonomyDoc, TaxonomyModel>( {
+  lang: { type: String, required: true, enum: Object.values( LangEnum ) },
   type: { type: String, required: true, enum: Object.values( TaxonomyTypeEnum ) },
   description: { type: String, required: false },
   term: { type: String, required: true },

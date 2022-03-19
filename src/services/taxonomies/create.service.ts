@@ -6,8 +6,10 @@ import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
 import { TaxonomyLocaleEnum } from "infrastructure/locales/service-locale-keys/taxonomies.locale";
+import { LangEnum } from "infrastructure/locales/i18next-config";
 
 export interface ITaxonomyCreateService {
+  lang: LangEnum;
   type: TaxonomyTypeEnum;
   description: string;
   term: string;
@@ -18,11 +20,11 @@ export interface ITaxonomyCreateService {
 }
 
 export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
-  const { type, description, term, parent, createdBy, createdByIp, userAgent } = data;
+  const { lang, type, description, term, parent, createdBy, createdByIp, userAgent } = data;
   if ( !mongoose.isValidObjectId( createdBy ) ) throw new BadRequestError( "User id must be a standard id", CoreLocaleEnum.ERROR_USER_ID );
   const slug = slugify( term );
 
-  const taxonomy = Taxonomy.build( { type, description, term, slug, parent, createdBy, createdByIp, userAgent } );
+  const taxonomy = Taxonomy.build( { lang, type, description, term, slug, parent, createdBy, createdByIp, userAgent } );
   if ( parent && !mongoose.isValidObjectId( parent ) ) {
     throw new BadRequestError( "Something went wrong with parent taxonomy", CoreLocaleEnum.ERROR_400_MSG );
   }

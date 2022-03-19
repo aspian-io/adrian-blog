@@ -12,10 +12,28 @@ export type IPostCreateService = Omit<PostAttrs, "slug" | "child">;
 
 export async function postCreateService ( data: IPostCreateService ) {
   const {
-    title, subtitle, excerpt, content, visibility,
-    status, scheduledFor, scheduledExpiration, commentAllowed, viewCount, type,
-    isPinned, order, parent, taxonomies, attachments,
-    createdBy, createdByIp, updatedBy, updatedByIp, userAgent
+    lang,
+    title,
+    subtitle,
+    excerpt,
+    content,
+    visibility,
+    status,
+    scheduledFor,
+    scheduledExpiration,
+    commentAllowed,
+    viewCount,
+    type,
+    isPinned,
+    order,
+    parent,
+    taxonomies,
+    attachments,
+    createdBy,
+    createdByIp,
+    updatedBy,
+    updatedByIp,
+    userAgent
   } = data;
 
   if ( !mongoose.isValidObjectId( createdBy ) ) {
@@ -42,6 +60,7 @@ export async function postCreateService ( data: IPostCreateService ) {
   }
 
   const post = Post.build( {
+    lang,
     title,
     subtitle,
     excerpt,
