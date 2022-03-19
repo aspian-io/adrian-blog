@@ -3,10 +3,10 @@ import { emailVerificationTemplate } from "infrastructure/email/templates/email-
 import { User } from "models/auth/auth-user.model";
 import { authEmailConfirmationRedisKeyGen, authEmailConfirmationTokenGen } from "../helpers/email-confirmation.helper";
 import { redisWrapper } from "infrastructure/database/redis/redis-client";
-import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
+import { LangEnum } from "infrastructure/locales/i18next-config";
 
 export async function authSendEmailVerificationLinkService ( userId: string ) {
   const user = await User.findById( userId );
@@ -33,7 +33,7 @@ export async function authSendEmailVerificationLinkService ( userId: string ) {
 
   const verificationEmailLink = `${ process.env.BASE_URL }/${ process.env.EMAIL_VERIFICATION_PATH }/${ user.id }/${ token }`;
   const { subject, template } = emailVerificationTemplate(
-    EmailTemplateLangEnum[ process.env.DEFAULT_LANG! as keyof typeof EmailTemplateLangEnum ],
+    LangEnum[ process.env.DEFAULT_LANG! as keyof typeof LangEnum ],
     user.email,
     verificationEmailLink
   );

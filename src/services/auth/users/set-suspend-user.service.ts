@@ -2,8 +2,8 @@ import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { clearCache } from "infrastructure/cache/clear-cache";
 import { sendMail } from "infrastructure/email/mailer";
 import { suspendAccountTemplate } from "infrastructure/email/templates/suspend-account";
-import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
+import { LangEnum } from "infrastructure/locales/i18next-config";
 import { User } from "models/auth/auth-user.model";
 
 export interface ISetSuspendedUser {
@@ -24,7 +24,7 @@ export async function authSetSuspendUserService ( params: ISetSuspendedUser ) {
   clearCache( CacheOptionServiceEnum.USER );
 
   const { subject, template } = suspendAccountTemplate(
-    EmailTemplateLangEnum[ process.env.DEFAULT_LANG! as keyof typeof EmailTemplateLangEnum ],
+    LangEnum[ process.env.DEFAULT_LANG! as keyof typeof LangEnum ],
     user.email,
     user.isSuspended
   );

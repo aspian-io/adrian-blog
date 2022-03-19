@@ -1,9 +1,9 @@
 import { redisWrapper } from "infrastructure/database/redis/redis-client";
 import { sendMail } from "infrastructure/email/mailer";
 import { resetPasswordEmailTemplate } from "infrastructure/email/templates/reset-password";
-import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
+import { LangEnum } from "infrastructure/locales/i18next-config";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { User } from "models/auth/auth-user.model";
 import { authResetPassRedisKeyGen, authResetPassTokenGen } from "../helpers/reset-password.helper";
@@ -29,7 +29,7 @@ export async function authSendPassResetLinkService ( email: string ) {
 
   const resetPassLink = `${ process.env.BASE_URL }/${ process.env.RESET_PASS_PATH }/${ user.id }/${ token }`;
   const { subject, template } = resetPasswordEmailTemplate(
-    EmailTemplateLangEnum[ process.env.DEFAULT_LANG! as keyof typeof EmailTemplateLangEnum ],
+    LangEnum[ process.env.DEFAULT_LANG! as keyof typeof LangEnum ],
     user.email,
     resetPassLink
   );

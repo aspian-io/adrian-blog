@@ -3,11 +3,11 @@ import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { clearCache } from "infrastructure/cache/clear-cache";
 import { User } from "models/auth/auth-user.model";
 import { changePasswordTemplate } from "infrastructure/email/templates/change-password";
-import { EmailTemplateLangEnum } from "infrastructure/email/templates/types/email-template-langs";
 import { sendMail } from "infrastructure/email/mailer";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
+import { LangEnum } from "infrastructure/locales/i18next-config";
 
 export interface IAuthChangePassword {
   userId: string;
@@ -43,7 +43,7 @@ export async function authChangePasswordService ( params: IAuthChangePassword ) 
   clearCache( CacheOptionServiceEnum.USER );
 
   const { subject, template } = changePasswordTemplate(
-    EmailTemplateLangEnum[ process.env.DEFAULT_LANG! as keyof typeof EmailTemplateLangEnum ],
+    LangEnum[ process.env.DEFAULT_LANG! as keyof typeof LangEnum ],
     user.email
   );
 
