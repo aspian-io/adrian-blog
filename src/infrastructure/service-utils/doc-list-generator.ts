@@ -90,11 +90,11 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
 
   let filterByVal: string[] = [];
   if ( isFilterByArray ) {
-    filterByVal = Array.from( new Set( modelKeys.filter( key => filterBy.includes( key as any ) ) ) );
+    filterByVal = modelKeys.filter( key => filterBy.includes( key as any ) );
   } else {
     const filterByAsArray = filterBy ? [ filterBy.toString() ] : [];
     filterByVal = filterByAsArray.length
-      ? Array.from( new Set( modelKeys.filter( key => filterByAsArray.includes( key as any ) ) ) )
+      ? modelKeys.filter( key => filterByAsArray.includes( key as any ) )
       : [];
   }
 
