@@ -161,6 +161,10 @@
         "chooseUsers": "Please choose some users to send email to",
         "chooseTemplate": "Choose a template to be used for sending email",
         "subject": "Please enter email subject"
+      },
+      "sendEmailSchema": {
+        "to": "Please enter destination valid email address",
+        "content": "Please enter content of the email"
       }
     }
   },
@@ -360,6 +364,9 @@
     "email": {
       "sendByTemplate": {
         "successMsg": "Email sent to users by using template"
+      },
+      "sendOne": {
+        "successMsg": "Email sent to destination email address successfully"
       }
     }
   }
