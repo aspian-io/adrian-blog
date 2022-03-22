@@ -7,7 +7,7 @@ import { Post, PostStatusEnum } from "models/posts/post.model";
 import { SMSUserInfoDto } from "./DTOs/sms-user-info.dto";
 import { sendPatternSMS } from './send-sms.service';
 
-export async function bulkSmsToUsers ( userIds: string[], smsTemplateId: string ) {
+export async function bulkSmsToUsersService ( userIds: string[], smsTemplateId: string ) {
   const pattern = await Post.findById( smsTemplateId );
   if ( !pattern || pattern.status === PostStatusEnum.PENDING ) {
     throw new BadRequestError( "SMS pattern not found or is pending", SMSLocaleEnum.ERROR_PATTERN_NOT_FOUND );

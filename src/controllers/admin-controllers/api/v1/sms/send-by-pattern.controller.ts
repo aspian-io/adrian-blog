@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { SMSLocaleEnum } from "infrastructure/locales/service-locale-keys/sms.locale";
 import { logSerializer } from "infrastructure/serializers/log-serializer";
-import { bulkSmsToUsers } from "services/sms/bulk-sms-to-users.service";
+import { bulkSmsToUsersService } from "services/sms/bulk-sms-to-users.service";
 import { logger } from "services/winston-logger/logger.service";
 
 export async function adminSmsSendByPatternController ( req: Request, res: Response ) {
-  await bulkSmsToUsers( req.body.userIds, req.body.smsTemplateId );
+  await bulkSmsToUsersService( req.body.userIds, req.body.smsTemplateId );
   res.status( 200 ).send( {} );
   logger.info(
     `The admin <${ req.currentUser!.email }> sends sms to users by using pattern`,

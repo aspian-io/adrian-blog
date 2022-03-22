@@ -151,6 +151,17 @@
         "chooseUsers": "Please choose some users to send sms to",
         "choosePattern": "Choose a pattern to be used for sending sms"
       }
+    },
+    "email": {
+      "bulkEmailToUsers": {
+        "templateNotFound": "Requested template not found",
+        "usersNotFound": "Requested users not found or they do not have confirmed their email"
+      },
+      "sendByTemplateSchema": {
+        "chooseUsers": "Please choose some users to send email to",
+        "chooseTemplate": "Choose a template to be used for sending email",
+        "subject": "Please enter email subject"
+      }
     }
   },
   "info": {
@@ -344,6 +355,11 @@
     "sms": {
       "sendByPattern": {
         "successMsg": "SMS sent to users by using pattern"
+      }
+    },
+    "email": {
+      "sendByTemplate": {
+        "successMsg": "Email sent to users by using template"
       }
     }
   }
