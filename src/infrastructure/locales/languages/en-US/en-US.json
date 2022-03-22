@@ -150,6 +150,10 @@
       "sendByPatternSchema": {
         "chooseUsers": "Please choose some users to send sms to",
         "choosePattern": "Choose a pattern to be used for sending sms"
+      },
+      "sendManuallySchema": {
+        "recipients": "Entering recipients is required",
+        "message": "Message content is required"
       }
     },
     "email": {
@@ -357,6 +361,9 @@
       }
     },
     "sms": {
+      "sendManually": {
+        "successMsg": "SMS sent manually"
+      },
       "sendByPattern": {
         "successMsg": "SMS sent to users by using pattern"
       }
