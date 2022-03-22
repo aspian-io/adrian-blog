@@ -1,4 +1,4 @@
-import { Post, PostAttrs, PostStatusEnum } from "models/posts/post.model";
+import { Post, PostAttrs, PostStatusEnum, PostTypeEnum } from "models/posts/post.model";
 import mongoose from 'mongoose';
 import slugify from "slugify";
 import { clearCache } from "infrastructure/cache/clear-cache";
@@ -8,8 +8,9 @@ import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
+import { smsCreatePattern } from "services/sms/create-sms-pattern.service";
 
-export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "child">;
+export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "child" | "placeHolders">;
 
 export async function postEditService ( data: PostEditService ) {
   const {
@@ -32,7 +33,8 @@ export async function postEditService ( data: PostEditService ) {
     attachments,
     updatedBy,
     updatedByIp,
-    userAgent
+    userAgent,
+    postmeta
   } = data;
 
   if ( !mongoose.isValidObjectId( updatedBy ) ) {
@@ -65,6 +67,19 @@ export async function postEditService ( data: PostEditService ) {
     && new Date( scheduledExpiration ).getTime() > new Date( scheduledFor ).getTime();
   const slugified = slugify( title );
 
+  let postmetaVal = postmeta && postmeta.length ? postmeta : [];
+
+  if ( type === PostTypeEnum.SMS_TEMPLATE ) {
+    if ( !subtitle ) {
+      throw new BadRequestError( "Something went wrong", CoreLocaleEnum.ERROR_400_MSG );
+    }
+    const smsPattern = await smsCreatePattern( content, subtitle, false );
+    postmetaVal.push( {
+      key: "code",
+      value: smsPattern.data.pattern.code
+    } );
+  }
+
   post.set( {
     lang,
     title,
@@ -84,7 +99,8 @@ export async function postEditService ( data: PostEditService ) {
     attachments,
     updatedBy,
     updatedByIp,
-    userAgent
+    userAgent,
+    postmeta: postmetaVal
   } );
 
   const session = await mongoose.startSession(); // Transaction session started

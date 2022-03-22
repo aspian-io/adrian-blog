@@ -1,4 +1,4 @@
-import { Post, PostAttrs, PostStatusEnum } from "models/posts/post.model";
+import { Post, PostAttrs, PostStatusEnum, PostTypeEnum } from "models/posts/post.model";
 import mongoose from 'mongoose';
 import slugify from "slugify";
 import { clearCache } from "infrastructure/cache/clear-cache";
@@ -7,8 +7,9 @@ import { scheduledPostsQueueToArchive, scheduledPostsQueueToPublish } from "./po
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
 import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
+import { smsCreatePattern } from "services/sms/create-sms-pattern.service";
 
-export type IPostCreateService = Omit<PostAttrs, "slug" | "child">;
+export type IPostCreateService = Omit<PostAttrs, "slug" | "child" | "placeHolders">;
 
 export async function postCreateService ( data: IPostCreateService ) {
   const {
@@ -33,7 +34,8 @@ export async function postCreateService ( data: IPostCreateService ) {
     createdByIp,
     updatedBy,
     updatedByIp,
-    userAgent
+    userAgent,
+    postmeta
   } = data;
 
   if ( !mongoose.isValidObjectId( createdBy ) ) {
@@ -59,6 +61,19 @@ export async function postCreateService ( data: IPostCreateService ) {
     );
   }
 
+  let postmetaVal = postmeta && postmeta.length ? postmeta : [];
+
+  if ( type === PostTypeEnum.SMS_TEMPLATE ) {
+    if ( !subtitle ) {
+      throw new BadRequestError( "Something went wrong", CoreLocaleEnum.ERROR_400_MSG );
+    }
+    const smsPattern = await smsCreatePattern( content, subtitle, false );
+    postmetaVal.push( {
+      key: "code",
+      value: smsPattern.data.pattern.code
+    } );
+  }
+
   const post = Post.build( {
     lang,
     title,
@@ -82,7 +97,8 @@ export async function postCreateService ( data: IPostCreateService ) {
     createdByIp,
     updatedBy,
     updatedByIp,
-    userAgent
+    userAgent,
+    postmeta: postmetaVal
   } );
 
   const session = await mongoose.startSession(); // Transaction session started

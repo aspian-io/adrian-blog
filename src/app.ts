@@ -21,6 +21,7 @@ import { corsInit } from 'infrastructure/security/cors-init';
 import { taxonomyRouter } from 'infrastructure/routes/api/v1/user/taxonomy.router';
 import { postRouter } from 'infrastructure/routes/api/v1/user/post.router';
 import { postCommentRouter } from 'infrastructure/routes/api/v1/user/post-comment.router';
+import { adminSMSRouter } from 'infrastructure/routes/api/v1/admin/sms.router';
 
 const app = express();
 app.use( express.json() );
@@ -57,6 +58,7 @@ app.use( '/:lng?/api/v1/admin/posts', adminPostRouter );
 app.use( '/:lng?/api/v1/admin/post-comments', adminPostCommentRouter );
 app.use( '/:lng?/api/v1/admin/attachments', adminAttachmentRouter );
 app.use( '/:lng?/api/v1/admin/activities', adminActivityRouter );
+app.use( '/:lng?/api/v1/admin/sms', adminSMSRouter );
 // Issue 404 Not Found Error if all paths until this point do not match 
 app.all( '*', async ( req, res, next ) => {
   next( new NotFoundError() );

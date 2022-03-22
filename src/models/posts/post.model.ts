@@ -24,8 +24,21 @@ export enum PostTypeEnum {
   PAGE = "PAGE",
   NEWS = "NEWS",
   BANNER = "BANNER",
-  EMAIL_TEMPLATE = "EMAIL_TEMPLATE"
+  EMAIL_TEMPLATE = "EMAIL_TEMPLATE",
+  SMS_TEMPLATE = "SMS_TEMPLATE"
 }
+
+// Postmeta Subdocument Interface
+export interface Postmeta {
+  key: string;
+  value: string;
+}
+
+// Postmeta Subdocument Schema
+const postmetaSchema = new Schema<Postmeta>( {
+  key: { type: String, required: true },
+  value: { type: String, required: true }
+} );
 
 export interface PostAttrs extends BaseAttrs {
   lang: LangEnum;
@@ -52,6 +65,7 @@ export interface PostAttrs extends BaseAttrs {
   numReviews?: number;
   likes?: BaseMinimalDoc[];
   numLikes?: number;
+  postmeta?: Postmeta[];
 }
 
 export interface PostDoc extends BaseDoc, Document {
@@ -79,6 +93,7 @@ export interface PostDoc extends BaseDoc, Document {
   numReviews: number;
   likes: BaseMinimalDoc[];
   numLikes: number;
+  postmeta?: Postmeta[];
 }
 
 interface PostModel extends Model<PostDoc> {
@@ -124,6 +139,7 @@ const postSchema = new Schema<PostDoc, PostModel>( {
   numReviews: { type: Number, default: 0 },
   likes: [ postLike ],
   numLikes: { type: Number, default: 0 },
+  postmeta: [ postmetaSchema ],
   ...baseSchema.obj
 }, baseSchemaOptions );
 

@@ -21,7 +21,6 @@ export interface ITaxonomyCreateService {
 
 export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
   const { lang, type, description, term, parent, createdBy, createdByIp, userAgent } = data;
-  if ( !mongoose.isValidObjectId( createdBy ) ) throw new BadRequestError( "User id must be a standard id", CoreLocaleEnum.ERROR_USER_ID );
   const slug = slugify( term );
 
   const taxonomy = Taxonomy.build( { lang, type, description, term, slug, parent, createdBy, createdByIp, userAgent } );
@@ -32,7 +31,7 @@ export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
     ? await Taxonomy.findById( parent )
     : null;
   if ( parent && !parentTaxonomy ) {
-    throw new BadRequestError( "Something went worng getting parent taxonomy", CoreLocaleEnum.ERROR_400_MSG );
+    throw new BadRequestError( "Something went wrong getting parent taxonomy", CoreLocaleEnum.ERROR_400_MSG );
   }
 
   const duplicateTaxonomy = await Taxonomy.findOne( { type, term } );

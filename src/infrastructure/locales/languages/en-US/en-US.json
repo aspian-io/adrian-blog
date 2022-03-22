@@ -137,6 +137,20 @@
         "contentEmptyErr": "Comment content cannot be empty",
         "contentLengthErr": "Comment content's length must be less than 250 characters"
       }
+    },
+    "sms": {
+      "createPattern": {
+        "providerErr": "SMS provider not found or disabled"
+      },
+      "bulkSmsToUsers": {
+        "patternNotFound": "Requested pattern not found or is pending",
+        "patternCodeNotFound": "Pattern code not found",
+        "usersNotFound": "Requested users not found or they do not have confirmed their mobile phone numbers"
+      },
+      "sendByPatternSchema": {
+        "chooseUsers": "Please choose some users to send sms to",
+        "choosePattern": "Choose a pattern to be used for sending sms"
+      }
     }
   },
   "info": {
@@ -325,6 +339,11 @@
       },
       "userArea": {
         "commentLike": "Comment liked/unliked successfully"
+      }
+    },
+    "sms": {
+      "sendByPattern": {
+        "successMsg": "SMS sent to users by using pattern"
       }
     }
   }

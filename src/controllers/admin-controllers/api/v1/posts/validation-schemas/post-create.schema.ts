@@ -29,13 +29,5 @@ export const postCreateSchema = [
         'Post content is required',
         PostLocaleEnum.ERROR_SCHEMA_CREATE_CONTENT
       )
-    ),
-  body( 'taxonomies' )
-    .isArray( { min: 1 } )
-    .withMessage(
-      validationMsgSerializer(
-        'A post needs to have at least one taxonomy',
-        PostLocaleEnum.ERROR_SCHEMA_CREATE_TAXONOMIES
-      )
     )
 ];

@@ -4,7 +4,7 @@ import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.
 import { VerificationCode } from "infrastructure/sms/verification-code";
 import { User } from "models/auth/auth-user.model";
 import { ISmsPatternVerificationValues } from "services/sms/helpers/types";
-import { PatternNameEnum, sendPatternSMS, sendSMS } from "services/sms/send-sms.service";
+import { PatternNameEnum, sendNamedPatternSMS } from "services/sms/send-sms.service";
 
 export async function authSendVerificationCodeService ( userId: string ) {
   const user = await User.findById( userId );
@@ -20,7 +20,7 @@ export async function authSendVerificationCodeService ( userId: string ) {
   const verificationCode = new VerificationCode( userId );
   const code = await verificationCode.generateCode();
 
-  await sendPatternSMS<ISmsPatternVerificationValues>(
+  await sendNamedPatternSMS<ISmsPatternVerificationValues>(
     PatternNameEnum.SMS_VERIFICATION_CODE_PATTERN,
     user.mobilePhone,
     {

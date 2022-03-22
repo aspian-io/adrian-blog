@@ -49,5 +49,6 @@ export enum AccessPoliciesEnum {
   PostComment_SETTINGS_LIST = "PostComment_SETTINGS_LIST",
   PostComment_SETTINGS_EDIT = "PostComment_SETTINGS_EDIT",
 
-
+  // SMS Policies
+  SMS_SEND_BY_PATTERN = "SMS_SEND_BY_PATTERN"
 }
