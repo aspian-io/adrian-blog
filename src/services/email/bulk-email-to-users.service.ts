@@ -24,7 +24,7 @@ export async function bulkEmailToUsersService ( userIds: string[], emailTemplate
   }
 
   const usersDto = dtoMapper( users, EmailUserInfoDto );
-  usersDto.forEach( async ( user ) => {
+  await Promise.all( usersDto.map( async ( user ) => {
     const generatedContent = PlaceHolder.replaceWith( template.content, user );
     await sendMail( {
       from: process.env.EMAIL!,
@@ -32,5 +32,5 @@ export async function bulkEmailToUsersService ( userIds: string[], emailTemplate
       subject,
       html: generatedContent
     } );
-  } );
+  } ) );
 }

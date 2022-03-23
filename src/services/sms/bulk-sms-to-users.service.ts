@@ -31,10 +31,10 @@ export async function bulkSmsToUsersService ( userIds: string[], smsTemplateId: 
   }
 
   const usersDto = dtoMapper( users, SMSUserInfoDto );
-  usersDto.forEach( async ( user ) => {
+  await Promise.all( usersDto.map( async ( user ) => {
     const patternValues = PlaceHolder.getSMSPatternProps( pattern.content );
     const values: Record<string, any> = {};
     patternValues.forEach( val => values[ val ] = user[ val as keyof SMSUserInfoDto ] );
     await sendPatternSMS( patternCodeInfo.value, user.mobilePhone, values );
-  } );
+  } ) );
 }
