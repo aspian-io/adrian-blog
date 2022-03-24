@@ -6,8 +6,14 @@ import { PlaceHolder } from "infrastructure/string-utils/placeholder";
 import { User } from "models/auth/auth-user.model";
 import { Post } from "models/posts/post.model";
 import { EmailUserInfoDto } from "./DTOs/email-user-info.dto";
+import { scheduledEmailQueueToSend } from "./email-queue.service";
 
-export async function bulkEmailToUsersService ( userIds: string[], emailTemplateId: string, subject: string ) {
+export async function bulkEmailToUsersService (
+  userIds: string[],
+  emailTemplateId: string,
+  subject: string,
+  scheduledISODate?: string
+) {
   const template = await Post.findById( emailTemplateId );
   if ( !template ) {
     throw new BadRequestError( "Email template not found", EmailLocaleEnum.ERROR_TEMPLATE_NOT_FOUND );
@@ -24,13 +30,23 @@ export async function bulkEmailToUsersService ( userIds: string[], emailTemplate
   }
 
   const usersDto = dtoMapper( users, EmailUserInfoDto );
-  await Promise.all( usersDto.map( async ( user ) => {
-    const generatedContent = PlaceHolder.replaceWith( template.content, user );
-    await sendMail( {
-      from: process.env.EMAIL!,
-      to: user.email,
+  if ( scheduledISODate ) {
+    await scheduledEmailQueueToSend.add( {
       subject,
-      html: generatedContent
+      template: template.content,
+      users: usersDto
+    }, {
+      delay: new Date( scheduledISODate ).getTime() - Date.now()
     } );
-  } ) );
+  } else {
+    await Promise.all( usersDto.map( async ( user ) => {
+      const generatedContent = PlaceHolder.replaceWith( template.content, user );
+      await sendMail( {
+        from: process.env.EMAIL!,
+        to: user.email,
+        subject,
+        html: generatedContent
+      } );
+    } ) );
+  }
 }
