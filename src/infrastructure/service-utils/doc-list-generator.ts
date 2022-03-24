@@ -194,7 +194,7 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
   } else if ( size > 100 ) {
     limit = 100;
   } else {
-    limit = size;
+    limit = size ? size : 10;
   }
 
   const totalPages = Math.ceil( total / limit );
@@ -204,7 +204,7 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
   } else if ( page > totalPages ) {
     pageVal = totalPages > 0 ? totalPages : 1;
   } else {
-    pageVal = 1;
+    pageVal = page ? page : 1;
   }
   const skip = ( pageVal - 1 ) * limit;
 

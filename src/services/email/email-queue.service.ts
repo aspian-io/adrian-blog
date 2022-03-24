@@ -5,6 +5,8 @@ import { PlaceHolder } from 'infrastructure/string-utils/placeholder';
 import { EmailUserInfoDto } from './DTOs/email-user-info.dto';
 
 interface Payload {
+  templateTitle: string;
+  scheduledISODate: string;
   users: EmailUserInfoDto[];
   subject: string;
   template: string;

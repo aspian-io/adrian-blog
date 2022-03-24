@@ -12,6 +12,8 @@ import { Taxonomy } from "models/taxonomies/taxonomy.model";
 import { connectToMongoDB } from "../mongodb/mongoose-connection";
 import { Settings, SettingsKeyEnum, SettingsServiceEnum } from "models/settings/settings.model";
 import { settingsData } from "infrastructure/data/settings.data";
+import { postData } from "infrastructure/data/posts.data";
+import slugify from "slugify";
 
 connectToMongoDB();
 
@@ -39,8 +41,19 @@ const importData = async () => {
       } ];
     }
     await Settings.insertMany( settingsDataArr );
-    await User.insertMany( await usersData() );
+    const users = await User.insertMany( await usersData() );
     await Claim.insertMany( claimsData );
+    await Promise.all( postData.map( async p => {
+      const post = Post.build( {
+        ...p,
+        createdBy: users[ 0 ].id,
+        createdByIp: "::1",
+        userAgent: "SYSTEM",
+        slug: slugify( p.title ),
+
+      } );
+      await post.save();
+    } ) );
 
     console.log( chalk.bold.green( `${ emoji.get( 'white_check_mark' ) } Data seeded to database successfully` ) );
     process.exit();

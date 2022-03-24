@@ -18,10 +18,7 @@ export async function bulkEmailToUsersService (
   if ( !template ) {
     throw new BadRequestError( "Email template not found", EmailLocaleEnum.ERROR_TEMPLATE_NOT_FOUND );
   }
-  const users = await User.find(
-    { _id: { $in: userIds } },
-    { isEmailConfirmed: true }
-  );
+  const users = await User.find( { _id: { $in: userIds }, isEmailConfirmed: true } );
   if ( !users.length ) {
     throw new BadRequestError(
       "Requested users for receiving emails are not found or not have confirmed email",
@@ -32,12 +29,15 @@ export async function bulkEmailToUsersService (
   const usersDto = dtoMapper( users, EmailUserInfoDto );
   if ( scheduledISODate ) {
     await scheduledEmailQueueToSend.add( {
+      templateTitle: template.title,
+      scheduledISODate,
       subject,
       template: template.content,
       users: usersDto
     }, {
       delay: new Date( scheduledISODate ).getTime() - Date.now()
     } );
+
   } else {
     await Promise.all( usersDto.map( async ( user ) => {
       const generatedContent = PlaceHolder.replaceWith( template.content, user );
