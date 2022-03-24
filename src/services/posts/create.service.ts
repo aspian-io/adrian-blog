@@ -63,7 +63,16 @@ export async function postCreateService ( data: IPostCreateService ) {
 
   let postmetaVal = postmeta && postmeta.length ? postmeta : [];
 
-  if ( type === PostTypeEnum.SMS_TEMPLATE ) {
+  if ( type === PostTypeEnum.SMS_TEMPLATE || type === PostTypeEnum.SMS_BIRTHDAY_TEMPLATE ) {
+    if ( type === PostTypeEnum.SMS_BIRTHDAY_TEMPLATE ) {
+      const isDuplicated = await Post.findOne( { type: PostTypeEnum.SMS_BIRTHDAY_TEMPLATE } );
+      if ( isDuplicated ) {
+        throw new BadRequestError(
+          "Duplicate birthday sms pattern is not allowed",
+          PostLocaleEnum.ERROR_DUPLICATE_BIRTHDAY_TEMPLATE
+        );
+      }
+    }
     if ( !subtitle ) {
       throw new BadRequestError( "Something went wrong", CoreLocaleEnum.ERROR_400_MSG );
     }

@@ -19,7 +19,8 @@
     "requestValidationError": "پارامترهای ورودی صحیح نمی باشد",
     "userId": "شناسه کاربری میبایست یک شناسه استاندارد باشد",
     "settings": {
-      "editValueErr": "وارد کردن مقدار تنظیم الزامی است"
+      "editValueErr": "وارد کردن مقدار تنظیم الزامی است",
+      "birthdayCongratsSMSTemplateErr": "برای فعال سازی این قابلیت ابتدا می بایست یک پترن پیامک تبریک تولد تعریف کرده باشید"
     },
     "auth": {
       "userIsSuspended": "کاربر تعلیق شده است",
@@ -100,10 +101,12 @@
         "duplicateParentPostErr": "پست والد قبلا استفاده شده و قابل استفاده مجدد نیست"
       },
       "createService": {
-        "duplicatePostErr": "پست با عنوان تکراری مجاز نمی باشد"
+        "duplicatePostErr": "پست با عنوان تکراری مجاز نمی باشد",
+        "duplicateBirthdaySMSTemplateErr": "پترن پیامک تکراری برای تبریک تولد مجاز نمی باشد"
       },
       "deleteService": {
-        "taxonomyIdErr": "شناسه پست میبایست یک شناسه استاندارد باشد"
+        "taxonomyIdErr": "شناسه پست میبایست یک شناسه استاندارد باشد",
+        "birthdayCongratsSettingErr": "جهت حذف یک پترن پیامک تبریک تولد ابتدا باید این قابلیت را از طریق مراجعه به تنظیمات غیرفعال کنید"
       },
       "reviewService": {
         "alreadyReviewed": "پست قبلا امتیازدهی شده است"

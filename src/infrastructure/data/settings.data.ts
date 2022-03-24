@@ -20,8 +20,8 @@ export const settingsData = [
     userAgent: "SYSTEM"
   },
   {
-    key: SettingsKeyEnum.SMS_BIRTHDAY_CONGRATS_PID,
-    value: "false",
+    key: SettingsKeyEnum.SMS_BIRTHDAY_CONGRATS,
+    value: "true",
     service: SettingsServiceEnum.SMS,
     userAgent: "SYSTEM"
   },

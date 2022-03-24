@@ -1,4 +1,6 @@
+import { dtoMapper } from "infrastructure/service-utils/dto-mapper";
 import { User } from "models/auth/auth-user.model";
+import { AuthViewProfileDto } from "../DTOs/view-profile.dto";
 
 export async function userBirthdayService () {
   const birthdayUsers = await User.find( {
@@ -10,5 +12,6 @@ export async function userBirthdayService () {
     }
   } );
 
-  return birthdayUsers;
+  const usersDto = dtoMapper( birthdayUsers, AuthViewProfileDto );
+  return usersDto;
 }

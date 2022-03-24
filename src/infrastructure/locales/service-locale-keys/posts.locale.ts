@@ -19,6 +19,8 @@ export enum PostLocaleEnum {
   ERROR_PARENT_NOT_FOUND = "errors.posts.common.parentNotFoundErr",
   ERROR_DUPLICATE_PARENT = "errors.posts.common.duplicateParentPostErr",
   ERROR_ALREADY_REVIEWED = "errors.post.reviewService.alreadyReviewed",
+  ERROR_DUPLICATE_BIRTHDAY_TEMPLATE = "errors.posts.createService.duplicateBirthdaySMSTemplateErr",
+  ERROR_BIRTHDAY_CONGRATS_ON = "errors.posts.deleteService.birthdayCongratsSettingErr",
 
   ERROR_SCHEMA_CREATE_TITLE = "errors.posts.createSchema.titleEmptyErr",
   ERROR_SCHEMA_CREATE_EXCERPT = "errors.posts.createSchema.excerptEmptyErr",

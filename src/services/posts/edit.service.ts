@@ -69,15 +69,11 @@ export async function postEditService ( data: PostEditService ) {
 
   let postmetaVal = postmeta && postmeta.length ? postmeta : [];
 
-  if ( type === PostTypeEnum.SMS_TEMPLATE ) {
+  if ( post.type === PostTypeEnum.SMS_TEMPLATE || type === PostTypeEnum.SMS_BIRTHDAY_TEMPLATE ) {
     if ( !subtitle ) {
       throw new BadRequestError( "Something went wrong", CoreLocaleEnum.ERROR_400_MSG );
     }
-    const smsPattern = await smsCreatePattern( content, subtitle, false );
-    postmetaVal.push( {
-      key: "code",
-      value: smsPattern.data.pattern.code
-    } );
+    postmetaVal = post.postmeta ?? [];
   }
 
   post.set( {

@@ -19,7 +19,8 @@
     "requestValidationError": "Invalid request parameters",
     "userId": "User id must be a standard id",
     "settings": {
-      "editValueErr": "Setting value is required"
+      "editValueErr": "Setting value is required",
+      "birthdayCongratsSMSTemplateErr": "You must create a birthday sms template beforehand to turn on the functionality"
     },
     "auth": {
       "userIsSuspended": "User is suspended",
@@ -100,10 +101,12 @@
         "duplicateParentPostErr": "The parent post has been taken and is not reusable"
       },
       "createService": {
-        "duplicatePostErr": "Duplicate post title is not allowed"
+        "duplicatePostErr": "Duplicate post title is not allowed",
+        "duplicateBirthdaySMSTemplateErr": "Duplicate birthday SMS pattern is not allowed"
       },
       "deleteService": {
-        "postIdErr": "Post Id must be a standard Id"
+        "postIdErr": "Post Id must be a standard Id",
+        "birthdayCongratsSettingErr": "To delete a birthday SMS pattern you must turn off the functionality from settings beforehand"
       },
       "reviewService": {
         "alreadyReviewed": "Post already reviewed"
