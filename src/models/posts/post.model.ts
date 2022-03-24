@@ -25,7 +25,8 @@ export enum PostTypeEnum {
   NEWS = "NEWS",
   BANNER = "BANNER",
   EMAIL_TEMPLATE = "EMAIL_TEMPLATE",
-  SMS_TEMPLATE = "SMS_TEMPLATE"
+  SMS_TEMPLATE = "SMS_TEMPLATE",
+  SMS_BIRTHDAY_CONGRATS = "SMS_BIRTHDAY_CONGRATS"
 }
 
 // Postmeta Subdocument Interface

@@ -1,3 +1,4 @@
+import { adminSmsCreditController } from 'controllers/admin-controllers/api/v1/sms/credit.controller';
 import { adminSmsSendByPatternController } from 'controllers/admin-controllers/api/v1/sms/send-by-pattern.controller';
 import { adminSendSmsController } from 'controllers/admin-controllers/api/v1/sms/send-sms.controller';
 import { smsSendByPatternSchema } from 'controllers/admin-controllers/api/v1/sms/validation-schemas/send-by-pattern.schema';
@@ -10,6 +11,13 @@ import { validateRequest } from 'infrastructure/middleware/validate-request.midd
 import { AccessPoliciesEnum } from 'infrastructure/security/access-policies.enum';
 
 export const adminSMSRouter = express.Router();
+
+adminSMSRouter.get(
+  '/credit',
+  requireAuth,
+  authorize( [ AccessPoliciesEnum.SMS_CREDIT, AccessPoliciesEnum.Core_ADMIN ] ),
+  asyncHandler( adminSmsCreditController )
+);
 
 adminSMSRouter.post(
   '/send-sms',

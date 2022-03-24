@@ -6,6 +6,7 @@ import { User } from "models/auth/auth-user.model";
 import { Post, PostStatusEnum } from "models/posts/post.model";
 import { SMSUserInfoDto } from "./DTOs/sms-user-info.dto";
 import { sendPatternSMS } from './send-sms.service';
+import { smsCreditService } from "./sms-credit.service";
 
 export async function bulkSmsToUsersService ( userIds: string[], smsTemplateId: string ) {
   const pattern = await Post.findById( smsTemplateId );
@@ -31,6 +32,12 @@ export async function bulkSmsToUsersService ( userIds: string[], smsTemplateId: 
   }
 
   const usersDto = dtoMapper( users, SMSUserInfoDto );
+  const credit = await smsCreditService();
+  const totalCost = usersDto.length * credit.smsCost;
+  const isCreditEnough = totalCost + credit.minCredit;
+  if ( !isCreditEnough || !credit.sendingSMSAllowed ) {
+    throw new BadRequestError( "Credit amount is not enough to send SMS", SMSLocaleEnum.ERROR_PROVIDER_CREDIT );
+  }
   await Promise.all( usersDto.map( async ( user ) => {
     const patternValues = PlaceHolder.getSMSPatternProps( pattern.content );
     const values: Record<string, any> = {};

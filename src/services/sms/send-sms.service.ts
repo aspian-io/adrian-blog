@@ -4,6 +4,7 @@ import { SMSLocaleEnum } from "infrastructure/locales/service-locale-keys/sms.lo
 import { SettingsKeyEnum } from "models/settings/settings.model";
 import { settingGetValueService } from "services/settings/get-value.service";
 import { smsPatternType } from "./helpers/types";
+import { smsCreditService } from "./sms-credit.service";
 
 interface ISendSMSHandler {
   [ provider: string ]: ( message: string, recipients: string[] ) => Promise<void>;
@@ -38,9 +39,15 @@ export async function sendSMS ( message: string, recipients: string[] ): Promise
   const sendSMSHandler = sendSMSHandlers[ provider ];
   if ( !sendSMSHandler ) {
     // Provider not found or disabled
-    return;
+    throw new BadRequestError( "SMS provider not found", SMSLocaleEnum.ERROR_PROVIDER );
   }
 
+  const credit = await smsCreditService();
+  const totalCost = recipients.length * credit.smsCost;
+  const isCreditEnough = totalCost + credit.minCredit;
+  if ( !isCreditEnough || !credit.sendingSMSAllowed ) {
+    throw new BadRequestError( "Credit amount is not enough to send SMS", SMSLocaleEnum.ERROR_PROVIDER_CREDIT );
+  }
   await sendSMSHandler( message, recipients );
 }
 
@@ -64,6 +71,11 @@ export async function sendNamedPatternSMS<T extends smsPatternType> ( patternNam
     return;
   }
 
+  const credit = await smsCreditService();
+  if ( !credit.sendingSMSAllowed ) {
+    return
+  }
+
   await sendPatternSMSHandler<T>( patternName, recipient, values );
 }
 
@@ -85,7 +97,12 @@ export async function sendPatternSMS<T extends smsPatternType> ( patternCode: st
   const sendPatternSMSHandler = sendPatternSMSHandlers[ provider ];
   if ( !sendPatternSMSHandler ) {
     // Provider not found or disabled
-    throw new BadRequestError( "SMS provider disabled or not found", SMSLocaleEnum.ERROR_PROVIDER );
+    return;
+  }
+
+  const credit = await smsCreditService();
+  if ( !credit.sendingSMSAllowed ) {
+    throw new BadRequestError( "Credit amount is not enough to send SMS", SMSLocaleEnum.ERROR_PROVIDER_CREDIT );
   }
 
   await sendPatternSMSHandler<T>( patternCode, recipient, values );
@@ -98,7 +115,7 @@ async function farazSendSMSHandler ( message: string, recipients: string[] ) {
     return;
   }
 
-  await farazSendSMS( originator, recipients, message );
+  const sms = await farazSendSMS( originator, recipients, message );
 }
 
 // FarazSMS send pattern sms handler

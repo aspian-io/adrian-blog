@@ -145,7 +145,8 @@
       "bulkSmsToUsers": {
         "patternNotFound": "Requested pattern not found or is pending",
         "patternCodeNotFound": "Pattern code not found",
-        "usersNotFound": "Requested users not found or they do not have confirmed their mobile phone numbers"
+        "usersNotFound": "Requested users not found or they do not have confirmed their mobile phone numbers",
+        "providerCreditErr": "Credit amount is not enough to send SMS"
       },
       "sendByPatternSchema": {
         "chooseUsers": "Please choose some users to send sms to",
