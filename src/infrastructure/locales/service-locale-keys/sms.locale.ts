@@ -1,6 +1,9 @@
 export enum SMSLocaleEnum {
   INFO_SEND_MANUALLY = "info.sms.sendManually.successMsg",
   INFO_SEND_BY_PATTERN = "info.sms.sendByPattern.successMsg",
+  INFO_JOBS_DELAYED_LIST = "info.sms.delayedJobsList.successMsg",
+  INFO_JOBS_COMLETED_LIST = "info.sms.completedJobsList.successMsg",
+  INFO_DELETE_JOB = "info.sms.deleteJob.successMsg",
 
   ERROR_PROVIDER = "errors.sms.createPattern.providerErr",
   ERROR_PROVIDER_CREDIT = "errors.sms.bulkSmsToUsers.providerCreditErr",

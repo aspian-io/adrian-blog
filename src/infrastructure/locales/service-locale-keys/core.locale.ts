@@ -6,5 +6,5 @@ export enum CoreLocaleEnum {
   ERROR_DBCONNECTION_MSG = "errors.dbConnectionError.msg",
   ERROR_REQUEST_VALIDATION_ERROR = "errors.requestValidationError",
   ERROR_CORS = "errors.corsErr",
-  ERROR_USER_ID = "errors.userId"
+  ERROR_USER_ID = "errors.userId",
 }

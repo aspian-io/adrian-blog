@@ -370,6 +370,15 @@
       },
       "sendByPattern": {
         "successMsg": "SMS sent to users by using pattern"
+      },
+      "delayedJobsList": {
+        "successMsg": "List of delayed sending sms jobs retrieved successfully"
+      },
+      "completedJobsList": {
+        "successMsg": "List of completed sending sms jobs retrieved successfully"
+      },
+      "deleteJob": {
+        "successMsg": "A sending sms job has been deleted successfully"
       }
     },
     "email": {
@@ -378,6 +387,15 @@
       },
       "sendOne": {
         "successMsg": "Email sent to destination email address successfully"
+      },
+      "delayedJobsList": {
+        "successMsg": "List of delayed sending email jobs retrieved successfully"
+      },
+      "completedJobsList": {
+        "successMsg": "List of completed sending email jobs retrieved successfully"
+      },
+      "deleteJob": {
+        "successMsg": "A sending email job has been deleted successfully"
       }
     }
   }

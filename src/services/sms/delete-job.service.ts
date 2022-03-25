@@ -1,7 +1,10 @@
 import { JobId } from "bull";
+import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { scheduledSMSQueueToSend } from "./sms-queue.service";
 
-export async function smsScheduledDeleteJob ( jobId: JobId ) {
+export async function smsDeleteJobService ( jobId: JobId ) {
   const job = await scheduledSMSQueueToSend.getJob( jobId );
-  await job?.remove();
+  if ( !job ) throw new NotFoundError();
+  await job.remove();
+  return job;
 }
