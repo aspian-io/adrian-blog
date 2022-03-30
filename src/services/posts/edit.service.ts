@@ -8,9 +8,8 @@ import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
-import { smsCreatePattern } from "services/sms/create-sms-pattern.service";
 
-export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "child" | "placeHolders">;
+export type PostEditService = Omit<PostAttrs, "createdBy" | "createdByIp" | "child">;
 
 export async function postEditService ( data: PostEditService ) {
   const {
@@ -20,6 +19,7 @@ export async function postEditService ( data: PostEditService ) {
     subtitle,
     excerpt,
     content,
+    featuredImage,
     visibility,
     status,
     scheduledFor,
@@ -82,6 +82,7 @@ export async function postEditService ( data: PostEditService ) {
     subtitle,
     excerpt,
     content,
+    featuredImage,
     visibility,
     slug: slugified,
     status: isScheduledForFuture ? PostStatusEnum.FUTURE : status,

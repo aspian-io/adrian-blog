@@ -26,6 +26,8 @@ export enum AuthLocaleEnum {
   ERROR_EMAIL_IN_USE = "errors.auth.registerService.emailInUse",
   ERROR_RESET_LINK_EXP = "errors.auth.resetPasswordService.resetPassLinkExpiredErr",
   ERROR_CONFIRM_EMAIL_LINK_EXP = "errors.auth.confirmEmailService.confirmEmailLinkExpiredErr",
+  ERROR_CONFIRM_SUBSCRIPTION_LINK_EXP = "errors.auth.confirmSubscriptionService.confirmSubscriptionLinkExpiredErr",
+  ERROR_SUBSCRIPTION_CANCELLATION_LINK_EXP = "errors.auth.confirmSubscriptionService.subscriptionCancellationLinkExpiredErr",
   ERROR_EMAIL_NOT_CONFIRMED = "errors.auth.confirmEmailService.emailNotConfirmed",
   ERROR_EMAIL_ALREADY_CONFIRMED = "errors.auth.confirmEmailService.emailAlreadyConfirmed",
   ERROR_USER_IS_SUSPENDED = "errors.auth.userIsSuspended",

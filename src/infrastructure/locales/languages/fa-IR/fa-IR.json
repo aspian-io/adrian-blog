@@ -20,7 +20,9 @@
     "userId": "شناسه کاربری میبایست یک شناسه استاندارد باشد",
     "settings": {
       "editValueErr": "وارد کردن مقدار تنظیم الزامی است",
-      "birthdayCongratsSMSTemplateErr": "برای فعال سازی این قابلیت ابتدا می بایست یک پترن پیامک تبریک تولد تعریف کرده باشید"
+      "birthdayCongratsSMSTemplateErr": "برای فعال سازی این قابلیت ابتدا می بایست یک پترن پیامک تبریک تولد تعریف کرده باشید",
+      "newsletterEnablingErr": "فعال سازی امکان ارسال خبرنامه قبل از تعریف قالب های سرصفحه، بدنه و پاورقی آن ممکن نمی باشد",
+      "hourErr": "عدد ساعت میبایست عدد صحیحی بین ۰ و ۲۳ باشد"
     },
     "auth": {
       "userIsSuspended": "کاربر تعلیق شده است",
@@ -34,6 +36,10 @@
         "confirmEmailLinkExpiredErr": "پیوند تایید نشانی پست الکترونیک نادرست بوده یا منقضی شده است",
         "emailAlreadyConfirmed": "نشانی پست الکترونیک شما قبلا تایید شده است",
         "emailNotConfirmed": "لطفا ابتدا از طریق پیوند ارسالی به پست الکترونیک خود، نشانی آن را تایید نمایید تا بتوانید از حساب کاربری خود استفاده کنید"
+      },
+      "confirmSubscriptionService": {
+        "confirmSubscriptionLinkExpiredErr": "پیوند تایید اشتراک در خبرنامه نادرست بوده یا منقضی شده است",
+        "subscriptionCancellationLinkExpiredErr": "پیوند تایید اشتراک در خبرنامه نادرست بوده یا منقضی شده است"
       },
       "getRefreshTokenService": {
         "invalidRefreshToken": "توکن تمدید کننده اشتباه است"
@@ -396,6 +402,9 @@
       },
       "deleteJob": {
         "successMsg": "یک برنامه زمانبندی ارسال پست های الترونیک موفقیت حذف گردید"
+      },
+      "newsletterCronJob": {
+        "newsletter": "خبرنامه"
       }
     }
   }

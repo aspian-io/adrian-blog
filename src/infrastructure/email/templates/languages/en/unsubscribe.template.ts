@@ -1,7 +1,7 @@
-export const enEmailVerificationTemplate = ( email: string, verificationLink: string ) => {
-  const subject = `${ process.env.BRAND_NAME } - Please confirm your email address`;
+export const enUnsubscribeTemplate = ( email: string, verificationLink: string ) => {
+  const subject = `${ process.env.BRAND_NAME } - Canceling subscription confirmation`;
   const template = `
-  <p>You are receiving this because you (or someone else) registered a user account by using the email address '${ email }' on ${ process.env.BRAND_NAME } website.</p>
+  <p>You are receiving this because you (or someone else) used the email address '${ email }' on ${ process.env.BRAND_NAME } website to unsubscribe.</p>
 
   <p>Please click on the following link, or paste this into your browser to confirm the mentioned email address:</p>
   
@@ -17,4 +17,4 @@ export const enEmailVerificationTemplate = ( email: string, verificationLink: st
 `;
 
   return { subject, template };
-}
+};

@@ -1,6 +1,6 @@
 import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { docListGenerator, IListQueryPreDefinedFilters, IListQueryPreDefinedOrders } from "infrastructure/service-utils/doc-list-generator";
-import { IDtoMapperOptions } from "infrastructure/service-utils/dto-mapper";
+import { IDtoMapperOption } from "infrastructure/service-utils/dto-mapper";
 import { Comment } from "models/post-comments/post-comment.model";
 import { ParsedQs } from 'qs';
 import { PostCommentDto } from "./DTOs/post-comment.dto";
@@ -11,7 +11,7 @@ export interface IPostCommentListService {
   preDefinedFilters?: IListQueryPreDefinedFilters[];
   preDefinedOrders?: IListQueryPreDefinedOrders[];
   dataMapTo?: new () => PostCommentDto;
-  mapperOptions?: IDtoMapperOptions[];
+  mapperOptions?: IDtoMapperOption[];
   fieldsToPopulate?: string[];
 }
 

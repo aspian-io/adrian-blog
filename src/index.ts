@@ -7,7 +7,6 @@ import { redisWrapper } from 'infrastructure/database/redis/redis-client';
 import { startCacheMongooseQueries } from 'infrastructure/cache/redis-cache-extension';
 import { connectToMongoDB } from 'infrastructure/database/mongodb/mongoose-connection';
 import { smsProviderInit } from 'infrastructure/sms/provider-init';
-import { emailDelayedJobsListService } from 'services/email/delayed-jobs-list.service';
 
 const boldGreen = chalk.bold.green;
 

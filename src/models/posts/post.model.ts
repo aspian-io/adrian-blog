@@ -25,6 +25,9 @@ export enum PostTypeEnum {
   NEWS = "NEWS",
   BANNER = "BANNER",
   EMAIL_TEMPLATE = "EMAIL_TEMPLATE",
+  NEWSLETTER_HEADER_TEMPLATE = "NEWSLETTER_HEADER_TEMPLATE",
+  NEWSLETTER_BODY_TEMPLATE = "NEWSLETTER_BODY_TEMPLATE",
+  NEWSLETTER_FOOTER_TEMPLATE = "NEWSLETTER_FOOTER_TEMPLATE",
   SMS_TEMPLATE = "SMS_TEMPLATE",
   SMS_BIRTHDAY_TEMPLATE = "SMS_BIRTHDAY_TEMPLATE"
 }
@@ -48,6 +51,7 @@ export interface PostAttrs extends BaseAttrs {
   excerpt: string;
   content: string;
   slug: string;
+  featuredImage?: string;
   visibility: PostVisibilityEnum;
   status: PostStatusEnum;
   scheduledFor?: Date;
@@ -76,6 +80,7 @@ export interface PostDoc extends BaseDoc, Document {
   excerpt: string;
   content: string;
   slug: string;
+  featuredImage?: AttachmentDoc;
   visibility: PostVisibilityEnum;
   status: PostStatusEnum;
   scheduledFor?: Date;
@@ -122,6 +127,7 @@ const postSchema = new Schema<PostDoc, PostModel>( {
   excerpt: { type: String, required: true },
   content: { type: String, required: true },
   slug: { type: String, required: true, unique: true },
+  featuredImage: { type: Schema.Types.ObjectId, ref: "Attachment" },
   visibility: { type: String, required: true, default: PostVisibilityEnum.PUBLIC, enum: Object.values( PostVisibilityEnum ) },
   status: { type: String, required: true, default: PostStatusEnum.PUBLISH, enum: Object.values( PostStatusEnum ) },
   scheduledFor: Date,

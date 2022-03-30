@@ -7,7 +7,8 @@ import { userBirthdayService } from 'services/auth/users/user-birthday.service';
 import { sendPatternSMS } from 'services/sms/send-sms.service';
 import { smsCreditService } from 'services/sms/sms-credit.service';
 
-export const birthdayCongratsQueue = new Queue( 'birthday-cronjob:send-sms', process.env.REDIS_URL! );
+export const BIRTHDAY_CONGRATS_QUEUE_NAME = 'birthday-cronjob:send-sms';
+export const birthdayCongratsQueue = new Queue( BIRTHDAY_CONGRATS_QUEUE_NAME, process.env.REDIS_URL! );
 
 birthdayCongratsQueue.process( async ( job ) => {
   const users = await userBirthdayService();

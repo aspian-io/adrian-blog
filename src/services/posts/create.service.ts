@@ -9,7 +9,7 @@ import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.
 import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
 import { smsCreatePattern } from "services/sms/create-sms-pattern.service";
 
-export type IPostCreateService = Omit<PostAttrs, "slug" | "child" | "placeHolders">;
+export type IPostCreateService = Omit<PostAttrs, "slug" | "child">;
 
 export async function postCreateService ( data: IPostCreateService ) {
   const {
@@ -18,6 +18,7 @@ export async function postCreateService ( data: IPostCreateService ) {
     subtitle,
     excerpt,
     content,
+    featuredImage,
     visibility,
     status,
     scheduledFor,
@@ -89,6 +90,7 @@ export async function postCreateService ( data: IPostCreateService ) {
     subtitle,
     excerpt,
     content,
+    featuredImage,
     visibility,
     status: isScheduledForFuture ? PostStatusEnum.FUTURE : status,
     scheduledFor,

@@ -20,7 +20,9 @@
     "userId": "User id must be a standard id",
     "settings": {
       "editValueErr": "Setting value is required",
-      "birthdayCongratsSMSTemplateErr": "You must create a birthday sms template beforehand to turn on the functionality"
+      "birthdayCongratsSMSTemplateErr": "You must create a birthday sms template beforehand to turn on the functionality",
+      "newsletterEnablingErr": "Enabling newsletter cannot be done before setting newsletter's header and body and footer template",
+      "hourErr": "Hour number must be an integer between 0 and 23"
     },
     "auth": {
       "userIsSuspended": "User is suspended",
@@ -31,9 +33,13 @@
         "resetPassLinkExpiredErr": "Invalid reset password link or the link expired"
       },
       "confirmEmailService": {
-        "confirmEmailLinkExpiredErr": "Invalid confirmation email link or the link expired",
+        "confirmEmailLinkExpiredErr": "Invalid confirmation email link or the link has been expired",
         "emailAlreadyConfirmed": "Email has been already confirmed",
         "emailNotConfirmed": "Please confirm your email address through the confirmation link sent to your email, to be able to use your account"
+      },
+      "confirmSubscriptionService": {
+        "confirmSubscriptionLinkExpiredErr": "Invalid confirmation subscription link or the link has been expired",
+        "subscriptionCancellationLinkExpiredErr": "Invalid subscription cancellation link or the link has been expired"
       },
       "getRefreshTokenService": {
         "invalidRefreshToken": "Invalid refresh token"
@@ -174,6 +180,9 @@
         "to": "Please enter destination valid email address",
         "content": "Please enter content of the email"
       }
+    },
+    "subscription": {
+      "confirmSubscription": {}
     }
   },
   "info": {
@@ -396,6 +405,9 @@
       },
       "deleteJob": {
         "successMsg": "A sending email job has been deleted successfully"
+      },
+      "newsletterCronJob": {
+        "newsletter": "Newsletter"
       }
     }
   }

@@ -2,7 +2,7 @@ import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { commaSeparatedToArray } from "infrastructure/string-utils/comma-separated-to-array";
 import { FilterQuery, Model } from "mongoose";
 import { ParsedQs } from 'qs';
-import { dtoMapper, IDtoMapperOptions } from "./dto-mapper";
+import { dtoMapper, IDtoMapperOption } from "./dto-mapper";
 
 // Input params
 export interface IListQueryParams<T, U = T> {
@@ -14,7 +14,7 @@ export interface IListQueryParams<T, U = T> {
   preDefinedOrders?: IListQueryPreDefinedOrders[];                  // Pre-defined orders to apply
   fieldsToPopulate?: string[];                                      // Array of field to populate
   dataMapTo?: new () => U;                                          // An instance of DTO class to map data to
-  mapperOptions?: IDtoMapperOptions[];                              // DTO Mapper options
+  mapperOptions?: IDtoMapperOption[];                               // DTO Mapper options
 }
 
 // Result type

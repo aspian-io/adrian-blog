@@ -9,6 +9,6 @@ export async function adminEmailCompletedJobsListController ( req: Request, res:
   res.send( jobsList );
   logger.info(
     `The admin <${ req.currentUser!.email }> retrieved list of completed sending email jobs successfully`,
-    logSerializer( req, res, EmailLocaleEnum.INFO_JOBS_COMLETED_LIST )
+    logSerializer( req, res, EmailLocaleEnum.INFO_JOBS_COMPLETED_LIST )
   );
 }

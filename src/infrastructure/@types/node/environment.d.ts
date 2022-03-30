@@ -9,6 +9,8 @@ namespace NodeJS {
     SUPPORT_PATH?: string;
     RESET_PASS_PATH?: string;
     EMAIL_VERIFICATION_PATH?: string;
+    SUBSCRIPTION_PATH?: string;
+    SUBSCRIPTION_CANCELLATION_PATH?: string;
     EMAIL?: string;
     DB_HOST?: string;
     USING_CACHE?: 'true' | 'false';

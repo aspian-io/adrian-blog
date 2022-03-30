@@ -2,8 +2,9 @@ export enum EmailLocaleEnum {
   INFO_SEND_BY_TEMPLATE = "info.email.sendByTemplate.successMsg",
   INFO_SEND_ONE = "info.email.sendOne.successMsg",
   INFO_JOBS_DELAYED_LIST = "info.email.delayedJobsList.successMsg",
-  INFO_JOBS_COMLETED_LIST = "info.email.completedJobsList.successMsg",
+  INFO_JOBS_COMPLETED_LIST = "info.email.completedJobsList.successMsg",
   INFO_DELETE_JOB = "info.email.deleteJob.successMsg",
+  INFO_NEWSLETTER_SUBJECT = "info.email.newsletterCronJob.newsletter",
 
   ERROR_TEMPLATE_NOT_FOUND = "errors.email.bulkEmailToUsers.templateNotFound",
   ERROR_USERS_NOT_FOUND = "errors.email.bulkEmailToUsers.usersNotFound",

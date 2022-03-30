@@ -8,7 +8,7 @@ export const faEmailVerificationTemplate = ( email: string, verificationLink: st
   
   <p>&emsp;<a href=${ verificationLink } target="_blank">${ verificationLink }</a></p>
 
-  <p>لطفا در نظر داشته باشید که پیوند بالا تا۷ روز آینده معتبر بوده و پس از آن ابطال می گردد./p>
+  <p>لطفا در نظر داشته باشید که پیوند بالا تا ۲۴ ساعت آینده معتبر بوده و پس از آن ابطال می گردد./p>
   
   <p>اگر این نامه به اشتباه برای شما ارسال شده، می توانید آن را نادیده بگیرید.</p>
   
