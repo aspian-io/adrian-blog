@@ -1,10 +1,11 @@
 import path from "path";
 import { sanitize } from 'string-sanitizer';
 import { isFileTypeAllowed } from "infrastructure/security/filetype-allowed";
-import { AttachmentPolicyEnum } from "models/attachments/attachment.model";
+import { AttachmentPolicyEnum, AttachmentSectionEnum } from "models/attachments/attachment.model";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { CoreLocaleEnum } from "infrastructure/locales/service-locale-keys/core.locale";
 import { AttachmentLocaleEnum } from "infrastructure/locales/service-locale-keys/attachments.locale";
+import { pathGeneratorBySection } from "./path-gen";
 
 /**
  * Get AWS S3 Config Params.
@@ -44,14 +45,13 @@ const host = `${ process.env.HOST }:${ process.env.PORT }`;
 // Filename generator params type
 interface IFileNameGeneratorParams {
   userId: string;
-  userEmail: string;
   metadata: any;
   allowedMimeTypes: string[];
 }
 // Filename Generator
 const fileNameGenerator = ( params: IFileNameGeneratorParams ) => {
-  const { userId, userEmail, metadata, allowedMimeTypes } = params;
-  if ( !userId || !userEmail ) {
+  const { userId, metadata, allowedMimeTypes } = params;
+  if ( !userId || !Object.values( AttachmentSectionEnum ).includes( metadata.section ) ) {
     throw new BadRequestError(
       "Something went wrong generating uploading file name",
       CoreLocaleEnum.ERROR_400_MSG
@@ -59,21 +59,18 @@ const fileNameGenerator = ( params: IFileNameGeneratorParams ) => {
   }
   const rawFileName = path.parse( metadata.name ).name;
   const fileExt = path.parse( metadata.name ).ext;
-  const userEmailParts = userEmail.split( '@' );
-  const username = userEmailParts[ 0 ];
   const rootFolderName = metadata.access === AttachmentPolicyEnum.PRIVATE
     ? "private"
     : "download";
   // Sanitizing 
   const sanitizedFileName = sanitize.addUnderscore( rawFileName );
-  const sanitizedUsername = sanitize.addUnderscore( username );
   // Check for file type 
   const isTypeAllowed = isFileTypeAllowed( metadata.type, allowedMimeTypes );
   if ( !isTypeAllowed ) {
     throw new BadRequestError( "File type not allowed", AttachmentLocaleEnum.ERROR_FILE_TYPE_NOT_ALLOWED );
   }
   // Compute full filename
-  const fullFileName = `${ rootFolderName }/${ sanitizedUsername }_${ userId }/${ sanitizedFileName }_${ Date.now() }${ fileExt }`;
+  const fullFileName = `${ rootFolderName }/${ pathGeneratorBySection( metadata.section ) }/${ sanitizedFileName }_${ Date.now() }${ fileExt }`;
   return fullFileName;
 };
 
@@ -85,7 +82,6 @@ const s3BucketConfig = ( expiresInSeconds: number, allowedMimeTypes: string[] ) 
         getKey: ( req: any, filename: any, metadata: any ) => {
           return fileNameGenerator( {
             userId: req.currentUser.id,
-            userEmail: req.currentUser.email,
             allowedMimeTypes,
             metadata
           } );

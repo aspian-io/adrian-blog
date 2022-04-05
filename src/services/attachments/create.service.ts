@@ -1,6 +1,6 @@
 import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { clearCache } from "infrastructure/cache/clear-cache";
-import { Attachment, AttachmentPolicyEnum } from "models/attachments/attachment.model";
+import { Attachment, AttachmentPolicyEnum, AttachmentSectionEnum } from "models/attachments/attachment.model";
 
 export interface IAttachmentCreateService {
   path: string;
@@ -9,6 +9,7 @@ export interface IAttachmentCreateService {
   type: string;
   caption: string;
   size: number;
+  section: AttachmentSectionEnum;
   createdBy: string;
   createdByIp: string;
   userAgent: string;
@@ -16,7 +17,7 @@ export interface IAttachmentCreateService {
 }
 
 export async function attachmentCreateService ( params: IAttachmentCreateService ) {
-  const { path, policy, fileName, type, caption, size, videoThumbnail, createdBy, createdByIp, userAgent } = params;
+  const { path, policy, fileName, type, caption, size, section, videoThumbnail, createdBy, createdByIp, userAgent } = params;
   const attachment = Attachment.build( {
     path,
     policy,
@@ -24,6 +25,7 @@ export async function attachmentCreateService ( params: IAttachmentCreateService
     type,
     caption,
     size,
+    section,
     videoThumbnail,
     createdBy,
     createdByIp,

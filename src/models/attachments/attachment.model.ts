@@ -8,6 +8,7 @@ export interface AttachmentAttrs extends BaseAttrs {
   type: string;
   caption: string;
   size: number;
+  section: AttachmentSectionEnum;
   videoThumbnail?: string;
 }
 
@@ -18,12 +19,24 @@ export interface AttachmentDoc extends BaseDoc, Document {
   type: string;
   caption: string;
   size: number;
+  section: AttachmentSectionEnum;
   videoThumbnail?: AttachmentDoc;
 }
 
 export enum AttachmentPolicyEnum {
   DOWNLOAD = "DOWNLOAD",
   PRIVATE = "PRIVATE"
+}
+
+export enum AttachmentSectionEnum {
+  SITE_LOGO = "SITE_LOGO",
+  MAIN_SLIDESHOW = "MAIN_SLIDESHOW",
+  USER = "USER",
+  BLOG = "BLOG",
+  NEWS = "NEWS",
+  BRAND_LOGO = "BRAND_LOGO",
+  PRODUCT = "PRODUCT",
+  COURSE = "COURSE"
 }
 
 interface AttachmentModel extends Model<AttachmentDoc> {
@@ -37,6 +50,7 @@ const attachmentSchema = new Schema<AttachmentDoc, AttachmentModel>( {
   type: { type: String, required: true },
   caption: { type: String, required: false },
   size: { type: Number, required: true },
+  section: { type: String, required: true, enum: Object.values( AttachmentSectionEnum ) },
   videoThumbnail: { type: Schema.Types.ObjectId, ref: "Attachment" },
   ...baseSchema.obj
 }, baseSchemaOptions );
