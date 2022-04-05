@@ -35,8 +35,8 @@ export async function attachmentDeleteSingleFileService ( attachmentId: string )
 export async function attachmentDeleteMultipleFilesService ( attachmentIds: string[] ) {
   const attachments = await Attachment.find( { _id: attachmentIds } );
   if ( attachmentIds.length !== attachments.length ) throw new NotFoundError();
-  let Objects: IS3DeleteSingleObjectType[] = [];
-  let deletedUrls: string[] = [];
+  const Objects: IS3DeleteSingleObjectType[] = [];
+  const deletedUrls: string[] = [];
   attachments.forEach( async a => {
     const videoThumbnail = a.videoThumbnail ? await Attachment.findById( a.videoThumbnail ) : null;
     if ( videoThumbnail ) {
