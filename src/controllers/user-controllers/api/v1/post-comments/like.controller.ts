@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { CommentLocaleEnum } from "infrastructure/locales/service-locale-keys/post-comment.locale";
 import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { dtoMapper } from "infrastructure/service-utils/dto-mapper";
-import { PostCommentDto, PostDtoOption } from "services/post-comments/DTOs/post-comment.dto";
+import { PostCommentDto, postCommentDtoOptions } from "services/post-comments/DTOs/post-comment.dto";
 import { postCommentLikeService } from "services/post-comments/like.service";
 import { logger } from "services/winston-logger/logger.service";
 
@@ -13,7 +13,7 @@ export async function postCommentLikeController ( req: Request, res: Response ) 
     ipAddress: req.ip,
     userAgent: req.get( 'User-Agent' ) || 'unknown_agent'
   } );
-  const commentDto = dtoMapper( comment, PostCommentDto, [ PostDtoOption ] );
+  const commentDto = dtoMapper( comment, PostCommentDto, postCommentDtoOptions );
   res.send( commentDto );
   logger.info(
     "A comment liked/unliked successfully",

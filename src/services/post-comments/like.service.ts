@@ -21,7 +21,7 @@ export async function postCommentLikeService ( params: IPostCommentLikeService )
     comment.numLikes = comment.likes.length;
   } else {
     comment.likes.push( {
-      createdBy: userId,
+      createdBy: userId as any,
       createdByIp: ipAddress,
       userAgent
     } );

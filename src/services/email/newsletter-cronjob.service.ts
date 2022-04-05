@@ -43,7 +43,7 @@ sendingNewsletterQueue.process( async ( job ) => {
       const langDirection = rtlLangs.includes( subscriber.lang ) ? "rtl" : "ltr";
       const langConstraintPosts = posts.filter( p => p.lang === subscriber.lang );
       const postsDto = langConstraintPosts.map( p => {
-        return new EmailPostInfoDto( langDirection, p.title, p.slug, p.subtitle, p.excerpt, p.featuredImage?.url );
+        return new EmailPostInfoDto( langDirection, p.title, p.slug, p.subtitle, p.excerpt, p.featuredImage?.path );
       } );
       let headerContent = '';
       let bodyContent = '';

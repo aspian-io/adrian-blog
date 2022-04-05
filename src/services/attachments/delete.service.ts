@@ -9,11 +9,20 @@ import { Attachment } from "models/attachments/attachment.model";
 export async function attachmentDeleteSingleFileService ( attachmentId: string ) {
   const attachment = await Attachment.findById( attachmentId );
   if ( !attachment ) throw new NotFoundError();
+  const attachmentThumbnail = attachment.videoThumbnail
+    ? await Attachment.findById( attachment.videoThumbnail ) : null;
 
   try {
+    if ( attachmentThumbnail ) {
+      await s3DeleteObject( {
+        Bucket: process.env.S3_BUCKET!,
+        Key: attachmentThumbnail.path,
+      } );
+      await attachmentThumbnail.delete();
+    }
     await s3DeleteObject( {
       Bucket: process.env.S3_BUCKET!,
-      Key: attachment.url,
+      Key: attachment.path,
     } );
     await attachment.delete();
   } catch ( error ) {
@@ -28,9 +37,15 @@ export async function attachmentDeleteMultipleFilesService ( attachmentIds: stri
   if ( attachmentIds.length !== attachments.length ) throw new NotFoundError();
   let Objects: IS3DeleteSingleObjectType[] = [];
   let deletedUrls: string[] = [];
-  attachments.forEach( a => {
+  attachments.forEach( async a => {
+    const videoThumbnail = a.videoThumbnail ? await Attachment.findById( a.videoThumbnail ) : null;
+    if ( videoThumbnail ) {
+      Objects.push( {
+        Key: videoThumbnail.path
+      } );
+    }
     Objects.push( {
-      Key: a.url
+      Key: a.path
     } );
   } );
 

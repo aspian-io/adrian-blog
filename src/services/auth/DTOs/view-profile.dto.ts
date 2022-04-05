@@ -18,4 +18,5 @@ export class AuthViewProfileDto {
   isMobilePhoneVerified?: boolean = undefined;
   isEmailConfirmed?: boolean = undefined;
   phone?: string = undefined;
+  imgProxySignedUrl?: string = undefined;
 }

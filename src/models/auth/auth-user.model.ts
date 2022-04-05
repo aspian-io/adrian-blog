@@ -1,6 +1,7 @@
 import { PasswordUtil } from 'infrastructure/security/password-util';
 import mongoose, { Schema } from 'mongoose';
 import { AccessPoliciesEnum } from 'infrastructure/security/access-policies.enum';
+import { AttachmentDoc } from 'models/attachments/attachment.model';
 
 export enum GenderEnum {
   FEMALE = "FEMALE",
@@ -49,7 +50,7 @@ export interface UserDoc extends mongoose.Document {
   mobilePhone?: string;
   isMobilePhoneVerified?: Boolean;
   phone?: string;
-  avatar?: string;
+  avatar?: AttachmentDoc;
   job?: string;
   email: string;
   isEmailConfirmed?: boolean;
@@ -81,7 +82,7 @@ const userSchema = new mongoose.Schema<UserDoc, UserModel>( {
   mobilePhone: { type: String, required: false },
   isMobilePhoneVerified: { type: Boolean, default: false },
   phone: { type: String, required: false },
-  avatar: { type: String, required: false },
+  avatar: { type: Schema.Types.ObjectId, ref: "Attachment" },
   job: { type: String, required: false },
   email: { type: String, unique: true, required: true },
   isEmailConfirmed: { type: Boolean, default: false },

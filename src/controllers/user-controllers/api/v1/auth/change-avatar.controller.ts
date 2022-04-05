@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
+import { IImgProxyPrams } from "infrastructure/imgproxy/sign-url";
 import { AuthLocaleEnum } from "infrastructure/locales/service-locale-keys/auth.locale";
 import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { dtoMapper } from "infrastructure/service-utils/dto-mapper";
-import { UserDoc } from "models/auth/auth-user.model";
 import { AuthViewProfileDto } from "services/auth/DTOs/view-profile.dto";
 import { authChangeAvatarService } from "services/auth/users/change-avatar.service";
 import { logger } from "services/winston-logger/logger.service";
@@ -12,10 +12,11 @@ export async function authChangeAvatarController ( req: Request, res: Response )
   const userAgent = req.get( 'User-Agent' ) ?? 'unknown_agent';
   const user = await authChangeAvatarService( {
     userId: req.currentUser!.id,
-    avatarUrl: req.body.avatarUrl,
+    avatarId: req.body.avatarId,
     updatedBy: req.currentUser!.id,
     updatedByIp,
-    userAgent
+    userAgent,
+    imgProxyParams: { ...req.query as Omit<IImgProxyPrams, "key"> }
   } );
   const profileDto = dtoMapper( user, AuthViewProfileDto );
 

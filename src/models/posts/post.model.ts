@@ -2,7 +2,7 @@ import { LangEnum } from 'infrastructure/locales/i18next-config';
 import { AttachmentDoc } from 'models/attachments/attachment.model';
 import { BaseAttrs, BaseDoc, BaseMinimalDoc, baseMinimalSchema, baseSchema, baseSchemaOptions } from 'models/base/base.model';
 import { TaxonomyDoc } from 'models/taxonomies/taxonomy.model';
-import { model, Schema, Model, Document, Types } from 'mongoose';
+import { model, Schema, Model, Document } from 'mongoose';
 
 export enum PostVisibilityEnum {
   PUBLIC = "PUBLIC",
@@ -102,7 +102,7 @@ export interface PostDoc extends BaseDoc, Document {
   postmeta?: Postmeta[];
 }
 
-interface PostModel extends Model<PostDoc> {
+export interface PostModel extends Model<PostDoc> {
   build ( attrs: PostAttrs ): PostDoc;
 }
 

@@ -18,4 +18,5 @@ export class PostDto {
   attachments: AttachmentDoc[] = [];
   createdAt: Date = new Date();
   updatedAt: Date = new Date();
+  imgProxySignedUrl?: string = undefined;
 }

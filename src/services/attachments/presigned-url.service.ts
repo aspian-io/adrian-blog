@@ -12,7 +12,7 @@ export async function attachmentGetPresignedUrlService ( attachmentId: string ) 
 
   const url = s3.getSignedUrl( 'getObject', {
     Bucket: process.env.S3_BUCKET,
-    Key: attachment.url,
+    Key: attachment.path,
     Expires: expHours * 60 * 60
   } );
 

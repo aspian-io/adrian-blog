@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { IImgProxyPrams } from "infrastructure/imgproxy/sign-url";
 import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
 import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { PostStatusEnum, PostTypeEnum } from "models/posts/post.model";
@@ -30,7 +31,8 @@ export async function postBlogListController ( req: Request, res: Response ) {
       orderBy: "createdAt",
       orderParam: -1
     } ],
-    dataMapTo: PostDto
+    dataMapTo: PostDto,
+    imgProxyParams: { ...req.query as Omit<IImgProxyPrams, "key"> }
   } );
   res.send( posts );
   logger.info( "List of blogs retrieved successfully", logSerializer( req, res, PostLocaleEnum.INFO_USERAREA_BLOGS ) );

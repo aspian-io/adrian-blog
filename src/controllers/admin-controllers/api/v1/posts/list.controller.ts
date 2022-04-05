@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { IImgProxyPrams } from "infrastructure/imgproxy/sign-url";
 import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
 import { logSerializer } from "infrastructure/serializers/log-serializer";
 import { postListService } from "services/posts/list.service";
@@ -24,7 +25,8 @@ export async function adminPostListController ( req: Request, res: Response ) {
         orderBy: "createdAt",
         orderParam: -1
       }
-    ]
+    ],
+    imgProxyParams: { ...req.query as Omit<IImgProxyPrams, "key"> }
   } );
   res.send( posts );
   logger.info(

@@ -38,6 +38,9 @@ namespace NodeJS {
     S3_FORTH_PATH_STYLE?: 'true' | 'false';
     S3_STREAMING_UPLOAD?: 'true' | 'false';
     S3_BUCKET?: string;
+    IMGPROXY_BASE_URL?: string;
+    IMGPROXY_KEY?: string;
+    IMGPROXY_SALT?: string;
     POSTCOMMENT_REPLY_ALLOWED_LEVEL?: string;
   }
 }

@@ -1,11 +1,26 @@
 import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
-import { Comment } from "models/post-comments/post-comment.model";
+import { IImgProxyPrams, imgProxySignUrl } from "infrastructure/imgproxy/sign-url";
+import { WithImgProxyUrlType } from "infrastructure/imgproxy/type";
+import { Comment, CommentDoc } from "models/post-comments/post-comment.model";
 
-export async function postCommentDetailsService ( id: string ) {
+export async function postCommentDetailsService (
+  id: string,
+  imgProxyParams?: Omit<IImgProxyPrams, "key">
+): Promise<WithImgProxyUrlType<CommentDoc>> {
   const comment = await Comment.findById( id )
+    .populate( {
+      path: "createdBy",
+      populate: {
+        path: "avatar"
+      }
+    } )
     .cache( CacheOptionServiceEnum.POST_COMMENT );
   if ( !comment ) throw new NotFoundError();
 
-  return comment;
+  const imgProxySignedUrl = imgProxyParams?.resizingType && comment.createdBy.avatar
+    ? imgProxySignUrl( { ...imgProxyParams, key: comment.createdBy.avatar.path } )
+    : "";
+
+  return { ...comment.toJSON<CommentDoc>(), imgProxySignedUrl };
 }
