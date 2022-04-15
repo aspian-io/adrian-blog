@@ -14,7 +14,6 @@ export interface IPostCommentListService {
   preDefinedFilters?: IListQueryPreDefinedFilters[];
   preDefinedOrders?: IListQueryPreDefinedOrders[];
   dataMapTo?: new () => PostCommentDto;
-  mapperOptions?: IDtoMapperOption<any>[];
   fieldsToPopulate?: string[] | PopulateOptions | PopulateOptions[];
   imgProxyParams?: Omit<IImgProxyPrams, "key">;
 }
@@ -26,7 +25,6 @@ export async function postCommentListService ( params: IPostCommentListService )
     preDefinedFilters,
     preDefinedOrders,
     dataMapTo,
-    mapperOptions,
     fieldsToPopulate,
     imgProxyParams
   } = params;
@@ -42,7 +40,6 @@ export async function postCommentListService ( params: IPostCommentListService )
     preDefinedOrders,
     fieldsToPopulate,
     dataMapTo,
-    mapperOptions
   } );
   if ( imgProxyParams?.resizingType ) {
     const processedData = result.data.map( d => {

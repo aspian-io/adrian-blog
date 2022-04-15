@@ -15,13 +15,14 @@ export interface ITaxonomyEditService {
   description: string;
   term: string;
   parent?: string;
+  featuredImage?: string;
   updatedBy: string;
   updatedByIp: string;
   userAgent: string;
 }
 
 export async function taxonomyEditService ( data: ITaxonomyEditService ) {
-  const { lang, slug, type, description, term, parent, updatedBy, updatedByIp, userAgent } = data;
+  const { lang, slug, type, description, term, parent, featuredImage, updatedBy, updatedByIp, userAgent } = data;
   const taxonomy = await Taxonomy.findOne( { slug } );
   const slugified = slugify( term );
 
@@ -46,6 +47,7 @@ export async function taxonomyEditService ( data: ITaxonomyEditService ) {
     description,
     term,
     parent,
+    featuredImage,
     slug: slugified,
     updatedBy,
     updatedByIp,

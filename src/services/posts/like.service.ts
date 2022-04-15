@@ -21,7 +21,7 @@ export async function postLikeService ( params: IPostLikeService ) {
     post.numLikes = post.likes.length;
   } else {
     post.likes.push( {
-      createdBy: userId,
+      createdBy: userId as any,
       createdByIp: ipAddress,
       userAgent
     } );

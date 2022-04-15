@@ -1,6 +1,7 @@
+import { DTOMapper } from "infrastructure/service-utils/dto-mapper";
 import { GenderEnum } from "models/auth/auth-user.model";
 
-export class EmailUserInfoDto {
+export class EmailUserInfoDto extends DTOMapper {
   firstName: string = '';
   lastName: string = '';
   displayName?: string = undefined;

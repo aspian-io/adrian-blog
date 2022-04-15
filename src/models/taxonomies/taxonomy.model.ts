@@ -1,4 +1,5 @@
 import { LangEnum } from 'infrastructure/locales/i18next-config';
+import { AttachmentDoc } from 'models/attachments/attachment.model';
 import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from 'models/base/base.model';
 import { Model, Schema, Document, model } from 'mongoose';
 
@@ -16,6 +17,7 @@ export interface TaxonomyAttrs extends BaseAttrs {
   slug: string;
   parent?: string;
   children?: string[];
+  featuredImage?: string;
 }
 
 export interface TaxonomyDoc extends BaseDoc, Document {
@@ -26,6 +28,7 @@ export interface TaxonomyDoc extends BaseDoc, Document {
   slug: string;
   parent?: TaxonomyDoc;
   children: TaxonomyDoc[];
+  featuredImage?: AttachmentDoc;
 }
 
 interface TaxonomyModel extends Model<TaxonomyDoc> {
@@ -39,6 +42,7 @@ const taxonomySchema = new Schema<TaxonomyDoc, TaxonomyModel>( {
   slug: { type: String, required: true, unique: true },
   parent: { type: Schema.Types.ObjectId, ref: "Taxonomy" },
   children: [ { type: Schema.Types.ObjectId, ref: "Taxonomy" } ],
+  featuredImage: { type: Schema.Types.ObjectId, ref: "Attachment" },
   ...baseSchema.obj
 }, baseSchemaOptions );
 

@@ -28,7 +28,7 @@ export async function postReviewService ( params: IPostReviewService ) {
 
   post.reviews.push( {
     rate,
-    createdBy,
+    createdBy: createdBy as any,
     createdByIp,
     userAgent
   } );

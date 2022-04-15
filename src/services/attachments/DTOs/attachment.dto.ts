@@ -1,6 +1,7 @@
+import { DTOMapper } from "infrastructure/service-utils/dto-mapper";
 import { AttachmentPolicyEnum } from "models/attachments/attachment.model";
 
-export class AttachmentPhotoDto {
+export class AttachmentPhotoDto extends DTOMapper {
   path: string = '';
   policy: AttachmentPolicyEnum = AttachmentPolicyEnum.DOWNLOAD;
   fileName: string = '';

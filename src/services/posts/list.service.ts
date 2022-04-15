@@ -26,7 +26,7 @@ export async function postListService ( params: IPostListService ) {
   } );
   if ( imgProxyParams?.resizingType ) {
     const processedData = result.data.map( d => {
-      let postDoc: WithImgProxyUrlType<PostDoc> = d as PostDoc;
+      let postDoc: WithImgProxyUrlType<PostDoc | PostDto> = dataMapTo ? d as PostDto : d as PostDoc;
       if ( postDoc.featuredImage && postDoc.featuredImage.path ) {
         const imgProxySignedUrl = imgProxySignUrl( { ...imgProxyParams, key: postDoc.featuredImage.path } );
         postDoc = { ...postDoc, imgProxySignedUrl };

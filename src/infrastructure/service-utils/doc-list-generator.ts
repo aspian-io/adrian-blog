@@ -2,10 +2,10 @@ import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { commaSeparatedToArray } from "infrastructure/string-utils/comma-separated-to-array";
 import { FilterQuery, Model, PopulateOptions } from "mongoose";
 import { ParsedQs } from 'qs';
-import { dtoMapper, IDtoMapperOption } from "./dto-mapper";
+import { DTOMapper, dtoMapper } from "./dto-mapper";
 
 // Input params
-export interface IListQueryParams<T, U = T> {
+export interface IListQueryParams<T, U extends DTOMapper> {
   model: Model<T>;                                                  // Mongoose Model (T is type of the Model's Document)
   fieldsToExclude?: string[];                                       // Model fields we do not want to use for filtering
   cache?: IListQueryCache;                                          // Enable or disable Redis cache for the result
@@ -14,7 +14,6 @@ export interface IListQueryParams<T, U = T> {
   preDefinedOrders?: IListQueryPreDefinedOrders[];                  // Pre-defined orders to apply
   fieldsToPopulate?: string[] | PopulateOptions | PopulateOptions[];// Array of field to populate
   dataMapTo?: new () => U;                                          // An instance of DTO class to map data to
-  mapperOptions?: IDtoMapperOption<any>[];                               // DTO Mapper options
 }
 
 // Result type
@@ -58,7 +57,7 @@ export interface IListQueryPreDefinedOrders {
  * @param {IListQueryParams<T>} params - Params to generate conditional list of type `IListQueryParams<T>`
  * @returns {Promise<IListQueryResult<T>>} A Promise of type `IListQueryResult<T>`
  */
-export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U> ): Promise<IListQueryResult<T, U>> {
+export async function docListGenerator<T, U extends DTOMapper = never> ( params: IListQueryParams<T, U> ): Promise<IListQueryResult<T, U>> {
   const {
     model,
     fieldsToExclude,
@@ -67,7 +66,6 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
     preDefinedFilters,
     preDefinedOrders,
     dataMapTo,
-    mapperOptions,
     fieldsToPopulate
   } = params;
 
@@ -233,7 +231,7 @@ export async function docListGenerator<T, U = T> ( params: IListQueryParams<T, U
   }
 
   if ( dataMapTo ) {
-    dtoResultsList = dtoMapper<T, U>( resultsList, dataMapTo, mapperOptions );
+    dtoResultsList = dtoMapper<T, U>( resultsList, dataMapTo );
   }
 
   return {

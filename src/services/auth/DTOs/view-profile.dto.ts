@@ -1,6 +1,7 @@
+import { DTOMapper } from "infrastructure/service-utils/dto-mapper";
 import { GenderEnum } from "models/auth/auth-user.model";
 
-export class AuthViewProfileDto {
+export class AuthViewProfileDto extends DTOMapper {
   firstName?: string = undefined;
   lastName?: string = undefined;
   avatar?: string = undefined;

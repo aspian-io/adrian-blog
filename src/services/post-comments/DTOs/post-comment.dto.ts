@@ -1,8 +1,18 @@
-import { IDtoMapperOption } from "infrastructure/service-utils/dto-mapper";
+import { DTOMapper, IDtoMapperOption } from "infrastructure/service-utils/dto-mapper";
 import { BaseMinimalDoc } from "models/base/base.model";
-import { UserMinimalDto, userMinimalDtoOption } from "services/auth/DTOs/user.dto";
+import { UserMinimalDto } from "services/auth/DTOs/user.dto";
 
-export class PostCommentDto {
+export class PostCommentDto extends DTOMapper {
+  dtoMapperProfile (): IDtoMapperOption<any>[] {
+    const postCommentUserDtoOption: IDtoMapperOption<UserMinimalDto> = {
+      mapToClass: {
+        mapFromKey: "createdBy",
+        dtoClass: UserMinimalDto
+      }
+    };
+
+    return [ postCommentUserDtoOption ];
+  }
   title: string = '';
   content: string = '';
   likes: BaseMinimalDoc[] = [];
@@ -15,12 +25,3 @@ export class PostCommentDto {
   createdBy: UserMinimalDto = new UserMinimalDto();
   imgProxySignedUrl?: string = undefined;
 }
-
-export const postCommentUserDtoOption: IDtoMapperOption<UserMinimalDto> = {
-  mapToClass: {
-    mapFromKey: "createdBy",
-    dtoClass: UserMinimalDto
-  }
-};
-
-export const postCommentDtoOptions = [ postCommentUserDtoOption, userMinimalDtoOption ];

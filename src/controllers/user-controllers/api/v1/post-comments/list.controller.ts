@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { IImgProxyPrams } from "infrastructure/imgproxy/sign-url";
 import { CommentLocaleEnum } from "infrastructure/locales/service-locale-keys/post-comment.locale";
 import { logSerializer } from "infrastructure/serializers/log-serializer";
-import { PostCommentDto, postCommentDtoOptions } from "services/post-comments/DTOs/post-comment.dto";
+import { PostCommentDto } from "services/post-comments/DTOs/post-comment.dto";
 import { postCommentListService } from "services/post-comments/list.service";
 import { logger } from "services/winston-logger/logger.service";
 
@@ -29,7 +29,6 @@ export async function postCommentListController ( req: Request, res: Response ) 
       }
     },
     dataMapTo: PostCommentDto,
-    mapperOptions: postCommentDtoOptions,
     imgProxyParams: { ...req.query as Omit<IImgProxyPrams, "key"> }
   } );
 

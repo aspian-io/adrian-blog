@@ -14,16 +14,17 @@ export interface ITaxonomyCreateService {
   description: string;
   term: string;
   parent?: string;
+  featuredImage?: string;
   createdBy: string;
   createdByIp: string;
   userAgent: string;
 }
 
 export async function taxonomyCreateService ( data: ITaxonomyCreateService ) {
-  const { lang, type, description, term, parent, createdBy, createdByIp, userAgent } = data;
+  const { lang, type, description, term, parent, featuredImage, createdBy, createdByIp, userAgent } = data;
   const slug = slugify( term );
 
-  const taxonomy = Taxonomy.build( { lang, type, description, term, slug, parent, createdBy, createdByIp, userAgent } );
+  const taxonomy = Taxonomy.build( { lang, type, description, term, slug, parent, featuredImage, createdBy, createdByIp, userAgent } );
   if ( parent && !mongoose.isValidObjectId( parent ) ) {
     throw new BadRequestError( "Something went wrong with parent taxonomy", CoreLocaleEnum.ERROR_400_MSG );
   }
