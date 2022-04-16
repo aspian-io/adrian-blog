@@ -3,7 +3,7 @@
 //  */
 export class DTOMapper {
   dtoMapperProfile (): IDtoMapperOption<any>[] | undefined {
-    return undefined
+    return undefined;
   };
 }
 
@@ -73,8 +73,15 @@ function mapper<T, U extends DTOMapper> ( source: T, destination: U ): U {
         // To class mapping (recursively)
         if ( option.mapToClass?.mapFromKey === key ) {
           if ( source[ key as keyof T ] ) {
-            const result = mapper( source[ key as keyof T ], new option.mapToClass.dtoClass() );
-            destination[ key as keyof U ] = result as any;
+            if ( Array.isArray( source[ key as keyof T ] ) ) {
+              const result = Array.from( source[ key as keyof T ] as any ).map( el => {
+                return mapper( source[ key as keyof T ], new option.mapToClass!.dtoClass() );
+              } );
+              destination[ key as keyof U ] = result as any;
+            } else {
+              const result = mapper( source[ key as keyof T ], new option.mapToClass.dtoClass() );
+              destination[ key as keyof U ] = result as any;
+            }
           }
           // To value mapping
         } else if ( option.mapToPath?.mapFromKey === key ) {
