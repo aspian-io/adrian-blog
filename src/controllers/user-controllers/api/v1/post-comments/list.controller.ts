@@ -22,12 +22,12 @@ export async function postCommentListController ( req: Request, res: Response ) 
       orderBy: "createdAt",
       orderParam: -1
     } ],
-    fieldsToPopulate: {
+    fieldsToPopulate: [ {
       path: "createdBy",
       populate: {
         path: "avatar"
       }
-    },
+    }, { path: 'numLikes' } ],
     dataMapTo: PostCommentDto,
     imgProxyParams: { ...req.query as Omit<IImgProxyPrams, "key"> }
   } );

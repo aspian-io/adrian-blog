@@ -8,7 +8,7 @@ import { logger } from "services/winston-logger/logger.service";
 
 export async function postLikeController ( req: Request, res: Response ) {
   const post = await postLikeService( {
-    postId: req.params.id,
+    slug: req.params.postSlug,
     userId: req.currentUser!.id,
     ipAddress: req.ip,
     userAgent: req.get( 'User-Agent' ) || 'unknown_agent'

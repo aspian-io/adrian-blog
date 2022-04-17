@@ -31,6 +31,7 @@ export async function postBlogListController ( req: Request, res: Response ) {
       orderBy: "createdAt",
       orderParam: -1
     } ],
+    fieldsToPopulate: { path: 'numLikes' },
     dataMapTo: PostDto,
     imgProxyParams: { ...req.query as Omit<IImgProxyPrams, "key"> }
   } );

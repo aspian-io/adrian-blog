@@ -32,6 +32,7 @@ export const baseSchemaOptions: SchemaOptions | undefined = {
       ret.id = ret._id;
       delete ret._id;
     },
+    virtuals: true,
     versionKey: false
   },
   timestamps: true

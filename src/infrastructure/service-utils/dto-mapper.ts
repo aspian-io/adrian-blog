@@ -75,7 +75,7 @@ function mapper<T, U extends DTOMapper> ( source: T, destination: U ): U {
           if ( source[ key as keyof T ] ) {
             if ( Array.isArray( source[ key as keyof T ] ) ) {
               const result = Array.from( source[ key as keyof T ] as any ).map( el => {
-                return mapper( source[ key as keyof T ], new option.mapToClass!.dtoClass() );
+                return mapper( el, new option.mapToClass!.dtoClass() );
               } );
               destination[ key as keyof U ] = result as any;
             } else {

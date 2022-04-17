@@ -15,6 +15,8 @@ export async function postCommentDetailsService (
         path: "avatar"
       }
     } )
+    .populate( 'likes' )
+    .populate( 'numLikes' )
     .cache( CacheOptionServiceEnum.POST_COMMENT );
   if ( !comment ) throw new NotFoundError();
 

@@ -2,11 +2,14 @@ import { postBannerListController } from 'controllers/user-controllers/api/v1/po
 import { postBlogDetailsController } from 'controllers/user-controllers/api/v1/posts/blogs/details.controller';
 import { postBlogsByTaxonomyController } from 'controllers/user-controllers/api/v1/posts/blogs/list-by-taxonomy.controller';
 import { postBlogListController } from 'controllers/user-controllers/api/v1/posts/blogs/list.controller';
+import { postLikeController } from 'controllers/user-controllers/api/v1/posts/common/like.controller';
+import { postReviewController } from 'controllers/user-controllers/api/v1/posts/common/review.controller';
 import { postNewsDetailsController } from 'controllers/user-controllers/api/v1/posts/news/details.controller';
 import { postNewsListController } from 'controllers/user-controllers/api/v1/posts/news/list.controller';
 import { postPageDetailsController } from 'controllers/user-controllers/api/v1/posts/pages/datails.controller';
 import express from 'express';
 import { asyncHandler } from 'infrastructure/middleware/async-handler.middleware';
+import { requireAuth } from 'infrastructure/middleware/require-auth.middleware';
 
 export const postRouter = express.Router();
 
@@ -50,4 +53,18 @@ postRouter.get(
 postRouter.get(
   '/pages/:slug',
   asyncHandler( postPageDetailsController )
+);
+
+// POST: Review a post
+postRouter.post(
+  '/review/:postSlug',
+  requireAuth,
+  asyncHandler( postReviewController )
+);
+
+// POST: Like a post
+postRouter.post(
+  '/like/:postSlug',
+  requireAuth,
+  asyncHandler( postLikeController )
 );

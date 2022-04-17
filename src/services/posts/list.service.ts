@@ -2,6 +2,7 @@ import { IImgProxyPrams, imgProxySignUrl } from "infrastructure/imgproxy/sign-ur
 import { WithImgProxyUrlType } from "infrastructure/imgproxy/type";
 import { docListGenerator, IListQueryPreDefinedFilters, IListQueryPreDefinedOrders, IListQueryResult } from "infrastructure/service-utils/doc-list-generator";
 import { Post, PostDoc } from "models/posts/post.model";
+import { PopulateOptions } from "mongoose";
 import { ParsedQs } from 'qs';
 import { PostDto } from "./DTOs/post.dto";
 
@@ -10,18 +11,20 @@ export interface IPostListService {
   query?: ParsedQs;
   preDefinedFilters?: IListQueryPreDefinedFilters[];
   preDefinedOrders?: IListQueryPreDefinedOrders[];
+  fieldsToPopulate?: string[] | PopulateOptions | PopulateOptions[];
   dataMapTo?: new () => PostDto;
   imgProxyParams?: Omit<IImgProxyPrams, "key">;
 }
 
 export async function postListService ( params: IPostListService ) {
-  const { fieldsToExclude, query, preDefinedFilters, preDefinedOrders, dataMapTo, imgProxyParams } = params;
+  const { fieldsToExclude, query, preDefinedFilters, preDefinedOrders, fieldsToPopulate, dataMapTo, imgProxyParams } = params;
   const result = await docListGenerator( {
     fieldsToExclude,
     model: Post,
     queryStringParams: query,
     preDefinedFilters,
     preDefinedOrders,
+    fieldsToPopulate,
     dataMapTo
   } );
   if ( imgProxyParams?.resizingType ) {

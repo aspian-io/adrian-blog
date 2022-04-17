@@ -1,5 +1,6 @@
 import { DTOMapper, IDtoMapperOption } from "infrastructure/service-utils/dto-mapper";
 import { AttachmentDoc } from "models/attachments/attachment.model";
+import { BaseMinimalDoc } from "models/base/base.model";
 import { PostDoc } from "models/posts/post.model";
 import { TaxonomyDoc } from "models/taxonomies/taxonomy.model";
 import { AttachmentPhotoDto } from "services/attachments/DTOs/attachment.dto";
@@ -25,6 +26,9 @@ export class PostDto extends DTOMapper {
   commentAllowed: Boolean = true;
   viewCount?: Number = 0;
   isPinned?: Boolean = false;
+  rating?: number = 0;
+  numReviews?: number = 0;
+  numLikes?: number = 0;
   child?: PostDoc = undefined;
   parent?: PostDoc = undefined;
   taxonomies: TaxonomyDoc[] = [];

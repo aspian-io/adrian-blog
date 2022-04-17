@@ -3,10 +3,11 @@ import { clearCache } from "infrastructure/cache/clear-cache";
 import { BadRequestError } from "infrastructure/errors/bad-request-error";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
 import { PostLocaleEnum } from "infrastructure/locales/service-locale-keys/posts.locale";
+import { PostReview } from "models/posts/post-review.model";
 import { Post } from "models/posts/post.model";
 
 export interface IPostReviewService {
-  postId: string;
+  slug: string;
   rate: number;
   createdBy: string;
   createdByIp: string;
@@ -14,8 +15,8 @@ export interface IPostReviewService {
 }
 
 export async function postReviewService ( params: IPostReviewService ) {
-  const { postId, rate, createdBy, createdByIp, userAgent } = params;
-  const post = await Post.findById( postId );
+  const { slug, rate, createdBy, createdByIp, userAgent } = params;
+  const post = await Post.findOne( { slug } ).populate( 'reviews' );
   if ( !post ) throw new NotFoundError();
 
   const alreadyReviewed = post.reviews.find(
@@ -26,12 +27,15 @@ export async function postReviewService ( params: IPostReviewService ) {
     throw new BadRequestError( "Post already reviewed", PostLocaleEnum.ERROR_ALREADY_REVIEWED );
   }
 
-  post.reviews.push( {
+  const review = PostReview.build( {
     rate,
-    createdBy: createdBy as any,
+    post: post.id,
+    createdBy,
     createdByIp,
     userAgent
   } );
+  await review.save();
+  await post.populate( 'reviews' );
 
   post.numReviews = post.reviews.length;
 

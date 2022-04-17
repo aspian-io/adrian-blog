@@ -18,7 +18,7 @@ export enum PostLocaleEnum {
   ERROR_POST_ID = "errors.posts.deleteService.postIdErr",
   ERROR_PARENT_NOT_FOUND = "errors.posts.common.parentNotFoundErr",
   ERROR_DUPLICATE_PARENT = "errors.posts.common.duplicateParentPostErr",
-  ERROR_ALREADY_REVIEWED = "errors.post.reviewService.alreadyReviewed",
+  ERROR_ALREADY_REVIEWED = "errors.posts.reviewService.alreadyReviewed",
   ERROR_DUPLICATE_BIRTHDAY_TEMPLATE = "errors.posts.createService.duplicateBirthdaySMSTemplateErr",
   ERROR_BIRTHDAY_CONGRATS_ON = "errors.posts.deleteService.birthdayCongratsSettingErr",
 

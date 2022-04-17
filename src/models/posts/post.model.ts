@@ -1,8 +1,10 @@
 import { LangEnum } from 'infrastructure/locales/i18next-config';
 import { AttachmentDoc } from 'models/attachments/attachment.model';
-import { BaseAttrs, BaseDoc, BaseMinimalDoc, baseMinimalSchema, baseSchema, baseSchemaOptions } from 'models/base/base.model';
+import { BaseAttrs, BaseDoc, baseSchema, baseSchemaOptions } from 'models/base/base.model';
 import { TaxonomyDoc } from 'models/taxonomies/taxonomy.model';
 import { model, Schema, Model, Document } from 'mongoose';
+import { PostLikeDoc } from './post-like.model';
+import { PostReviewDoc } from './post-review.model';
 
 export enum PostVisibilityEnum {
   PUBLIC = "PUBLIC",
@@ -65,11 +67,8 @@ export interface PostAttrs extends BaseAttrs {
   parent?: string;
   taxonomies: string[];
   attachments: string[];
-  reviews?: PostReview[];
   rating?: number;
   numReviews?: number;
-  likes?: BaseMinimalDoc[];
-  numLikes?: number;
   postmeta?: Postmeta[];
 }
 
@@ -94,30 +93,17 @@ export interface PostDoc extends BaseDoc, Document {
   parent?: PostDoc;
   taxonomies: TaxonomyDoc[];
   attachments: AttachmentDoc[];
-  reviews: PostReview[];
+  reviews: PostReviewDoc[];
   rating: number;
   numReviews: number;
-  likes: BaseMinimalDoc[];
-  numLikes: number;
+  likes?: PostLikeDoc[];
+  numLikes?: number;
   postmeta?: Postmeta[];
 }
 
 export interface PostModel extends Model<PostDoc> {
   build ( attrs: PostAttrs ): PostDoc;
 }
-
-export interface PostReview extends BaseMinimalDoc {
-  rate: number;
-}
-
-const reviewSchema = new Schema<PostReview>( {
-  rate: { type: Number, min: 0, max: 5 },
-  ...baseMinimalSchema.obj
-}, baseSchemaOptions );
-
-const postLike = new Schema<BaseMinimalDoc>( {
-  ...baseMinimalSchema.obj
-}, baseSchemaOptions );
 
 // Post Model Schema
 const postSchema = new Schema<PostDoc, PostModel>( {
@@ -141,11 +127,8 @@ const postSchema = new Schema<PostDoc, PostModel>( {
   parent: { type: Schema.Types.ObjectId, ref: "Post" },
   taxonomies: [ { type: Schema.Types.ObjectId, ref: "Taxonomy" } ],
   attachments: [ { type: Schema.Types.ObjectId, ref: "Attachment" } ],
-  reviews: [ reviewSchema ],
   rating: { type: Number, default: 0 },
   numReviews: { type: Number, default: 0 },
-  likes: [ postLike ],
-  numLikes: { type: Number, default: 0 },
   postmeta: [ postmetaSchema ],
   ...baseSchema.obj
 }, baseSchemaOptions );
@@ -153,6 +136,25 @@ const postSchema = new Schema<PostDoc, PostModel>( {
 postSchema.statics.build = ( attrs: PostAttrs ) => {
   return new Post( attrs );
 };
+
+postSchema.virtual( 'reviews', {
+  ref: 'PostReview',
+  localField: '_id',
+  foreignField: 'post'
+} );
+
+postSchema.virtual( 'likes', {
+  ref: 'PostLike',
+  localField: '_id',
+  foreignField: 'post'
+} );
+
+postSchema.virtual( 'numLikes', {
+  ref: 'PostLike',
+  localField: '_id',
+  foreignField: 'post',
+  count: true
+} );
 
 const Post = model<PostDoc, PostModel>( "Post", postSchema );
 

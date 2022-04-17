@@ -12,12 +12,12 @@ export async function adminPostCommentListController ( req: Request, res: Respon
       orderBy: "createdAt",
       orderParam: -1
     } ],
-    fieldsToPopulate: {
+    fieldsToPopulate: [ {
       path: "createdBy",
       populate: {
         path: "avatar"
       }
-    },
+    }, { path: "numLikes" } ],
     imgProxyParams: { ...req.query as Omit<IImgProxyPrams, "key"> }
   } );
   res.send( comments );

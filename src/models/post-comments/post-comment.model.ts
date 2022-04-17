@@ -1,12 +1,10 @@
-import { BaseAttrs, BaseDoc, BaseMinimalDoc, baseMinimalSchema, baseSchema, baseSchemaOptions } from "models/base/base.model";
+import { BaseAttrs, BaseDoc, BaseMinimalDoc, baseSchema, baseSchemaOptions } from "models/base/base.model";
 import { PostDoc } from "models/posts/post.model";
 import { Document, model, Model, Schema } from "mongoose";
 
 export interface CommentAttrs extends BaseAttrs {
   title: string;
   content: string;
-  likes?: BaseMinimalDoc[];
-  numLikes?: number;
   isApproved: boolean;
   replyLevel?: number;
   isReplyAllowed: boolean;
@@ -18,8 +16,8 @@ export interface CommentAttrs extends BaseAttrs {
 export interface CommentDoc extends BaseDoc, Document {
   title: string;
   content: string;
-  likes: BaseMinimalDoc[];
-  numLikes: number;
+  likes?: BaseMinimalDoc[];
+  numLikes?: number;
   isApproved: boolean;
   replyLevel: number;
   isReplyAllowed: boolean;
@@ -32,15 +30,9 @@ interface CommentModel extends Model<CommentDoc> {
   build ( attrs: CommentAttrs ): CommentDoc;
 }
 
-const commentLike = new Schema<BaseMinimalDoc>( {
-  ...baseMinimalSchema.obj
-}, baseSchemaOptions );
-
 const commentSchema = new Schema<CommentDoc, CommentModel>( {
   title: { type: String, required: true },
   content: { type: String, required: true },
-  likes: [ commentLike ],
-  numLikes: { type: Number, default: 0 },
   isApproved: { type: Boolean, required: true, default: false },
   replyLevel: { type: Number, default: 0 },
   isReplyAllowed: { type: Boolean, required: true, default: false },
@@ -53,5 +45,18 @@ const commentSchema = new Schema<CommentDoc, CommentModel>( {
 commentSchema.statics.build = ( attrs: CommentAttrs ) => {
   return new Comment( attrs );
 };
+
+commentSchema.virtual( 'likes', {
+  ref: 'PostCommentLike',
+  localField: '_id',
+  foreignField: 'postComment'
+} );
+
+commentSchema.virtual( 'numLikes', {
+  ref: 'PostCommentLike',
+  localField: '_id',
+  foreignField: 'postComment',
+  count: true
+} );
 
 export const Comment = model<CommentDoc, CommentModel>( "Comment", commentSchema );

@@ -8,7 +8,7 @@ import { logger } from "services/winston-logger/logger.service";
 
 export async function postReviewController ( req: Request, res: Response ) {
   const post = await postReviewService( {
-    postId: req.params.id,
+    slug: req.params.postSlug,
     rate: req.body.rate,
     createdBy: req.currentUser!.id,
     createdByIp: req.ip,

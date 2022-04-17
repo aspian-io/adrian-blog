@@ -26,6 +26,7 @@ export async function adminPostListController ( req: Request, res: Response ) {
         orderParam: -1
       }
     ],
+    fieldsToPopulate: { path: 'numLikes' },
     imgProxyParams: { ...req.query as Omit<IImgProxyPrams, "key"> }
   } );
   res.send( posts );

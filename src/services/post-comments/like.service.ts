@@ -1,6 +1,7 @@
 import { CacheOptionServiceEnum } from "infrastructure/cache/cache-options";
 import { clearCache } from "infrastructure/cache/clear-cache";
 import { NotFoundError } from "infrastructure/errors/not-found-error";
+import { PostCommentLike } from "models/post-comments/post-comment-like.model";
 import { Comment } from "models/post-comments/post-comment.model";
 
 export interface IPostCommentLikeService {
@@ -15,20 +16,20 @@ export async function postCommentLikeService ( params: IPostCommentLikeService )
   const comment = await Comment.findById( commentId ).populate( "createdBy" );
   if ( !comment ) throw new NotFoundError();
 
-  const existingLike = comment.likes.filter( l => l.createdBy.toString() === userId.toString() )[ 0 ];
+  const existingLike = await PostCommentLike.findOne( { postComment: comment.id, createdBy: userId } );
   if ( existingLike ) {
-    comment.likes = comment.likes.filter( l => l.createdBy.toString() !== userId.toString() );
-    comment.numLikes = comment.likes.length;
+    await existingLike.delete();
   } else {
-    comment.likes.push( {
-      createdBy: userId as any,
+    const postCommentLike = PostCommentLike.build( {
+      postComment: comment.id,
+      createdBy: userId,
       createdByIp: ipAddress,
       userAgent
     } );
-    comment.numLikes = comment.likes.length;
+    await postCommentLike.save();
   }
 
-  await comment.save();
+  await comment.populate( 'numLikes' );
   clearCache( CacheOptionServiceEnum.POST_COMMENT );
   return comment;
 }
