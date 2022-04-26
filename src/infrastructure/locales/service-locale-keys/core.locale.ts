@@ -7,4 +7,5 @@ export enum CoreLocaleEnum {
   ERROR_REQUEST_VALIDATION_ERROR = "errors.requestValidationError",
   ERROR_CORS = "errors.corsErr",
   ERROR_USER_ID = "errors.userId",
+  ERROR_LANG = "errors.lang",
 }

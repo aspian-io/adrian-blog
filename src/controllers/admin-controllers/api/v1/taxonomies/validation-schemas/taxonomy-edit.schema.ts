@@ -1,8 +1,20 @@
 import { body } from 'express-validator';
 import { validationMsgSerializer } from 'infrastructure/errors/request-validation-error';
+import { LangEnum } from 'infrastructure/locales/i18next-config';
+import { CoreLocaleEnum } from 'infrastructure/locales/service-locale-keys/core.locale';
 import { TaxonomyLocaleEnum } from 'infrastructure/locales/service-locale-keys/taxonomies.locale';
 
 export const taxonomyEditSchema = [
+  body( 'lang' )
+    .not()
+    .isEmpty()
+    .isIn( Object.values( LangEnum ) )
+    .withMessage(
+      validationMsgSerializer(
+        'Language cannot be empty and must be correctly specified',
+        CoreLocaleEnum.ERROR_LANG
+      )
+    ),
   body( 'type' )
     .not()
     .isEmpty()

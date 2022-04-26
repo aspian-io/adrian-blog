@@ -15,7 +15,7 @@ export interface ITaxonomyListService {
 }
 
 export async function taxonomyListService ( params: ITaxonomyListService ) {
-  const { query, preDefinedFilters, dataMapTo, imgProxyParams } = params;
+  const { query, preDefinedFilters, preDefinedOrders, dataMapTo, imgProxyParams } = params;
   const result = await docListGenerator( {
     fieldsToExclude: [],
     model: Taxonomy,
@@ -25,11 +25,12 @@ export async function taxonomyListService ( params: ITaxonomyListService ) {
       cacheOptionService: CacheOptionServiceEnum.TAXONOMY
     },
     preDefinedFilters,
+    preDefinedOrders,
     dataMapTo
   } );
   if ( imgProxyParams?.resizingType ) {
     const processedData = result.data.map( d => {
-      let taxonomyDoc: WithImgProxyUrlType<TaxonomyDoc | TaxonomyDto> = dataMapTo ?  d as TaxonomyDto : d as TaxonomyDoc;
+      let taxonomyDoc: WithImgProxyUrlType<TaxonomyDoc | TaxonomyDto> = dataMapTo ? d as TaxonomyDto : d as TaxonomyDoc;
       if ( taxonomyDoc.featuredImage && taxonomyDoc.featuredImage.path ) {
         const imgProxySignedUrl = imgProxySignUrl( { ...imgProxyParams, key: taxonomyDoc.featuredImage.path } );
         taxonomyDoc = { ...taxonomyDoc, imgProxySignedUrl };

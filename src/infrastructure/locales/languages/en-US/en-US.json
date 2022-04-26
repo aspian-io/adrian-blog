@@ -15,6 +15,7 @@
     "dbConnectionError": {
       "msg": "Error connecting to database"
     },
+    "langErr": "Language cannot be empty and must be correctly specified",
     "corsErr": "The request has been blocked by CORS policy",
     "requestValidationError": "Invalid request parameters",
     "userId": "User id must be a standard id",
